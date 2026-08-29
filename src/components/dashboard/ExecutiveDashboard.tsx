@@ -2,303 +2,582 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
-  TrendingUp,
-  Clock,
-  CheckCircle2,
-  FileSpreadsheet,
-  Layers,
-  ArrowRight,
-  Filter,
-  Search,
   Sparkles,
-  ShieldAlert,
-  Building,
-  PlusCircle,
+  Monitor,
+  Clock,
+  Edit3,
+  CheckCircle2,
+  AlertTriangle,
+  Info,
+  FileText,
+  Scale,
+  DollarSign,
+  ShieldCheck,
+  ArrowRight,
+  Search,
+  Plus,
+  Microscope,
+  Cpu,
+  Layers,
+  Check,
+  TrendingUp,
 } from "lucide-react";
-import { BudgetProposal, DashboardMetrics, RequestStatus } from "@/types/budget";
+import { DashboardMetrics, BudgetProposal } from "@/types/budget";
 
 export function ExecutiveDashboard() {
+  const router = useRouter();
+  const [promptText, setPromptText] = useState("");
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [proposals, setProposals] = useState<BudgetProposal[]>([]);
-  const [statusFilter, setStatusFilter] = useState<string>("ALL");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetchDashboardData();
-  }, [statusFilter]);
+    fetch("/api/dashboard/metrics")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.metrics) setMetrics(data.metrics);
+      })
+      .catch(console.error);
 
-  const fetchDashboardData = async () => {
-    setIsLoading(true);
-    try {
-      const [metricsRes, proposalsRes] = await Promise.all([
-        fetch("/api/dashboard/metrics"),
-        fetch(`/api/requests?status=${statusFilter}`),
-      ]);
+    fetch("/api/requests")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.proposals) setProposals(data.proposals);
+      })
+      .catch(console.error);
+  }, []);
 
-      const metricsData = await metricsRes.json();
-      const proposalsData = await proposalsRes.json();
-
-      if (metricsData.metrics) setMetrics(metricsData.metrics);
-      if (proposalsData.proposals) setProposals(proposalsData.proposals);
-    } catch (err) {
-      console.error("Dashboard fetch error:", err);
-    } finally {
-      setIsLoading(false);
+  const handleStartAnalysis = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const query = promptText.trim();
+    if (query) {
+      router.push(`/requests/new?prompt=${encodeURIComponent(query)}`);
+    } else {
+      router.push("/requests/new");
     }
   };
-
-  const statusBadge = (status: RequestStatus) => {
-    switch (status) {
-      case "APPROVED":
-        return "bg-emerald-100 text-emerald-800 border-emerald-200";
-      case "SUBMITTED":
-        return "bg-blue-100 text-blue-800 border-blue-200";
-      case "DEPT_REVIEW":
-        return "bg-purple-100 text-purple-800 border-purple-200";
-      case "AI_ANALYZED":
-        return "bg-amber-100 text-amber-800 border-amber-200";
-      case "REVISED":
-        return "bg-rose-100 text-rose-800 border-rose-200";
-      default:
-        return "bg-slate-100 text-slate-700 border-slate-200";
-    }
-  };
-
-  const statusLabelTh = (status: RequestStatus) => {
-    switch (status) {
-      case "APPROVED":
-        return "อนุมัติบรรจุแผน";
-      case "SUBMITTED":
-        return "ส่งระดับคณะแล้ว";
-      case "DEPT_REVIEW":
-        return "รอตรวจระดับภาควิชา";
-      case "AI_ANALYZED":
-        return "AI วิเคราะห์แล้ว";
-      case "REVISED":
-        return "ส่งกลับแก้ไข";
-      default:
-        return "แบบร่าง (Draft)";
-    }
-  };
-
-  const filteredProposals = proposals.filter((p) => {
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase();
-    return (
-      p.title.toLowerCase().includes(q) ||
-      p.code.toLowerCase().includes(q) ||
-      p.department.toLowerCase().includes(q)
-    );
-  });
 
   return (
-    <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-kku-950 text-white rounded-2xl p-6 sm:p-8 shadow-card flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <div className="flex items-center space-x-2 text-xs font-bold text-kku-300 uppercase tracking-wider mb-2">
-            <Sparkles className="w-4 h-4" />
-            <span>KKU Executive Budget Intelligence</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-white tracking-tight">
-            ภาพรวมคำของบประมาณครุภัณฑ์ มหาวิทยาลัยขอนแก่น
+    <div className="space-y-7 animate-in fade-in duration-300">
+      {/* 1. Hero AI Search / Prompt Card */}
+      <div className="bg-gradient-to-r from-indigo-50/90 via-purple-50/50 to-blue-50/80 border border-indigo-100 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-sm">
+        <div className="max-w-xl relative z-10 space-y-3">
+          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 tracking-tight">
+            ต้องการจัดซื้ออะไร?
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
-            ระบบติดตามการจัดสรรงบลงทุน ตรวจสอบราคากลาง 4 ฐาน ป้องกันการล็อคสเปก และลดเวลาทำงานที่ไม่สร้างมูลค่า (NVA Reduction)
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            บอกความต้องการของคุณ AI จะช่วยวิเคราะห์ ตรวจสอบมาตรฐานและราคาที่เหมาะสม
           </p>
-        </div>
 
-        <Link
-          href="/requests/new"
-          className="px-5 py-3 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-heading font-bold text-xs shadow-lg flex items-center space-x-2 transition-all hover:scale-105 shrink-0"
-        >
-          <PlusCircle className="w-4 h-4 text-kku-700" />
-          <span>สร้างคำขอใหม่ด้วย AI</span>
-        </Link>
-      </div>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Total Budget */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-subtle">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              วงเงินงบประมาณที่ขอรวม
-            </span>
-            <div className="w-8 h-8 rounded-lg bg-kku-50 text-kku-700 flex items-center justify-center">
-              <TrendingUp className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-heading font-bold text-slate-900 mt-2">
-            {metrics?.totalBudgetRequestedBaht.toLocaleString() || 0}{" "}
-            <span className="text-sm font-normal text-slate-500">บาท</span>
-          </div>
-          <p className="text-[11px] text-slate-400 mt-1">ปีงบประมาณ พ.ศ. 2569</p>
-        </div>
-
-        {/* Proposals Count */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-subtle">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              คำขอทั้งหมดในระบบ
-            </span>
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
-              <Layers className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-heading font-bold text-slate-900 mt-2">
-            {metrics?.totalProposals || 0}{" "}
-            <span className="text-sm font-normal text-slate-500">รายการ</span>
-          </div>
-          <div className="text-[11px] text-emerald-600 font-medium mt-1">
-            อนุมัติแล้ว {metrics?.approvedCount || 0} รายการ
-          </div>
-        </div>
-
-        {/* Standard Match Rate */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-subtle">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              อัตราตรงเกณฑ์ราคากลาง
-            </span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
-              <CheckCircle2 className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-heading font-bold text-emerald-600 mt-2">
-            {metrics?.standardMatchRate || 0}%
-          </div>
-          <p className="text-[11px] text-slate-400 mt-1">
-            อิงสำนักงบฯ &amp; กระทรวง DE 2569
-          </p>
-        </div>
-
-        {/* NVA Time Reduction */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-subtle">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              เวลาทำงานที่ประหยัดได้ (NVA)
-            </span>
-            <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center">
-              <Clock className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-heading font-bold text-purple-700 mt-2">
-            ~{metrics?.nvaTimeSavedHours || 0}{" "}
-            <span className="text-sm font-normal text-slate-500">ชม.</span>
-          </div>
-          <p className="text-[11px] text-slate-400 mt-1">
-            ลดขั้นตอนตรวจซ้ำและการร่างเอกสาร 70%+
-          </p>
-        </div>
-      </div>
-
-      {/* Proposals List Section */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-card">
-        <div className="p-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <div>
-            <h3 className="font-heading font-bold text-base text-slate-900">
-              รายการคำของบประมาณครุภัณฑ์ล่าสุด
-            </h3>
-            <p className="text-xs text-slate-500">
-              ติดตามสถานะและตรวจสอบข้อมูลรายละเอียดตามบทบาทสิทธิ์
-            </p>
-          </div>
-
-          <div className="flex items-center space-x-2 w-full sm:w-auto">
-            {/* Search */}
-            <div className="relative flex-1 sm:w-60">
-              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
+          <form onSubmit={handleStartAnalysis} className="pt-2">
+            <div className="bg-white rounded-2xl p-2 sm:p-2.5 border border-slate-200/90 shadow-md shadow-slate-200/50 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <input
                 type="text"
-                placeholder="ค้นหาชื่อรายการ, รหัส..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full text-xs pl-8 pr-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-kku-700"
+                value={promptText}
+                onChange={(e) => setPromptText(e.target.value)}
+                placeholder="เช่น เครื่องคอมพิวเตอร์สำหรับงาน Data Science จำนวน 10 เครื่อง..."
+                className="flex-1 px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder-slate-400 bg-transparent focus:outline-none"
               />
+              <button
+                type="submit"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-heading font-bold text-xs shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-1.5 transition-all hover:scale-[1.02] shrink-0"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>วิเคราะห์ด้วย AI</span>
+              </button>
             </div>
+          </form>
+        </div>
 
-            {/* Status Filter */}
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="text-xs py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-kku-700"
+        {/* Right Side 3D Robot & Analytics Illustration */}
+        <div className="hidden lg:block absolute right-6 top-1/2 -translate-y-1/2 w-80 h-52 pointer-events-none select-none">
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 320 200"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="glow" x1="0" y1="0" x2="320" y2="200" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#6366F1" stopOpacity="0.15" />
+                <stop offset="1" stopColor="#A855F7" stopOpacity="0.05" />
+              </linearGradient>
+              <linearGradient id="robotGrad" x1="180" y1="30" x2="260" y2="150" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#4F46E5" />
+                <stop offset="1" stopColor="#818CF8" />
+              </linearGradient>
+              <linearGradient id="chartGrad" x1="20" y1="20" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#FFFFFF" />
+                <stop offset="1" stopColor="#F1F5F9" />
+              </linearGradient>
+            </defs>
+
+            <rect width="320" height="200" rx="20" fill="url(#glow)" />
+
+            {/* Dashboard Floating UI Card */}
+            <g transform="translate(30, 25)" filter="drop-shadow(0 10px 15px rgba(99,102,241,0.12))">
+              <rect width="140" height="110" rx="14" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="1.5" />
+              <circle cx="20" cy="20" r="6" fill="#6366F1" />
+              <line x1="32" y1="20" x2="90" y2="20" stroke="#94A3B8" strokeWidth="3" strokeLinecap="round" />
+              {/* Mini Chart Bars */}
+              <rect x="20" y="80" width="12" height="20" rx="3" fill="#C7D2FE" />
+              <rect x="38" y="60" width="12" height="40" rx="3" fill="#818CF8" />
+              <rect x="56" y="45" width="12" height="55" rx="3" fill="#6366F1" />
+              <rect x="74" y="68" width="12" height="32" rx="3" fill="#C7D2FE" />
+              <rect x="92" y="50" width="12" height="50" rx="3" fill="#4F46E5" />
+              <rect x="110" y="35" width="12" height="65" rx="3" fill="#10B981" />
+              {/* Trend Line */}
+              <path d="M26 80 L44 60 L62 45 L80 68 L98 50 L116 35" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" fill="none" />
+            </g>
+
+            {/* AI Assistant Robot Head */}
+            <g transform="translate(190, 30)" filter="drop-shadow(0 12px 20px rgba(79,70,229,0.2))">
+              {/* Outer Body */}
+              <rect x="10" y="20" width="80" height="70" rx="24" fill="url(#robotGrad)" />
+              {/* Antenna */}
+              <line x1="50" y1="20" x2="50" y2="6" stroke="#6366F1" strokeWidth="4" strokeLinecap="round" />
+              <circle cx="50" cy="5" r="5" fill="#38BDF8" />
+              {/* Face Screen */}
+              <rect x="20" y="32" width="60" height="46" rx="16" fill="#0F172A" />
+              {/* Glowing Eyes */}
+              <circle cx="38" cy="55" r="6" fill="#38BDF8" />
+              <circle cx="62" cy="55" r="6" fill="#38BDF8" />
+              <circle cx="40" cy="53" r="2" fill="#FFFFFF" />
+              <circle cx="64" cy="53" r="2" fill="#FFFFFF" />
+              {/* Smile */}
+              <path d="M44 67 Q50 72 56 67" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" fill="none" />
+              {/* Ears */}
+              <rect x="2" y="42" width="8" height="26" rx="4" fill="#818CF8" />
+              <rect x="90" y="42" width="8" height="26" rx="4" fill="#818CF8" />
+            </g>
+
+            {/* Floating Sparkles & Badges */}
+            <g transform="translate(170, 110)">
+              <circle cx="15" cy="15" r="14" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.06))" />
+              <path d="M15 8 L17 13 L22 15 L17 17 L15 22 L13 17 L8 15 L13 13 Z" fill="#6366F1" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      {/* 2. Overview Metrics Section */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="font-heading font-bold text-slate-900 text-base">
+            ภาพรวมคำของบประมาณปี 2570
+          </h2>
+          <Link
+            href="/requests"
+            className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1 transition-colors"
+          >
+            <span>ดูทั้งหมด</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* 1. Total Requests */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
+            <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+              <Monitor className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
+                161
+              </div>
+              <div className="text-xs font-semibold text-slate-600 mt-0.5">รายการทั้งหมด</div>
+              <p className="text-[10px] text-slate-400 mt-1">เพิ่มขึ้น 12% จากเดือนที่แล้ว</p>
+            </div>
+          </div>
+
+          {/* 2. Pending Review */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
+            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+              <Clock className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
+                24
+              </div>
+              <div className="text-xs font-semibold text-slate-600 mt-0.5">รอตรวจสอบ</div>
+              <p className="text-[10px] text-amber-600 font-medium mt-1">ต้องดำเนินการ</p>
+            </div>
+          </div>
+
+          {/* 3. Needs Revision */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
+            <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+              <Edit3 className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
+                8
+              </div>
+              <div className="text-xs font-semibold text-slate-600 mt-0.5">ต้องแก้ไข</div>
+              <p className="text-[10px] text-rose-600 font-medium mt-1">รอการแก้ไข</p>
+            </div>
+          </div>
+
+          {/* 4. Ready to Submit */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
+                3
+              </div>
+              <div className="text-xs font-semibold text-slate-600 mt-0.5">พร้อมส่ง</div>
+              <p className="text-[10px] text-emerald-600 font-medium mt-1">พร้อมเสนออนุมัติ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Middle 3-Column Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Column 1: รายการที่ต้องดำเนินการ */}
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
+          <div>
+            <h3 className="font-heading font-bold text-sm text-slate-900 mb-4">
+              รายการที่ต้องดำเนินการ
+            </h3>
+
+            <div className="space-y-3">
+              {/* Item 1 */}
+              <Link
+                href="/requests"
+                className="p-3 rounded-2xl border border-slate-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all flex items-center justify-between"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <Monitor className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900">Computer Lab</h4>
+                    <p className="text-[11px] text-slate-400">คณะวิทยาศาสตร์</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-medium">
+                    ⚠ ตรวจสอบวงเงิน
+                  </span>
+                  <div className="text-xs font-bold text-slate-800 mt-1">520,000 บาท</div>
+                  <div className="text-[9px] text-slate-400">25 พ.ค. 2569</div>
+                </div>
+              </Link>
+
+              {/* Item 2 */}
+              <Link
+                href="/requests"
+                className="p-3 rounded-2xl border border-slate-100 hover:border-emerald-100 hover:bg-emerald-50/30 transition-all flex items-center justify-between"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <Microscope className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900">Microscope</h4>
+                    <p className="text-[11px] text-slate-400">คณะวิทยาศาสตร์</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
+                    ✓ ผ่านมาตรฐาน
+                  </span>
+                  <div className="text-xs font-bold text-slate-800 mt-1">1,250,000 บาท</div>
+                  <div className="text-[9px] text-slate-400">24 พ.ค. 2569</div>
+                </div>
+              </Link>
+
+              {/* Item 3 */}
+              <Link
+                href="/requests"
+                className="p-3 rounded-2xl border border-slate-100 hover:border-rose-100 hover:bg-rose-50/30 transition-all flex items-center justify-between"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                    <Cpu className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900">GPU Workstation</h4>
+                    <p className="text-[11px] text-slate-400">คณะเทคโนโลยีสารสนเทศ</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-medium">
+                    ⚠ Spec ไม่สอดคล้อง
+                  </span>
+                  <div className="text-xs font-bold text-slate-800 mt-1">850,000 บาท</div>
+                  <div className="text-[9px] text-slate-400">23 พ.ค. 2569</div>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-slate-100 text-center">
+            <Link
+              href="/requests"
+              className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
             >
-              <option value="ALL">สถานะทั้งหมด</option>
-              <option value="AI_ANALYZED">AI วิเคราะห์แล้ว</option>
-              <option value="DEPT_REVIEW">รอตรวจระดับภาควิชา</option>
-              <option value="SUBMITTED">ส่งระดับคณะแล้ว</option>
-              <option value="APPROVED">อนุมัติบรรจุแผน</option>
-            </select>
+              <span>ดูรายการทั้งหมด</span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
           </div>
         </div>
 
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50/70 border-b border-slate-200 text-slate-600 font-semibold">
-              <tr>
-                <th className="py-3 px-4">รหัสคำขอ</th>
-                <th className="py-3 px-4">ชื่อรายการครุภัณฑ์</th>
-                <th className="py-3 px-4">หน่วยงาน / ภาควิชา</th>
-                <th className="py-3 px-4 text-right">วงเงินรวม (บาท)</th>
-                <th className="py-3 px-4 text-center">สถานะ</th>
-                <th className="py-3 px-4 text-right">การจัดการ</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {filteredProposals.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="py-8 text-center text-slate-400">
-                    ไม่พบรายการคำของบประมาณตามเงื่อนไขที่เลือก
-                  </td>
-                </tr>
-              ) : (
-                filteredProposals.map((prop) => (
-                  <tr key={prop.id} className="hover:bg-slate-50/60 transition-colors">
-                    <td className="py-3.5 px-4 font-mono font-semibold text-kku-700">
-                      {prop.code}
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <div className="font-semibold text-slate-900 line-clamp-1">
-                        {prop.title}
-                      </div>
-                      <div className="text-[11px] text-slate-400">
-                        {prop.quantity} {prop.unit} ({Number(prop.unitPriceBaht).toLocaleString()} ฿/{prop.unit})
-                      </div>
-                    </td>
-                    <td className="py-3.5 px-4 text-slate-600">
-                      <div>{prop.department}</div>
-                      <div className="text-[11px] text-slate-400">{prop.faculty}</div>
-                    </td>
-                    <td className="py-3.5 px-4 text-right font-bold text-slate-900">
-                      {Number(prop.totalBudgetBaht).toLocaleString()} ฿
-                    </td>
-                    <td className="py-3.5 px-4 text-center">
-                      <span
-                        className={`inline-block text-[10px] px-2.5 py-0.5 rounded-full border font-semibold ${statusBadge(
-                          prop.status
-                        )}`}
-                      >
-                        {statusLabelTh(prop.status)}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-right">
-                      <Link
-                        href={`/requests/${prop.id}`}
-                        className="inline-flex items-center space-x-1 text-kku-700 hover:text-kku-900 font-semibold text-xs transition-colors"
-                      >
-                        <span>เปิดดู</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+        {/* Column 2: ความคืบหน้าการจัดทำคำของบประมาณ */}
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
+          <div>
+            <h3 className="font-heading font-bold text-sm text-slate-900 mb-4">
+              ความคืบหน้าการจัดทำคำของบประมาณ
+            </h3>
+
+            <div className="flex items-center justify-between gap-4">
+              {/* Circular Gauge */}
+              <div className="relative w-32 h-32 flex items-center justify-center shrink-0">
+                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    stroke="#EEF2F6"
+                    strokeWidth="8"
+                    fill="none"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    stroke="#4F46E5"
+                    strokeWidth="8"
+                    strokeDasharray="251.2"
+                    strokeDashoffset="138.16" /* 45% */
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                </svg>
+                <div className="absolute text-center">
+                  <div className="text-xl font-heading font-bold text-slate-900">45%</div>
+                  <div className="text-[9px] text-slate-400">ดำเนินการแล้ว</div>
+                </div>
+              </div>
+
+              {/* Steps Status List */}
+              <div className="space-y-1.5 text-xs flex-1">
+                <div className="flex items-center space-x-2 text-slate-700">
+                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
+                    ✓
+                  </div>
+                  <span className="text-[11px] font-medium">1. ความต้องการ</span>
+                </div>
+                <div className="flex items-center space-x-2 text-slate-700">
+                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
+                    ✓
+                  </div>
+                  <span className="text-[11px] font-medium">2. รายการที่แนะนำ</span>
+                </div>
+                <div className="flex items-center space-x-2 text-slate-700">
+                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
+                    ✓
+                  </div>
+                  <span className="text-[11px] font-medium">3. ราคาอ้างอิง</span>
+                </div>
+                <div className="flex items-center space-x-2 text-indigo-700 font-semibold">
+                  <div className="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">
+                    4
+                  </div>
+                  <span className="text-[11px]">4. ตรวจสอบวงเงิน</span>
+                </div>
+                <div className="flex items-center space-x-2 text-slate-400">
+                  <div className="w-4 h-4 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-[10px]">
+                    5
+                  </div>
+                  <span className="text-[11px]">5. ร่างคำของบประมาณ</span>
+                </div>
+                <div className="flex items-center space-x-2 text-slate-400">
+                  <div className="w-4 h-4 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-[10px]">
+                    6
+                  </div>
+                  <span className="text-[11px]">6. Specification</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-slate-100 text-center">
+            <Link
+              href="/requests/new"
+              className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
+            >
+              <span>ดำเนินการต่อ</span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Column 3: การแจ้งเตือน */}
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
+          <div>
+            <h3 className="font-heading font-bold text-sm text-slate-900 mb-4">
+              การแจ้งเตือน
+            </h3>
+
+            <div className="space-y-3">
+              {/* Alert 1 */}
+              <div className="p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-3">
+                <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <AlertTriangle className="w-4 h-4" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">
+                    วงเงินสูงกว่าข้อมูลอ้างอิง
+                  </h4>
+                  <div className="flex items-center justify-between mt-0.5">
+                    <span className="text-[11px] text-slate-500">Computer Lab</span>
+                    <span className="text-[10px] text-slate-400">5 นาทีที่แล้ว</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Alert 2 */}
+              <div className="p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-3">
+                <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <Info className="w-4 h-4" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">
+                    แนบใบเสนอราคา
+                  </h4>
+                  <div className="flex items-center justify-between mt-0.5">
+                    <span className="text-[11px] text-slate-500">GPU Workstation</span>
+                    <span className="text-[10px] text-slate-400">1 ชั่วโมงที่แล้ว</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Alert 3 */}
+              <div className="p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-3">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">
+                    มาตรฐานอัปเดต
+                  </h4>
+                  <div className="flex items-center justify-between mt-0.5">
+                    <span className="text-[11px] text-slate-500 truncate">
+                      กระทรวงดิจิทัลฯ ฉบับ พ.ศ. 2569
+                    </span>
+                    <span className="text-[10px] text-slate-400 shrink-0 ml-1">
+                      3 ชั่วโมงที่แล้ว
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-slate-100 text-center">
+            <Link
+              href="/notifications"
+              className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
+            >
+              <span>ดูการแจ้งเตือนทั้งหมด</span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Bottom Row: "AI ช่วยอะไรคุณได้บ้าง?" (5 Interactive Cards) */}
+      <div className="bg-gradient-to-r from-indigo-50/50 via-purple-50/30 to-blue-50/40 border border-indigo-100/70 rounded-3xl p-6 shadow-xs space-y-4">
+        <h3 className="font-heading font-bold text-sm text-indigo-950">
+          AI ช่วยอะไรคุณได้บ้าง?
+        </h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          {/* 1. ตรวจสอบชื่อครุภัณฑ์ */}
+          <Link
+            href="/requests/new?step=2"
+            className="bg-white border border-slate-200/80 hover:border-emerald-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <CheckCircle2 className="w-5 h-5" />
+            </div>
+            <h4 className="text-xs font-bold text-slate-900 group-hover:text-emerald-700">
+              ตรวจสอบชื่อครุภัณฑ์
+            </h4>
+            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+              ตรวจสอบความถูกต้องของชื่อและมาตรฐาน
+            </p>
+          </Link>
+
+          {/* 2. เปรียบเทียบราคา */}
+          <Link
+            href="/requests/new?step=3"
+            className="bg-white border border-slate-200/80 hover:border-purple-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <Scale className="w-5 h-5" />
+            </div>
+            <h4 className="text-xs font-bold text-slate-900 group-hover:text-purple-700">
+              เปรียบเทียบราคา
+            </h4>
+            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+              เปรียบเทียบราคาจากหลายแหล่งอ้างอิง
+            </p>
+          </Link>
+
+          {/* 3. ตรวจสอบวงเงิน */}
+          <Link
+            href="/requests/new?step=4"
+            className="bg-white border border-slate-200/80 hover:border-emerald-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <DollarSign className="w-5 h-5" />
+            </div>
+            <h4 className="text-xs font-bold text-slate-900 group-hover:text-emerald-700">
+              ตรวจสอบวงเงิน
+            </h4>
+            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+              AI วิเคราะห์ความเหมาะสมของวงเงิน
+            </p>
+          </Link>
+
+          {/* 4. ร่างเอกสารอัตโนมัติ */}
+          <Link
+            href="/requests/new?step=5"
+            className="bg-white border border-slate-200/80 hover:border-indigo-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <FileText className="w-5 h-5" />
+            </div>
+            <h4 className="text-xs font-bold text-slate-900 group-hover:text-indigo-700">
+              ร่างเอกสารอัตโนมัติ
+            </h4>
+            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+              สร้างร่างคำของบประมาณ และ Spec
+            </p>
+          </Link>
+
+          {/* 5. แหล่งอ้างอิงชัดเจน */}
+          <Link
+            href="/catalogs"
+            className="bg-white border border-slate-200/80 hover:border-blue-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-700">
+              แหล่งอ้างอิงชัดเจน
+            </h4>
+            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+              ทุกคำแนะนำมาพร้อมแหล่งอ้างอิงที่ตรวจสอบได้
+            </p>
+          </Link>
         </div>
       </div>
     </div>

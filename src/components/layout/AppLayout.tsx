@@ -1,0 +1,71 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { Sidebar } from "./Sidebar";
+import { TopHeader } from "./TopHeader";
+import { KKUUserSession } from "@/types/auth";
+
+interface AppLayoutProps {
+  children: React.ReactNode;
+}
+
+export function AppLayout({ children }: AppLayoutProps) {
+  const [currentUser, setCurrentUser] = useState<KKUUserSession | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/auth/mock-switch")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.availableRoles && data.availableRoles.length > 0) {
+          const currentRoleKey =
+            document.cookie
+              .split("; ")
+              .find((row) => row.startsWith("specwise_session_role="))
+              ?.split("=")[1] || "requester";
+          const match = data.availableRoles.find((r: any) => r.key === currentRoleKey);
+          setCurrentUser(match || data.availableRoles[0]);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  const handleRoleChange = async (roleKey: string) => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/auth/mock-switch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role: roleKey }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCurrentUser(data.user);
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error("Failed to switch role:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen bg-[#F8FAFC]">
+      {/* Fixed Left Sidebar */}
+      <Sidebar currentUser={currentUser} />
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <TopHeader
+          currentUser={currentUser}
+          onRoleChange={handleRoleChange}
+          isLoading={isLoading}
+        />
+        <main className="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}
