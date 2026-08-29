@@ -18,6 +18,8 @@ import {
   Layers,
   MessageSquare,
   FileCheck2,
+  FileSpreadsheet,
+  Download,
 } from "lucide-react";
 import { BudgetProposal, RequestStatus } from "@/types/budget";
 import { KKUUserSession } from "@/types/auth";
@@ -130,12 +132,23 @@ export default function RequestDetailPage() {
 
         {/* Action Controls */}
         <div className="flex flex-wrap items-center gap-2">
+          {/* Download Excel Button */}
+          <a
+            href={`/api/requests/${proposal.id}/export-excel`}
+            download={`KKU_RequestForm_${proposal.code}.xlsx`}
+            className="px-3.5 py-2 rounded-xl border border-emerald-300 bg-emerald-50/70 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition-all hover:scale-102"
+            title="ดาวน์โหลดไฟล์ Excel ตามรูปแบบฟอร์มทางการของมหาวิทยาลัยขอนแก่น"
+          >
+            <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+            <span>ดาวน์โหลด Excel (ฟอร์ม มข.)</span>
+          </a>
+
           {/* Print / Export HTML Button */}
           <a
             href={`/api/requests/${proposal.id}/export-html`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center space-x-1.5 shadow-sm"
+            className="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition-all hover:scale-102"
           >
             <Printer className="w-4 h-4 text-kku-700" />
             <span>พิมพ์แบบฟอร์ม มข. (PDF)</span>

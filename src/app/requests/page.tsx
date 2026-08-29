@@ -174,13 +174,24 @@ export default function RequestsPage() {
                       </span>
                     </td>
                     <td className="py-4 px-5 text-right">
-                      <Link
-                        href={`/requests/${prop.id}`}
-                        className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition-colors"
-                      >
-                        <span>เปิดดู</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
+                      <div className="inline-flex items-center space-x-1.5">
+                        <a
+                          href={`/api/requests/${prop.id}/export-excel`}
+                          download={`KKU_RequestForm_${prop.code}.xlsx`}
+                          title="ดาวน์โหลด Excel (ฟอร์ม มข.)"
+                          className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs transition-colors"
+                        >
+                          <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                          <span className="hidden md:inline">Excel</span>
+                        </a>
+                        <Link
+                          href={`/requests/${prop.id}`}
+                          className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition-colors"
+                        >
+                          <span>เปิดดู</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 ))
