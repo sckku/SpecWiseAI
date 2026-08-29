@@ -1,21 +1,6 @@
 import type { Metadata } from "next";
-import { Prompt, Sarabun } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
-
-const prompt = Prompt({
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["thai", "latin"],
-  variable: "--font-prompt",
-  display: "swap",
-});
-
-const sarabun = Sarabun({
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["thai", "latin"],
-  variable: "--font-sarabun",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "SpecWise AI — ผู้ช่วยวิเคราะห์คำของบประมาณและสเปกครุภัณฑ์ มหาวิทยาลัยขอนแก่น",
@@ -29,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className={`${prompt.variable} ${sarabun.variable}`}>
+    <html lang="th">
       <body className="min-h-screen bg-slate-50 flex flex-col font-sans">
         <Navbar />
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
