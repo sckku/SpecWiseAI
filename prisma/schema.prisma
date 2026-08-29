@@ -1,0 +1,191 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  REQUESTER
+  DEPT_VERIFIER
+  APPROVER
+  ADMIN
+}
+
+enum RequestStatus {
+  DRAFT
+  AI_ANALYZED
+  DEPT_REVIEW
+  SUBMITTED
+  REVISED
+  APPROVED
+  REJECTED
+}
+
+enum CatalogSource {
+  BUDGET_BUREAU
+  DE_MINISTRY
+  KKU_STANDARD
+  HISTORICAL
+}
+
+enum AlertLevel {
+  GREEN_MATCH
+  AMBER_ALERT
+  CUSTOM_NON_STANDARD
+}
+
+enum AttachmentType {
+  PHOTO_EQUIPMENT
+  SPEC_PDF
+  QUOTATIONS_3_PDF
+  FEASIBILITY_PDF
+}
+
+model User {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  name          String
+  thaiName      String
+  faculty       String
+  department    String
+  position      String
+  role          Role            @default(REQUESTER)
+  avatarUrl     String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  requests      BudgetRequest[] @relation("UserRequests")
+  comments      ReviewComment[] @relation("UserComments")
+  auditLogs     AuditLog[]
+}
+
+model BudgetRequest {
+  id                  String          @id @default(cuid())
+  code                String          @unique // e.g. REQ-2026-0001
+  title               String
+  fiscalYear          Int             @default(2569)
+  faculty             String
+  department          String
+  requesterId         String
+  requester           User            @relation("UserRequests", fields: [requesterId], references: [id])
+  status              RequestStatus   @default(DRAFT)
+  category            String
+  totalBudgetBaht     Decimal         @db.Decimal(14, 2)
+  quantity            Int             @default(1)
+  unit                String          @default("เครื่อง")
+  unitPriceBaht       Decimal         @db.Decimal(12, 2)
+  standardMatched     Boolean         @default(false)
+  standardName        String?
+  alertLevel          AlertLevel      @default(GREEN_MATCH)
+  form8Sections       Json?           // Stores full 8-section KKU structured JSON
+  neutralSpec         Json?           // Stores Step 6 neutral TOR specification JSON
+  aiAnalysisLog       Json?           // Stores full 6-step snapshot
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  items               BudgetItem[]
+  attachments         Attachment[]
+  reviewComments      ReviewComment[]
+  auditLogs           AuditLog[]
+
+  @@index([requesterId])
+  @@index([status])
+  @@index([faculty, department])
+}
+
+model BudgetItem {
+  id              String        @id @default(cuid())
+  requestId       String
+  request         BudgetRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  rawItemName     String
+  matchedCatalogId String?
+  matchedCatalog  StandardCatalog? @relation(fields: [matchedCatalogId], references: [id])
+  standardName    String?
+  quantity        Int           @default(1)
+  unit            String        @default("เครื่อง")
+  unitPrice       Decimal       @db.Decimal(12, 2)
+  totalPrice      Decimal       @db.Decimal(14, 2)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  quotations      QuotationVendor[]
+}
+
+model StandardCatalog {
+  id              String        @id @default(cuid())
+  source          CatalogSource
+  sourceEdition   String        // e.g. "เมษายน 2569", "พฤษภาคม 2569"
+  category        String        // e.g. "ครุภัณฑ์คอมพิวเตอร์", "ครุภัณฑ์วิทยาศาสตร์"
+  itemCode        String?       // e.g. "2.1", "4.3"
+  standardName    String        // e.g. "เครื่องคอมพิวเตอร์ สำหรับงานประมวลผล แบบที่ 1"
+  unitPrice       Decimal       @db.Decimal(12, 2)
+  unit            String        // e.g. "เครื่อง", "ชุด"
+  specSummary     String?       @db.Text
+  documentPage    Int?
+  effectiveDate   DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  budgetItems     BudgetItem[]
+
+  @@index([source, standardName])
+  @@index([category])
+}
+
+model QuotationVendor {
+  id            String      @id @default(cuid())
+  budgetItemId String
+  budgetItem    BudgetItem  @relation(fields: [budgetItemId], references: [id], onDelete: Cascade)
+  vendorName    String
+  unitPrice     Decimal     @db.Decimal(12, 2)
+  isLowestPrice Boolean     @default(false)
+  isSelected    Boolean     @default(false)
+  quotationRef  String?
+  createdAt     DateTime    @default(now())
+}
+
+model Attachment {
+  id            String         @id @default(cuid())
+  requestId     String
+  request       BudgetRequest  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  type          AttachmentType
+  fileName      String
+  fileSize      Int
+  contentType   String
+  storageKey    String
+  checksum      String?
+  createdAt     DateTime       @default(now())
+
+  @@index([requestId, type])
+}
+
+model ReviewComment {
+  id            String        @id @default(cuid())
+  requestId     String
+  request       BudgetRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  authorId      String
+  author        User          @relation("UserComments", fields: [authorId], references: [id])
+  content       String        @db.Text
+  action        String        // e.g. "APPROVE", "REQUEST_CHANGE", "COMMENT"
+  createdAt     DateTime      @default(now())
+
+  @@index([requestId])
+}
+
+model AuditLog {
+  id            String         @id @default(cuid())
+  requestId     String?
+  request       BudgetRequest? @relation(fields: [requestId], references: [id], onDelete: SetNull)
+  userId        String?
+  user          User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action        String         // e.g. "RUN_AI_STEP_1", "TRANSITION_STATUS", "EXPORT_PDF"
+  details       Json?
+  ipAddress     String?
+  createdAt     DateTime       @default(now())
+
+  @@index([requestId])
+  @@index([userId])
+}

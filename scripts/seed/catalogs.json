@@ -1,0 +1,101 @@
+[
+  {
+    "source": "DE_MINISTRY",
+    "sourceEdition": "เกณฑ์ราคากลางและคุณลักษณะพื้นฐานครุภัณฑ์คอมพิวเตอร์ (พฤษภาคม 2569)",
+    "category": "ครุภัณฑ์คอมพิวเตอร์",
+    "itemCode": "1.1",
+    "standardName": "เครื่องคอมพิวเตอร์ สำหรับงานสำนักงาน *(จอแสดงภาพขนาดไม่น้อยกว่า 19.5 นิ้ว)",
+    "unitPrice": 17000,
+    "unit": "เครื่อง",
+    "documentPage": 3,
+    "specSummary": "CPU ไม่น้อยกว่า 6 cores, RAM ไม่น้อยกว่า 8GB DDR4/DDR5, SSD M.2 NVMe ไม่น้อยกว่า 250GB, จอไม่น้อยกว่า 19.5 นิ้ว Full HD"
+  },
+  {
+    "source": "DE_MINISTRY",
+    "sourceEdition": "เกณฑ์ราคากลางและคุณลักษณะพื้นฐานครุภัณฑ์คอมพิวเตอร์ (พฤษภาคม 2569)",
+    "category": "ครุภัณฑ์คอมพิวเตอร์",
+    "itemCode": "2.1",
+    "standardName": "เครื่องคอมพิวเตอร์ สำหรับงานประมวลผล แบบที่ 1 *(จอแสดงภาพขนาดไม่น้อยกว่า 23 นิ้ว)",
+    "unitPrice": 26000,
+    "unit": "เครื่อง",
+    "documentPage": 4,
+    "specSummary": "CPU ไม่น้อยกว่า 6 cores, RAM ไม่น้อยกว่า 16GB DDR5, SSD M.2 NVMe ไม่น้อยกว่า 500GB, จอไม่น้อยกว่า 23 นิ้ว Full HD/QHD"
+  },
+  {
+    "source": "DE_MINISTRY",
+    "sourceEdition": "เกณฑ์ราคากลางและคุณลักษณะพื้นฐานครุภัณฑ์คอมพิวเตอร์ (พฤษภาคม 2569)",
+    "category": "ครุภัณฑ์คอมพิวเตอร์",
+    "itemCode": "2.2",
+    "standardName": "เครื่องคอมพิวเตอร์ สำหรับงานประมวลผล แบบที่ 2 *(จอแสดงภาพขนาดไม่น้อยกว่า 23 นิ้ว พร้อมการ์ดจอแยก)",
+    "unitPrice": 33000,
+    "unit": "เครื่อง",
+    "documentPage": 5,
+    "specSummary": "CPU ไม่น้อยกว่า 8 cores, RAM ไม่น้อยกว่า 16GB DDR5, SSD M.2 NVMe ไม่น้อยกว่า 500GB, GPU แยก VRAM ไม่น้อยกว่า 4GB"
+  },
+  {
+    "source": "DE_MINISTRY",
+    "sourceEdition": "เกณฑ์ราคากลางและคุณลักษณะพื้นฐานครุภัณฑ์คอมพิวเตอร์ (พฤษภาคม 2569)",
+    "category": "ครุภัณฑ์คอมพิวเตอร์",
+    "itemCode": "3.1",
+    "standardName": "เครื่องคอมพิวเตอร์พกพา (Notebook) สำหรับงานสำนักงาน",
+    "unitPrice": 21000,
+    "unit": "เครื่อง",
+    "documentPage": 7,
+    "specSummary": "CPU ไม่น้อยกว่า 4 cores, RAM ไม่น้อยกว่า 16GB, SSD M.2 ไม่น้อยกว่า 500GB, หน้าจอขนาดไม่น้อยกว่า 14 นิ้ว น้ำหนักไม่เกิน 1.6 กก."
+  },
+  {
+    "source": "DE_MINISTRY",
+    "sourceEdition": "เกณฑ์ราคากลางและคุณลักษณะพื้นฐานครุภัณฑ์คอมพิวเตอร์ (พฤษภาคม 2569)",
+    "category": "ครุภัณฑ์คอมพิวเตอร์",
+    "itemCode": "3.2",
+    "standardName": "เครื่องคอมพิวเตอร์พกพา (Notebook) สำหรับงานประมวลผล",
+    "unitPrice": 38000,
+    "unit": "เครื่อง",
+    "documentPage": 8,
+    "specSummary": "CPU ไม่น้อยกว่า 8 cores, RAM ไม่น้อยกว่า 16GB DDR5, SSD NVMe ไม่น้อยกว่า 512GB, GPU แยก VRAM ไม่น้อยกว่า 6GB"
+  },
+  {
+    "source": "BUDGET_BUREAU",
+    "sourceEdition": "บัญชีราคามาตรฐานครุภัณฑ์ สำนักงบประมาณ (เมษายน 2569)",
+    "category": "ครุภัณฑ์วิทยาศาสตร์",
+    "itemCode": "4.12",
+    "standardName": "เครื่องปั่นเหวี่ยงตกตะกอนควบคุมอุณหภูมิ (Refrigerated Centrifuge)",
+    "unitPrice": 350000,
+    "unit": "เครื่อง",
+    "documentPage": 45,
+    "specSummary": "ความเร็วรอบไม่น้อยกว่า 15,000 RPM, ควบคุมอุณหภูมิได้ในช่วง -10 ถึง +40 องศาเซลเซียส พร้อมหัวปั่นสำหรับหลอดทดลอง"
+  },
+  {
+    "source": "BUDGET_BUREAU",
+    "sourceEdition": "บัญชีราคามาตรฐานครุภัณฑ์ สำนักงบประมาณ (เมษายน 2569)",
+    "category": "ครุภัณฑ์วิทยาศาสตร์",
+    "itemCode": "4.18",
+    "standardName": "เครื่องวัดการดูดกลืนแสงแบบยูวี-วิสิเบิล (UV-Vis Spectrophotometer)",
+    "unitPrice": 280000,
+    "unit": "เครื่อง",
+    "documentPage": 52,
+    "specSummary": "ช่วงความยาวคลื่น 190 - 1,100 nm, Double beam optics, จอสัมผัสและพอร์ต USB/LAN"
+  },
+  {
+    "source": "KKU_STANDARD",
+    "sourceEdition": "แนวทางราคากลางครุภัณฑ์ มหาวิทยาลัยขอนแก่น (2569)",
+    "category": "ครุภัณฑ์การศึกษาและห้องปฏิบัติการ",
+    "itemCode": "KKU-AV-01",
+    "standardName": "จอสัมผัสอัจฉริยะเพื่อการเรียนการสอน (Interactive Smart Display 75 นิ้ว)",
+    "unitPrice": 95000,
+    "unit": "เครื่อง",
+    "documentPage": 12,
+    "specSummary": "จอแสดงผลขนาด 75 นิ้ว 4K UHD พร้อมกล้อง 4K และไมโครโฟนอาร์เรย์ในตัว รองรับ Wireless Casting 4 หน้าจอพร้อมกัน"
+  },
+  {
+    "source": "HISTORICAL",
+    "sourceEdition": "ประวัติการจัดซื้อจริง มหาวิทยาลัยขอนแก่น (ปีงบประมาณ 2567-2568)",
+    "category": "ครุภัณฑ์คอมพิวเตอร์สมรรถนะสูง",
+    "itemCode": "HIST-DS-01",
+    "standardName": "เครื่องคอมพิวเตอร์เวิร์กสเตชันสำหรับการคำนวณและปัญญาประดิษฐ์ (AI Workstation)",
+    "unitPrice": 50000,
+    "unit": "เครื่อง",
+    "documentPage": 1,
+    "specSummary": "CPU 14-24 cores, RAM 64GB DDR5, SSD 2TB NVMe PCIe 4.0, GPU Nvidia RTX 4070/4080 12-16GB VRAM หรือเทียบเท่า"
+  }
+]
