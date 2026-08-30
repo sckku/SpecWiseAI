@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
+import { Sarabun } from "next/font/google";
 import "./globals.css";
 import { AppLayout } from "@/components/layout/AppLayout";
+
+const sarabun = Sarabun({
+  subsets: ["thai", "latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+  variable: "--font-sarabun",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "SpecWise AI — ผู้ช่วยวิเคราะห์คำของบประมาณและสเปกครุภัณฑ์ มหาวิทยาลัยขอนแก่น",
@@ -14,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th">
-      <body className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans antialiased">
+    <html lang="th" className={sarabun.variable}>
+      <body className={`${sarabun.className} min-h-screen bg-[#F8FAFC] text-slate-900 font-sans antialiased`}>
         <AppLayout>{children}</AppLayout>
       </body>
     </html>

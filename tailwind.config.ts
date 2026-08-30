@@ -47,8 +47,10 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
+          "var(--font-sarabun)",
           "'Sarabun'",
-          "'Prompt'",
+          "'TH Sarabun New'",
+          "'THSarabunNew'",
           "system-ui",
           "-apple-system",
           "BlinkMacSystemFont",
@@ -57,10 +59,19 @@ const config: Config = {
           "sans-serif",
         ],
         heading: [
-          "'Prompt'",
+          "var(--font-sarabun)",
           "'Sarabun'",
+          "'TH Sarabun New'",
+          "'THSarabunNew'",
           "system-ui",
           "-apple-system",
+          "sans-serif",
+        ],
+        sarabun: [
+          "var(--font-sarabun)",
+          "'Sarabun'",
+          "'TH Sarabun New'",
+          "'THSarabunNew'",
           "sans-serif",
         ],
       },
