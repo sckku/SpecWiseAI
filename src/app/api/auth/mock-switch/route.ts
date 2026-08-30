@@ -47,24 +47,29 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  if (!isMockAuthEnabled()) {
-    return mockDisabled();
+  try {
+    if (!isMockAuthEnabled()) {
+      return mockDisabled();
+    }
+
+    const roleCookie = req.cookies.get("specwise_session_role")?.value?.toLowerCase() || "requester";
+    const currentUser = MOCK_USERS[roleCookie] || MOCK_USERS.requester;
+
+    const primaryKeys = ["requester", "requester_cs2", "requester_chem", "plan_admin", "procurement"];
+    const availableRoles = primaryKeys
+      .filter((key) => Boolean(MOCK_USERS[key]))
+      .map((key) => ({
+        key,
+        ...MOCK_USERS[key],
+      }));
+
+    return NextResponse.json({
+      currentRoleKey: roleCookie,
+      currentUser,
+      availableRoles,
+    });
+  } catch (err: any) {
+    console.error("GET mock-switch error:", err);
+    return NextResponse.json({ error: String(err?.message || err) }, { status: 500 });
   }
-
-  const roleCookie = req.cookies.get("specwise_session_role")?.value?.toLowerCase() || "requester";
-  const currentUser = MOCK_USERS[roleCookie] || MOCK_USERS.requester;
-
-  const primaryKeys = ["requester", "requester_cs2", "requester_chem", "plan_admin", "procurement"];
-  const availableRoles = primaryKeys
-    .filter((key) => MOCK_USERS[key])
-    .map((key) => ({
-      key,
-      ...MOCK_USERS[key],
-    }));
-
-  return NextResponse.json({
-    currentRoleKey: roleCookie,
-    currentUser,
-    availableRoles,
-  });
 }
