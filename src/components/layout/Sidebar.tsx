@@ -155,7 +155,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
           <div className="text-xs font-bold text-slate-800">
             AI ช่วยคุณไปแล้ว
           </div>
-          <p className="text-[11px] text-slate-400">ประจำปีงบประมาณ 2569 - 2570</p>
+          <p className="text-[11px] text-slate-400">ประจำปีงบประมาณ 2570</p>
 
           <div className="mt-2">
             <div className="text-2xl font-heading font-bold text-indigo-600 leading-tight">

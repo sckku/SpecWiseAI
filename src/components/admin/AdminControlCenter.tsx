@@ -156,7 +156,7 @@ export function AdminControlCenter() {
             <div className="mt-3 space-y-2 text-sm">
               <div className="p-2.5 rounded-xl border border-rose-100 bg-rose-50/30 flex items-center justify-between">
                 <div>
-                  <span className="font-mono font-bold text-rose-800">PR-2569-0123</span>
+                  <span className="font-mono font-bold text-rose-800">PR-2570-0123</span>
                   <div className="text-slate-500 text-sm">850,000 บาท</div>
                 </div>
                 <span className="text-sm px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold">
@@ -166,7 +166,7 @@ export function AdminControlCenter() {
 
               <div className="p-2.5 rounded-xl border border-amber-100 bg-amber-50/30 flex items-center justify-between">
                 <div>
-                  <span className="font-mono font-bold text-amber-800">PR-2569-0119</span>
+                  <span className="font-mono font-bold text-amber-800">PR-2570-0119</span>
                   <div className="text-slate-500 text-sm">520,000 บาท</div>
                 </div>
                 <span className="text-sm px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">
@@ -176,7 +176,7 @@ export function AdminControlCenter() {
 
               <div className="p-2.5 rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-between">
                 <div>
-                  <span className="font-mono font-bold text-slate-800">PR-2569-0125</span>
+                  <span className="font-mono font-bold text-slate-800">PR-2570-0125</span>
                   <div className="text-slate-500 text-sm">1,250,000 บาท</div>
                 </div>
                 <span className="text-sm px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-bold">
@@ -349,16 +349,16 @@ export function AdminControlCenter() {
             {/* Recent Imported TORs */}
             <div className="mt-3 space-y-1.5 text-sm">
               <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50">
-                <span className="text-slate-800 font-medium">ม.เชียงใหม่ (2569)</span>
-                <span className="text-sm text-slate-400">25 พ.ค. 2569</span>
+                <span className="text-slate-800 font-medium">ม.เชียงใหม่ (2570)</span>
+                <span className="text-sm text-slate-400">25 พ.ค. 2570</span>
               </div>
               <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50">
-                <span className="text-slate-800 font-medium">ม.สงขลานครินทร์ (2569)</span>
-                <span className="text-sm text-slate-400">24 พ.ค. 2569</span>
+                <span className="text-slate-800 font-medium">ม.สงขลานครินทร์ (2570)</span>
+                <span className="text-sm text-slate-400">24 พ.ค. 2570</span>
               </div>
               <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50">
-                <span className="text-slate-800 font-medium">กรมวิชาการเกษตร (2569)</span>
-                <span className="text-sm text-slate-400">23 พ.ค. 2569</span>
+                <span className="text-slate-800 font-medium">กรมวิชาการเกษตร (2570)</span>
+                <span className="text-sm text-slate-400">23 พ.ค. 2570</span>
               </div>
             </div>
           </div>
@@ -454,7 +454,7 @@ export function AdminControlCenter() {
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span>DB: Healthy</span>
           </span>
-          <span>25 พฤษภาคม 2569 14:30</span>
+          <span>25 พฤษภาคม 2570 14:30</span>
         </div>
       </div>
     </div>

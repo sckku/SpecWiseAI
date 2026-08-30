@@ -187,9 +187,9 @@ export async function generateOfficialKKUProposalExcel(proposal: BudgetProposal)
   );
 
   // 7.0 ความพร้อมในการดำเนินการ
-  ws.getCell("C70").value = sanitizeCellString(readiness?.procurementReadiness || "ตุลาคม 2569");
-  ws.getCell("C71").value = sanitizeCellString(readiness?.contractSigning || "ธันวาคม 2569");
-  ws.getCell("C72").value = sanitizeCellString(readiness?.installationDelivery || "มีนาคม 2570");
+  ws.getCell("C70").value = sanitizeCellString(readiness?.procurementReadiness || "ตุลาคม 2570");
+  ws.getCell("C71").value = sanitizeCellString(readiness?.contractSigning || "ธันวาคม 2570");
+  ws.getCell("C72").value = sanitizeCellString(readiness?.installationDelivery || "มีนาคม 2571");
 
   // 8.0 คำชี้แจงรายละเอียด
   // คุณลักษณะทั่วไป

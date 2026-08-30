@@ -26,7 +26,7 @@ metrics.categoryBreakdown.forEach((c) => {
   console.log(`  • ${c.category}: ${c.count} items, Total: ${c.amount.toLocaleString()} THB`);
 });
 
-console.log("\n🔍 Sample Item Check (REQ-2569-001):");
+console.log("\n🔍 Sample Item Check (REQ-2570-001):");
 const item1 = getProposalById("req-001");
 if (item1) {
   console.log(`- Title: ${item1.title}`);
@@ -41,7 +41,7 @@ if (item1) {
   console.log(`- Review Comments Count: ${item1.reviewComments?.length || 0}`);
 }
 
-console.log("\n🔍 Sample Special High-Budget Item Check (REQ-2569-013 FE-SEM 18.5M):");
+console.log("\n🔍 Sample Special High-Budget Item Check (REQ-2570-013 FE-SEM 18.5M):");
 const item13 = getProposalById("req-013");
 if (item13) {
   console.log(`- Title: ${item13.title}`);

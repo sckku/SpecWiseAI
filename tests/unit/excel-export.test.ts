@@ -21,7 +21,7 @@ describe("Excel Export Platform (sample_requestform.xlsx format)", () => {
     expect(ws).toBeDefined();
 
     // Verify Title and Year
-    expect(ws?.getCell("B2").value).toContain("2569");
+    expect(ws?.getCell("B2").value).toContain("2570");
 
     // Verify Basic Info (Section 1)
     expect(ws?.getCell("C5").value).toContain("วิทยาศาสตร์");

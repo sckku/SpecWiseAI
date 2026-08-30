@@ -463,7 +463,7 @@ export function ExecutiveDashboard() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-xs font-bold text-slate-900 truncate">
-                    เกณฑ์มาตรฐานอัปเดต 2569
+                    เกณฑ์มาตรฐานอัปเดต 2570
                   </h4>
                   <div className="flex items-center justify-between mt-0.5">
                     <span className="text-[11px] text-slate-500 truncate">

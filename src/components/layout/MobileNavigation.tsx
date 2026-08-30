@@ -129,7 +129,7 @@ export function MobileNavigation({ currentUser }: MobileNavigationProps) {
             <div className="border-t border-slate-100 p-4">
               <div className="rounded-2xl border border-indigo-100 bg-indigo-50/60 p-4">
                 <div className="flex items-center gap-2 text-sm font-semibold text-slate-800"><Sparkles className="h-4 w-4 text-indigo-600" /> AI ช่วยคุณไปแล้ว</div>
-                 <p className="mt-1 text-sm text-slate-500">ประจำปีงบประมาณ 2569 - 2570</p>
+                 <p className="mt-1 text-sm text-slate-500">ประจำปีงบประมาณ 2570</p>
                  <p className="mt-2 font-heading text-2xl font-bold text-indigo-600">{totalItems.toLocaleString()} <span className="font-sans text-sm font-normal text-slate-500">รายการ</span></p>
                  <p className="mt-2 border-t border-indigo-100 pt-2 text-sm text-slate-500">{currentUser?.thaiName || "ดร.สมชาย แก้วกล้า"}</p>
               </div>

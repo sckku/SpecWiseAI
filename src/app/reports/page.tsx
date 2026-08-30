@@ -43,7 +43,7 @@ export default function ReportsPage() {
     setIsExporting(true);
     setTimeout(() => {
       const csvData = [
-        ["รายงานสรุปภาพรวมคำของบประมาณและดัชนีประสิทธิภาพ SpecWise AI", "ปีงบประมาณ 2569 - 2570"],
+        ["รายงานสรุปภาพรวมคำของบประมาณและดัชนีประสิทธิภาพ SpecWise AI", "ปีงบประมาณ 2570"],
         ["มหาวิทยาลัยขอนแก่น", new Date().toLocaleDateString("th-TH")],
         [],
         ["ตัวชี้วัดหลัก (Key Metrics)", "ค่าที่วัดได้", "เกณฑ์เปรียบเทียบ"],
@@ -170,7 +170,7 @@ export default function ReportsPage() {
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xs space-y-4">
           <h3 className="font-heading font-bold text-sm text-slate-900">
-            สัดส่วนงบประมาณตามกลุ่มครุภัณฑ์ (พ.ศ. 2569 - 2570)
+            สัดส่วนงบประมาณตามกลุ่มครุภัณฑ์ (พ.ศ. 2570)
           </h3>
           <div className="space-y-3 text-xs">
             {metrics?.categoryBreakdown && metrics.categoryBreakdown.length > 0 ? (

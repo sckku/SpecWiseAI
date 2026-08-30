@@ -19,7 +19,7 @@ export interface BudgetProposal {
   requesterName: string;
   requesterEmail: string;
   status: RequestStatus;
-  fiscalYear: number; // e.g. 2569
+  fiscalYear: number; // e.g. 2570
   category: string;
   totalBudgetBaht: number;
   quantity: number;

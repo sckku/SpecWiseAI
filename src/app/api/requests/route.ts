@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     const currentProposals = getProposals();
     const newCount = currentProposals.length + 1;
-    const code = `REQ-2569-${String(newCount).padStart(3, "0")}`;
+    const code = `REQ-2570-${String(newCount).padStart(3, "0")}`;
 
     // Status is server-controlled: every new proposal starts as DRAFT and
     // must move through the workflow state machine (PATCH targetStatus).
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
       requesterName: user.thaiName,
       requesterEmail: user.email,
       status: "DRAFT",
-      fiscalYear: 2569,
+      fiscalYear: 2570,
       category: body.category || "ครุภัณฑ์คอมพิวเตอร์",
       totalBudgetBaht: body.totalBudgetBaht ?? 0,
       quantity: body.quantity ?? 1,

@@ -255,7 +255,7 @@ export function generateOfficialKKUProposalHtml(proposal: BudgetProposal): strin
   <table>
     <tr>
       <td width="25%" class="field-label">เกณฑ์มาตรฐานอ้างอิง:</td>
-      <td width="75%">${e(std?.ref1 || "เกณฑ์ราคากลางกระทรวงดิจิทัลฯ / สำนักงบประมาณ 2569")}</td>
+      <td width="75%">${e(std?.ref1 || "เกณฑ์ราคากลางกระทรวงดิจิทัลฯ / สำนักงบประมาณ 2570")}</td>
     </tr>
     <tr>
       <td class="field-label">ผลการวิเคราะห์ราคา:</td>

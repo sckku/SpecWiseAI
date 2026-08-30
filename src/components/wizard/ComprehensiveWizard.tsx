@@ -1028,7 +1028,7 @@ export function ComprehensiveWizard() {
                   <div>
                     <h3 className="font-heading font-bold text-base text-slate-900 flex items-center space-x-2">
                       <TrendingUp className="w-5 h-5 text-indigo-600" />
-                      <span>แนวโน้มราคาจัดหาครุภัณฑ์ย้อนหลัง 3 ปี (พ.ศ. 2566 - 2569)</span>
+                      <span>แนวโน้มราคาจัดหาครุภัณฑ์ย้อนหลัง 3 ปี (พ.ศ. 2567 - 2570)</span>
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
                       วิเคราะห์เปรียบเทียบระหว่างราคามาตรฐานสำนักงบฯ และราคาจัดหาจริงในระบบ
@@ -1042,7 +1042,7 @@ export function ComprehensiveWizard() {
                 {/* SVG Visual Trend Graph */}
                 <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/70">
                   <div className="h-56 w-full flex items-end justify-between gap-4 pt-6 px-4">
-                    {/* 2566 */}
+                    {/* 2567 */}
                     <div className="flex-1 flex flex-col items-center gap-2">
                       <div className="text-xs font-bold text-slate-700">
                         {Math.round(activeStandardPrice * 0.92).toLocaleString()} ฿
@@ -1051,31 +1051,11 @@ export function ComprehensiveWizard() {
                         <div
                           className="w-1/2 bg-slate-300 rounded-t-lg transition-all"
                           style={{ height: "65%" }}
-                          title="ราคามาตรฐาน 2566"
+                          title="ราคามาตรฐาน 2567"
                         ></div>
                         <div
                           className="w-1/2 bg-indigo-400 rounded-t-lg transition-all"
                           style={{ height: "72%" }}
-                          title="ราคาจัดหาจริง 2566"
-                        ></div>
-                      </div>
-                      <span className="text-xs font-semibold text-slate-600">ปี 2566</span>
-                    </div>
-
-                    {/* 2567 */}
-                    <div className="flex-1 flex flex-col items-center gap-2">
-                      <div className="text-xs font-bold text-slate-700">
-                        {Math.round(activeStandardPrice * 0.96).toLocaleString()} ฿
-                      </div>
-                      <div className="w-full flex items-end justify-center gap-1.5 h-36">
-                        <div
-                          className="w-1/2 bg-slate-300 rounded-t-lg transition-all"
-                          style={{ height: "70%" }}
-                          title="ราคามาตรฐาน 2567"
-                        ></div>
-                        <div
-                          className="w-1/2 bg-indigo-500 rounded-t-lg transition-all"
-                          style={{ height: "78%" }}
                           title="ราคาจัดหาจริง 2567"
                         ></div>
                       </div>
@@ -1085,24 +1065,44 @@ export function ComprehensiveWizard() {
                     {/* 2568 */}
                     <div className="flex-1 flex flex-col items-center gap-2">
                       <div className="text-xs font-bold text-slate-700">
-                        {Math.round(activeStandardPrice * 0.98).toLocaleString()} ฿
+                        {Math.round(activeStandardPrice * 0.96).toLocaleString()} ฿
                       </div>
                       <div className="w-full flex items-end justify-center gap-1.5 h-36">
                         <div
                           className="w-1/2 bg-slate-300 rounded-t-lg transition-all"
-                          style={{ height: "75%" }}
+                          style={{ height: "70%" }}
                           title="ราคามาตรฐาน 2568"
                         ></div>
                         <div
-                          className="w-1/2 bg-indigo-600 rounded-t-lg transition-all"
-                          style={{ height: "82%" }}
+                          className="w-1/2 bg-indigo-500 rounded-t-lg transition-all"
+                          style={{ height: "78%" }}
                           title="ราคาจัดหาจริง 2568"
                         ></div>
                       </div>
                       <span className="text-xs font-semibold text-slate-600">ปี 2568</span>
                     </div>
 
-                    {/* 2569 (Current) */}
+                    {/* 2569 */}
+                    <div className="flex-1 flex flex-col items-center gap-2">
+                      <div className="text-xs font-bold text-slate-700">
+                        {Math.round(activeStandardPrice * 0.98).toLocaleString()} ฿
+                      </div>
+                      <div className="w-full flex items-end justify-center gap-1.5 h-36">
+                        <div
+                          className="w-1/2 bg-slate-300 rounded-t-lg transition-all"
+                          style={{ height: "75%" }}
+                          title="ราคามาตรฐาน 2569"
+                        ></div>
+                        <div
+                          className="w-1/2 bg-indigo-600 rounded-t-lg transition-all"
+                          style={{ height: "82%" }}
+                          title="ราคาจัดหาจริง 2569"
+                        ></div>
+                      </div>
+                      <span className="text-xs font-semibold text-slate-600">ปี 2569</span>
+                    </div>
+
+                    {/* 2570 (Current) */}
                     <div className="flex-1 flex flex-col items-center gap-2">
                       <div className="text-xs font-bold text-indigo-700">
                         {activeStandardPrice.toLocaleString()} ฿
@@ -1111,15 +1111,15 @@ export function ComprehensiveWizard() {
                         <div
                           className="w-1/2 bg-indigo-400 rounded-t-lg transition-all"
                           style={{ height: "85%" }}
-                          title="ราคามาตรฐาน 2569"
+                          title="ราคามาตรฐาน 2570"
                         ></div>
                         <div
                           className="w-1/2 bg-gradient-to-t from-indigo-600 to-purple-600 rounded-t-lg transition-all shadow-sm"
                           style={{ height: "92%" }}
-                          title="ราคาที่ขอเสนอ 2569"
+                          title="ราคาที่ขอเสนอ 2570"
                         ></div>
                       </div>
-                      <span className="text-xs font-bold text-indigo-700">ปี 2569 (ปัจจุบัน)</span>
+                      <span className="text-xs font-bold text-indigo-700">ปี 2570 (ปัจจุบัน)</span>
                     </div>
                   </div>
 
@@ -1772,7 +1772,7 @@ export function ComprehensiveWizard() {
             <div className="p-6 overflow-y-auto space-y-4 text-sm font-sans leading-relaxed text-slate-800">
               <div className="text-center pb-4 border-b border-slate-200">
                 <div className="font-bold text-base text-slate-900">
-                  แบบฟอร์มข้อเสนอโครงการจัดหาครุภัณฑ์ ประจำปีงบประมาณ พ.ศ. 2569
+                  แบบฟอร์มข้อเสนอโครงการจัดหาครุภัณฑ์ ประจำปีงบประมาณ พ.ศ. 2570
                 </div>
                 <div className="text-xs text-slate-500 mt-1">
                   มหาวิทยาลัยขอนแก่น (Khon Kaen University)
