@@ -21,6 +21,12 @@ ENV NODE_ENV=production
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
+# Keep Prisma's schema and seed sources in the runtime image so operators can
+# run the documented database setup commands against the production container.
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/tsconfig.json ./
 
 EXPOSE 8999
 

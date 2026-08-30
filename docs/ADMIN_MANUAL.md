@@ -181,6 +181,17 @@ pnpm run db:push
 pnpm run db:seed
 ```
 
+สำหรับ UAT/production ที่รันด้วย Docker Compose ให้รันคำสั่งจากภายใน
+application container หลังจาก `docker compose up -d` และฐานข้อมูลพร้อมใช้งาน:
+```bash
+# ซิงค์ Schema และนำเข้าข้อมูลแคตตาล็อกมาตรฐาน
+docker compose exec app pnpm run db:push
+docker compose exec app pnpm run db:seed
+
+# นำเข้าชุดข้อมูลคำของบประมาณตัวอย่าง 40 รายการเพิ่มเติม (สำหรับ UAT เท่านั้น)
+docker compose exec app pnpm run db:seed:proposals
+```
+
 ### 9.3 การทดสอบระบบอัตโนมัติ (Automated Testing)
 ```bash
 # รัน Unit Tests & Integration Tests ทั้งหมด

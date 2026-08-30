@@ -23,9 +23,28 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // Browser pages require a real SSONext session in production. Redirecting
+  // before client components mount prevents their protected API calls from
+  // failing with 401 and leaving the dashboard empty.
+  const { pathname, search } = request.nextUrl;
+  const isPublicPage =
+    pathname === "/login" ||
+    pathname === "/403" ||
+    pathname.startsWith("/errors");
+
+  if (
+    !isMockAuth &&
+    !isPublicPage &&
+    !request.cookies.has("specwise_user_session")
+  ) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("returnUrl", `${pathname}${search}`);
+    return NextResponse.redirect(loginUrl);
+  }
+
   return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
