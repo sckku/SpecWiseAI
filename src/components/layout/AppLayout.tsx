@@ -57,22 +57,28 @@ export function AppLayout({ children }: AppLayoutProps) {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
+    <div className="flex min-h-screen bg-[#F8FAFC] print:bg-white print:min-h-0 print:block">
       {/* Fixed Left Sidebar */}
-      <Sidebar currentUser={currentUser} />
+      <div className="print:hidden">
+        <Sidebar currentUser={currentUser} />
+      </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <TopHeader
-          currentUser={currentUser}
-          onRoleChange={handleRoleChange}
-          isLoading={isLoading}
-        />
-        <main className="mx-auto w-full max-w-7xl flex-1 overflow-x-hidden px-4 py-4 pb-24 sm:px-6 sm:py-6 sm:pb-24 md:p-6 md:pb-6 xl:p-8 xl:pb-8">
+      <div className="flex-1 flex flex-col min-w-0 print:block print:w-full">
+        <div className="print:hidden">
+          <TopHeader
+            currentUser={currentUser}
+            onRoleChange={handleRoleChange}
+            isLoading={isLoading}
+          />
+        </div>
+        <main className="mx-auto w-full max-w-7xl flex-1 overflow-x-hidden px-4 py-4 pb-24 sm:px-6 sm:py-6 sm:pb-24 md:p-6 md:pb-6 xl:p-8 xl:pb-8 print:p-0 print:m-0 print:max-w-none print:overflow-visible">
           {children}
         </main>
       </div>
-      <MobileNavigation currentUser={currentUser} />
+      <div className="print:hidden">
+        <MobileNavigation currentUser={currentUser} />
+      </div>
     </div>
   );
 }
