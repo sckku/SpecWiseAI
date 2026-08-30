@@ -24,7 +24,11 @@ export function canTransition(
     };
   }
 
-  if (!rule.allowedRoles.includes(userRole) && userRole !== "ADMIN") {
+  if (
+    !rule.allowedRoles.includes(userRole) &&
+    userRole !== "ADMIN" &&
+    userRole !== "PLAN_ADMIN"
+  ) {
     return {
       allowed: false,
       message: `สิทธิ์ของคุณ (${userRole}) ไม่สามารถดำเนินการขั้นตอนนี้ได้ ต้องเป็น ${rule.allowedRoles.join(", ")}`,

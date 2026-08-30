@@ -13,10 +13,10 @@ import { z } from "zod";
 
 // Actions that change the review trail require elevated roles.
 const ACTION_ROLE_MAP: Record<string, string[]> = {
-  COMMENT: ["REQUESTER", "DEPT_VERIFIER", "APPROVER", "ADMIN"],
-  REQUEST_CHANGE: ["DEPT_VERIFIER", "APPROVER", "ADMIN"],
-  APPROVE: ["APPROVER", "ADMIN"],
-  REJECT: ["APPROVER", "ADMIN"],
+  COMMENT: ["REQUESTER", "PLAN_ADMIN", "FINANCE_PROCUREMENT", "ADMIN", "APPROVER", "DEPT_VERIFIER"],
+  REQUEST_CHANGE: ["PLAN_ADMIN", "FINANCE_PROCUREMENT", "ADMIN", "APPROVER", "DEPT_VERIFIER"],
+  APPROVE: ["PLAN_ADMIN", "ADMIN", "APPROVER"],
+  REJECT: ["PLAN_ADMIN", "ADMIN", "APPROVER"],
 };
 
 export async function POST(
@@ -32,10 +32,14 @@ export async function POST(
       return NextResponse.json({ error: "ไม่พบคำของบประมาณ" }, { status: 404 });
     }
 
-    // Requesters may only comment on their own submissions.
-    if (user.role === "REQUESTER" && proposal.requesterId !== user.id) {
+    // Requesters may comment on their own submissions or those in their department.
+    if (
+      user.role === "REQUESTER" &&
+      proposal.department !== user.department &&
+      proposal.requesterId !== user.id
+    ) {
       return NextResponse.json(
-        { error: "คุณไม่มีสิทธิ์แสดงความคิดเห็นในคำของบประมาณนี้" },
+        { error: "คุณไม่มีสิทธิ์แสดงความคิดเห็นในคำของบประมาณของหน่วยงานอื่น" },
         { status: 403 }
       );
     }

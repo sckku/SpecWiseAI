@@ -78,8 +78,8 @@ export default function ForbiddenPage() {
           คุณไม่มีสิทธิ์เข้าถึงส่วนงานหรือหน้าที่ระบุ
         </h1>
         <p className="mb-8 text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl mx-auto">
-          หน้านี้สงวนสิทธิ์เฉพาะผู้ใช้งานที่มีบทบาทตามที่กำหนดในระบบ เช่น ผู้ตรวจสอบภาควิชา (Dept Verifier),
-          ผู้อนุมัติระดับคณะ (Approver) หรือผู้ดูแลระบบ (Admin)
+          หน้านี้สงวนสิทธิ์เฉพาะผู้ใช้งานที่มีบทบาทตามที่กำหนดในระบบ เช่น แอดมินงานแผนและยุทธศาสตร์ (Plan Admin),
+          งานคลังและพัสดุ (Finance & Procurement) หรือเจ้าของคำขอที่สังกัดในหน่วยงานเดียวกัน
         </p>
 
         {/* Current Active Role Box */}

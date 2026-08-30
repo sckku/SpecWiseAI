@@ -273,8 +273,8 @@ describe("KKU Employee API v3 Integration Client (Postman Collection)", () => {
     const byId = await client.queryEmployee({ id: "emp-001" });
     expect(byId?.email).toBe("somchai.k@kku.ac.th");
 
-    const byEmail = await client.queryEmployee({ email: "verifier.sci@kku.ac.th" });
-    expect(byEmail?.departmentName).toBe("งานแผนและนโยบาย");
+    const byEmail = await client.queryEmployee({ email: "procurement.kku@kku.ac.th" });
+    expect(byEmail?.departmentName).toBe("งานบริหารพัสดุและทรัพย์สิน");
 
     const byName = await client.queryEmployee({
       firstname: "Somchai",
@@ -290,10 +290,10 @@ describe("KKU Employee API v3 Integration Client (Postman Collection)", () => {
     expect(token).toBe("mock-employee-bearer-token");
 
     const emp = await mockClient.getEmployeeById("emp-003");
-    expect(emp?.positionName).toBe("คณบดีคณะวิทยาศาสตร์");
-    expect(emp?.facultyName).toBe("คณะวิทยาศาสตร์");
+    expect(emp?.positionName).toBe("นักวิเคราะห์นโยบายและแผน ชำนาญการพิเศษ");
+    expect(emp?.facultyName).toBe("กองแผนงาน");
 
-    const byEmail = await mockClient.getEmployeeByEmail("admin.procure@kku.ac.th");
+    const byEmail = await mockClient.getEmployeeByEmail("procurement.kku@kku.ac.th");
     expect(byEmail?.facultyName).toBe("กองคลังและพัสดุ");
   });
 
@@ -301,8 +301,8 @@ describe("KKU Employee API v3 Integration Client (Postman Collection)", () => {
     const profileEmail = await fetchKKUEmployeeProfile("somchai.k@kku.ac.th");
     expect(profileEmail?.thaiFullName).toBe("ดร.สมชาย แก้วกล้า");
 
-    const profileId = await fetchKKUEmployeeProfile("emp-002");
-    expect(profileId?.departmentName).toBe("งานแผนและนโยบาย");
+    const profileId = await fetchKKUEmployeeProfile("emp-003");
+    expect(profileId?.departmentName).toBe("งานแผนและยุทธศาสตร์");
 
     const profileDirect = await fetchEmployeeById("emp-001");
     expect(profileDirect?.email).toBe("somchai.k@kku.ac.th");

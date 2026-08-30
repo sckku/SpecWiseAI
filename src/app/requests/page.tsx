@@ -12,14 +12,34 @@ import {
   Cpu,
   Layers,
   FileSpreadsheet,
+  Building2,
+  Users,
+  ShieldCheck,
+  User,
+  Sparkles,
+  Info,
 } from "lucide-react";
 import { BudgetProposal, RequestStatus } from "@/types/budget";
+import { KKUUserSession } from "@/types/auth";
 
 export default function RequestsPage() {
   const [proposals, setProposals] = useState<BudgetProposal[]>([]);
+  const [currentUser, setCurrentUser] = useState<KKUUserSession | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch current user role and session
+    fetch("/api/auth/mock-switch")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.currentUser) {
+          setCurrentUser(data.currentUser);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -44,6 +64,8 @@ export default function RequestsPage() {
         return "bg-amber-50 text-amber-700 border-amber-200";
       case "REVISED":
         return "bg-rose-50 text-rose-700 border-rose-200";
+      case "REJECTED":
+        return "bg-slate-100 text-slate-700 border-slate-300";
       default:
         return "bg-slate-50 text-slate-700 border-slate-200";
     }
@@ -54,17 +76,23 @@ export default function RequestsPage() {
       case "APPROVED":
         return "อนุมัติบรรจุแผน";
       case "SUBMITTED":
-        return "ส่งระดับคณะแล้ว";
+        return "ส่งงานแผนฯ แล้ว";
       case "DEPT_REVIEW":
         return "รอตรวจระดับภาควิชา";
       case "AI_ANALYZED":
         return "AI วิเคราะห์แล้ว";
       case "REVISED":
         return "ส่งกลับแก้ไข";
+      case "REJECTED":
+        return "ไม่อนุมัติ";
       default:
         return "แบบร่าง (Draft)";
     }
   };
+
+  const isPlanAdmin = currentUser?.role === "PLAN_ADMIN" || currentUser?.role === "ADMIN" || currentUser?.role === "APPROVER";
+  const isProcurement = currentUser?.role === "FINANCE_PROCUREMENT" || currentUser?.role === "DEPT_VERIFIER";
+  const isRequester = currentUser?.role === "REQUESTER" || !currentUser?.role;
 
   const filteredProposals = proposals.filter((p) => {
     if (!searchQuery.trim()) return true;
@@ -72,7 +100,8 @@ export default function RequestsPage() {
     return (
       p.title.toLowerCase().includes(q) ||
       p.code.toLowerCase().includes(q) ||
-      p.department.toLowerCase().includes(q)
+      p.department.toLowerCase().includes(q) ||
+      p.requesterName.toLowerCase().includes(q)
     );
   });
 
@@ -85,7 +114,7 @@ export default function RequestsPage() {
             คำของบประมาณครุภัณฑ์
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">
-            จัดการ ติดตามสถานะ และตรวจสอบคำของบประมาณครุภัณฑ์ทั้งหมด
+            จัดการ ติดตามสถานะ และตรวจสอบคำของบประมาณครุภัณฑ์
           </p>
         </div>
 
@@ -98,6 +127,49 @@ export default function RequestsPage() {
         </Link>
       </div>
 
+      {/* Scope / Visibility Notification Banner */}
+      {currentUser && (
+        <div
+          className={`rounded-2xl p-4 border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs sm:text-sm ${
+            isPlanAdmin
+              ? "bg-purple-50/80 border-purple-200 text-purple-900"
+              : isProcurement
+              ? "bg-blue-50/80 border-blue-200 text-blue-900"
+              : "bg-emerald-50/80 border-emerald-200 text-emerald-900"
+          }`}
+        >
+          <div className="flex items-center space-x-2.5">
+            {isPlanAdmin ? (
+              <Building2 className="w-5 h-5 text-purple-600 shrink-0" />
+            ) : isProcurement ? (
+              <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0" />
+            ) : (
+              <Users className="w-5 h-5 text-emerald-600 shrink-0" />
+            )}
+            <div>
+              <span className="font-bold">
+                {isPlanAdmin
+                  ? "แอดมิน (งานแผนและยุทธศาสตร์)"
+                  : isProcurement
+                  ? "งานคลังและพัสดุ มหาวิทยาลัยขอนแก่น"
+                  : `ขอบเขตข้อมูลหน่วยงาน: ${currentUser.department || "สาขาวิชาเคมี"}`}
+              </span>
+              <span className="text-slate-600 block sm:inline sm:ml-2 text-xs">
+                {isPlanAdmin
+                  ? "แสดงคำของบประมาณทั้งหมด ทุกหน่วยงานในมหาวิทยาลัย (พร้อมสิทธิ์พิจารณาอนุมัติ/ส่งกลับแก้ไข)"
+                  : isProcurement
+                  ? "แสดงคำของบประมาณทั้งหมด ทุกหน่วยงานในมหาวิทยาลัย (สำหรับตรวจสอบราคากลาง 4 ฐานและสเปก)"
+                  : "บุคลากรหน่วยงานเดียวกันสามารถดูข้อมูลคำขอของกันและกันได้ เพื่อใช้อ้างอิงและตรวจสอบ"}
+              </span>
+            </div>
+          </div>
+
+          <div className="shrink-0 font-semibold px-2.5 py-1 rounded-full bg-white/80 border border-slate-200 text-slate-700 text-xs shadow-2xs">
+            พบ {filteredProposals.length} รายการ
+          </div>
+        </div>
+      )}
+
       {/* Filter & Search Bar */}
       <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-xs flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
         <div className="relative flex-1">
@@ -106,7 +178,7 @@ export default function RequestsPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="ค้นหาชื่อคำขอ, รหัส, หน่วยงาน..."
+            placeholder="ค้นหาชื่อคำขอ, รหัส, ผู้ขอ, หรือหน่วยงาน..."
             className="w-full text-sm pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
           />
         </div>
@@ -120,7 +192,7 @@ export default function RequestsPage() {
           <option value="DRAFT">แบบร่าง (Draft)</option>
           <option value="AI_ANALYZED">AI วิเคราะห์แล้ว</option>
           <option value="DEPT_REVIEW">รอตรวจระดับภาควิชา</option>
-          <option value="SUBMITTED">ส่งระดับคณะแล้ว</option>
+          <option value="SUBMITTED">ส่งงานแผนฯ แล้ว</option>
           <option value="REVISED">ส่งกลับแก้ไข</option>
           <option value="APPROVED">อนุมัติบรรจุแผน</option>
           <option value="REJECTED">ไม่อนุมัติ</option>
@@ -130,13 +202,15 @@ export default function RequestsPage() {
       {/* Proposals List Table */}
       <div className="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <p className="border-b border-slate-100 px-4 py-2 text-sm text-slate-400 sm:hidden">เลื่อนตารางไปด้านข้างเพื่อดูข้อมูลเพิ่มเติม</p>
-          <table className="w-full min-w-[760px] text-left text-sm">
-            <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-500 font-semibold uppercase text-sm">
+          <p className="border-b border-slate-100 px-4 py-2 text-sm text-slate-400 sm:hidden">
+            เลื่อนตารางไปด้านข้างเพื่อดูข้อมูลเพิ่มเติม
+          </p>
+          <table className="w-full min-w-[800px] text-left text-sm">
+            <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-500 font-semibold uppercase text-xs">
               <tr>
                 <th className="py-3.5 px-5">รหัสคำขอ</th>
                 <th className="py-3.5 px-5">ชื่อรายการครุภัณฑ์</th>
-                <th className="py-3.5 px-5">หน่วยงาน / ส่วนงาน</th>
+                <th className="py-3.5 px-5">ผู้ขอ / หน่วยงาน</th>
                 <th className="py-3.5 px-5 text-right">วงเงินรวม</th>
                 <th className="py-3.5 px-5 text-center">สถานะ</th>
                 <th className="py-3.5 px-5 text-right">การจัดการ</th>
@@ -146,59 +220,78 @@ export default function RequestsPage() {
               {filteredProposals.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="py-12 text-center text-slate-400">
-                    ไม่พบรายการคำของบประมาณ
+                    ไม่พบรายการคำของบประมาณในขอบเขตการมองเห็นของคุณ
                   </td>
                 </tr>
               ) : (
-                filteredProposals.map((prop) => (
-                  <tr key={prop.id} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="py-4 px-5 font-mono font-bold text-indigo-700">
-                      {prop.code}
-                    </td>
-                    <td className="py-4 px-5">
-                      <div className="font-semibold text-slate-900">{prop.title}</div>
-                      <div className="text-sm text-slate-400 mt-0.5">
-                        {prop.quantity} {prop.unit} ({Number(prop.unitPriceBaht).toLocaleString()} ฿/{prop.unit})
-                      </div>
-                    </td>
-                    <td className="py-4 px-5">
-                      <div className="text-slate-800 font-medium">{prop.department}</div>
-                      <div className="text-sm text-slate-400">{prop.faculty}</div>
-                    </td>
-                    <td className="py-4 px-5 text-right font-heading font-bold text-slate-900">
-                      {Number(prop.totalBudgetBaht).toLocaleString()} ฿
-                    </td>
-                    <td className="py-4 px-5 text-center">
-                      <span
-                        className={`inline-block text-sm px-2.5 py-1 rounded-full border font-semibold ${statusBadge(
-                          prop.status
-                        )}`}
-                      >
-                        {statusLabelTh(prop.status)}
-                      </span>
-                    </td>
-                    <td className="py-4 px-5 text-right">
-                      <div className="inline-flex items-center space-x-1.5">
-                        <a
-                          href={`/api/requests/${prop.id}/export-excel`}
-                          download={`KKU_RequestForm_${prop.code}.xlsx`}
-                          title="ดาวน์โหลด Excel (ฟอร์ม มข.)"
-                          className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-sm transition-colors"
+                filteredProposals.map((prop) => {
+                  const isOwner = currentUser?.id === prop.requesterId;
+                  const isSameDeptColleague = isRequester && !isOwner && prop.department === currentUser?.department;
+
+                  return (
+                    <tr key={prop.id} className="hover:bg-slate-50/70 transition-colors">
+                      <td className="py-4 px-5 font-mono font-bold text-indigo-700">
+                        {prop.code}
+                      </td>
+                      <td className="py-4 px-5">
+                        <div className="font-semibold text-slate-900 flex items-center space-x-2">
+                          <span>{prop.title}</span>
+                          {isOwner && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                              คำขอของฉัน
+                            </span>
+                          )}
+                          {isSameDeptColleague && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              สาขาเดียวกัน
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-xs text-slate-400 mt-0.5">
+                          {prop.quantity} {prop.unit} ({Number(prop.unitPriceBaht).toLocaleString()} ฿/{prop.unit})
+                        </div>
+                      </td>
+                      <td className="py-4 px-5">
+                        <div className="text-slate-800 font-medium">{prop.requesterName}</div>
+                        <div className="text-xs text-slate-400">
+                          {prop.department} • {prop.faculty}
+                        </div>
+                      </td>
+                      <td className="py-4 px-5 text-right font-heading font-bold text-slate-900">
+                        {Number(prop.totalBudgetBaht).toLocaleString()} ฿
+                      </td>
+                      <td className="py-4 px-5 text-center">
+                        <span
+                          className={`inline-block text-xs px-2.5 py-1 rounded-full border font-semibold ${statusBadge(
+                            prop.status
+                          )}`}
                         >
-                          <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
-                          <span className="hidden md:inline">Excel</span>
-                        </a>
-                        <Link
-                          href={`/requests/${prop.id}`}
-                          className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-sm transition-colors"
-                        >
-                          <span>เปิดดู</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                          {statusLabelTh(prop.status)}
+                        </span>
+                      </td>
+                      <td className="py-4 px-5 text-right">
+                        <div className="inline-flex items-center space-x-1.5">
+                          <a
+                            href={`/api/requests/${prop.id}/export-excel`}
+                            download={`KKU_RequestForm_${prop.code}.xlsx`}
+                            title="ดาวน์โหลด Excel (ฟอร์ม มข.)"
+                            className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs transition-colors"
+                          >
+                            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="hidden md:inline">Excel</span>
+                          </a>
+                          <Link
+                            href={`/requests/${prop.id}`}
+                            className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition-colors"
+                          >
+                            <span>เปิดดู</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>

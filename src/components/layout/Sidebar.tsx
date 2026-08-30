@@ -36,15 +36,18 @@ export function Sidebar({ currentUser }: SidebarProps) {
       .catch((err) => console.error("Sidebar metrics fetch error:", err));
   }, [pathname]);
 
+  const isPlanAdmin = currentUser?.role === "PLAN_ADMIN" || currentUser?.role === "ADMIN" || currentUser?.role === "APPROVER";
+  const isProcurement = currentUser?.role === "FINANCE_PROCUREMENT" || currentUser?.role === "DEPT_VERIFIER";
+
   const navItems = [
     {
-      label: "หน้าหลัก (แดชบอร์ด)",
+      label: isPlanAdmin ? "แดชบอร์ดแผนงาน" : isProcurement ? "แดชบอร์ดพัสดุ" : "หน้าหลัก (แดชบอร์ด)",
       href: "/dashboard",
       icon: LayoutDashboard,
       active: pathname === "/dashboard",
     },
     {
-      label: "คำของบประมาณ",
+      label: isPlanAdmin ? "คำขอทั้งหมด / รออนุมัติ" : isProcurement ? "รายการคำขอทั้งหมด" : "คำขอของสาขาวิชา",
       href: "/requests",
       icon: FileText,
       active: pathname.startsWith("/requests") && pathname !== "/requests/new",
@@ -55,12 +58,22 @@ export function Sidebar({ currentUser }: SidebarProps) {
       icon: Layers,
       active: pathname === "/catalogs",
     },
-    {
-      label: "วิเคราะห์และรายงาน",
-      href: "/reports",
-      icon: BarChart3,
-      active: pathname === "/reports",
-    },
+    ...(isPlanAdmin || isProcurement
+      ? [
+          {
+            label: "วิเคราะห์และรายงาน",
+            href: "/reports",
+            icon: BarChart3,
+            active: pathname === "/reports",
+          },
+          {
+            label: isPlanAdmin ? "ศูนย์ควบคุมแอดมิน" : "ศูนย์ควบคุมพัสดุ",
+            href: "/admin",
+            icon: Settings,
+            active: pathname === "/admin",
+          },
+        ]
+      : []),
     {
       label: "คู่มือการใช้งาน",
       href: "/manual",

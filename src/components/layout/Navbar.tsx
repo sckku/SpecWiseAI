@@ -62,10 +62,11 @@ export function Navbar() {
 
   const roleBadgeColor = (role?: UserRole) => {
     switch (role) {
+      case "PLAN_ADMIN":
       case "ADMIN":
-        return "bg-purple-100 text-purple-800 border-purple-200";
       case "APPROVER":
-        return "bg-amber-100 text-amber-800 border-amber-200";
+        return "bg-purple-100 text-purple-800 border-purple-200";
+      case "FINANCE_PROCUREMENT":
       case "DEPT_VERIFIER":
         return "bg-blue-100 text-blue-800 border-blue-200";
       default:
@@ -75,14 +76,17 @@ export function Navbar() {
 
   const roleLabel = (role?: UserRole) => {
     switch (role) {
+      case "PLAN_ADMIN":
       case "ADMIN":
-        return "ผู้ดูแลระบบ (Admin)";
+        return "แอดมิน (งานแผนและยุทธศาสตร์)";
+      case "FINANCE_PROCUREMENT":
+        return "งานคลังและพัสดุ";
       case "APPROVER":
-        return "ผู้อนุมัติระดับคณะ (Approver)";
+        return "ผู้อนุมัติ (งานแผนฯ)";
       case "DEPT_VERIFIER":
-        return "ผู้ตรวจระดับภาควิชา (Verifier)";
+        return "ผู้ตรวจภาควิชา";
       default:
-        return "ผู้ขอตั้งงบประมาณ (Requester)";
+        return "ผู้ใช้งาน (สาขาวิชา)";
     }
   };
 
@@ -177,72 +181,92 @@ export function Navbar() {
 
               {/* Dropdown Menu for Role Switching */}
               {isRoleMenuOpen && (
-                <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2">
-                  <div className="px-3 py-2 border-b border-slate-100">
-                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">
+                <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2">
+                  <div className="px-3.5 py-2 border-b border-slate-100">
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">
                       สลับบทบาททดสอบ (Mock Auth)
                     </p>
-                    <p className="text-sm text-slate-400">
-                      จำลองการใช้งานสิทธิ์ตามระบบ KKU SSONext
+                    <p className="text-xs text-slate-400">
+                      ทดสอบการมองเห็นข้อมูลและสิทธิ์ตามบทบาทใน มข.
                     </p>
                   </div>
 
+                  {/* 1. ดร.สมชาย - ผู้ใช้งาน (สาขาวิชาเคมี) */}
                   <button
                     onClick={() => handleRoleSwitch("requester")}
-                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-sm transition-colors"
+                    className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors"
                   >
-                    <UserCheck className="w-4 h-4 text-emerald-600 mt-0.5" />
+                    <UserCheck className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
                     <div>
                       <div className="font-semibold text-slate-800">
-                        ดร.สมชาย (ผู้ขอตั้งงบ)
+                        ดร.สมชาย แก้วกล้า (ผู้ใช้งาน 1)
                       </div>
-                      <div className="text-sm text-slate-500">
-                        อาจารย์/นักวิจัย สาขาวิชาวิทยาการคอมฯ
+                      <div className="text-[11px] text-slate-500">
+                        สาขาวิชาเคมี คณะวิทยาศาสตร์
                       </div>
                     </div>
                   </button>
 
+                  {/* 2. ผศ.ดร.วิภาดา - ผู้ใช้งาน (สาขาวิชาเคมี สาขาเดียวกัน) */}
                   <button
-                    onClick={() => handleRoleSwitch("verifier")}
-                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-sm transition-colors"
+                    onClick={() => handleRoleSwitch("requester_cs2")}
+                    className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors"
                   >
-                    <ShieldCheck className="w-4 h-4 text-blue-600 mt-0.5" />
+                    <UserCheck className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
                     <div>
                       <div className="font-semibold text-slate-800">
-                        นายประเสริฐ (ผู้ตรวจภาควิชา)
+                        ผศ.ดร.วิภาดา สมบูรณ์ (ผู้ใช้งาน 2 - สาขาเดียวกัน)
                       </div>
-                      <div className="text-sm text-slate-500">
-                        เจ้าหน้าที่งานแผนและนโยบาย ภาควิชา
+                      <div className="text-[11px] text-slate-500">
+                        สาขาวิชาเคมี (เห็นคำขอในสาขาเดียวกัน)
                       </div>
                     </div>
                   </button>
 
+                  {/* 3. รศ.ดร.อนันต์ - ผู้ใช้งาน (สาขาวิชาฟิสิกส์ ต่างสาขา) */}
                   <button
-                    onClick={() => handleRoleSwitch("approver")}
-                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-sm transition-colors"
+                    onClick={() => handleRoleSwitch("requester_chem")}
+                    className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors"
                   >
-                    <Building2 className="w-4 h-4 text-amber-600 mt-0.5" />
+                    <UserCheck className="w-4 h-4 text-teal-600 mt-0.5 shrink-0" />
                     <div>
                       <div className="font-semibold text-slate-800">
-                        ศ.ดร.วิโรจน์ (ผู้อนุมัติคณะ)
+                        รศ.ดร.อนันต์ สิทธิชัย (ผู้ใช้งาน 3 - ต่างสาขา)
                       </div>
-                      <div className="text-sm text-slate-500">
-                        คณบดีคณะวิทยาศาสตร์
+                      <div className="text-[11px] text-slate-500">
+                        สาขาวิชาฟิสิกส์ คณะวิทยาศาสตร์ (เห็นเฉพาะสาขาฟิสิกส์)
                       </div>
                     </div>
                   </button>
 
+                  {/* 4. นายสมศักดิ์ - แอดมิน งานแผนและยุทธศาสตร์ (ผู้อนุมัติ) */}
                   <button
-                    onClick={() => handleRoleSwitch("admin")}
-                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-sm transition-colors"
+                    onClick={() => handleRoleSwitch("plan_admin")}
+                    className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors border-t border-slate-100"
                   >
-                    <Sparkles className="w-4 h-4 text-purple-600 mt-0.5" />
+                    <Building2 className="w-4 h-4 text-purple-600 mt-0.5 shrink-0" />
                     <div>
                       <div className="font-semibold text-slate-800">
-                        นางสาวกรกนก (ผู้ดูแลระบบ)
+                        นายสมศักดิ์ แผนดี (แอดมินงานแผนฯ)
                       </div>
-                      <div className="text-sm text-slate-500">
-                        กองคลังและพัสดุ มหาวิทยาลัยขอนแก่น
+                      <div className="text-[11px] text-slate-500">
+                        งานแผนและยุทธศาสตร์ (ทำหน้าที่อนุมัติ/ดูได้ทั้งหมด)
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 5. นางสาวกรกนก - งานคลังและพัสดุ (ดูข้อมูลได้ทั้งหมด) */}
+                  <button
+                    onClick={() => handleRoleSwitch("procurement")}
+                    className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+                    <div>
+                      <div className="font-semibold text-slate-800">
+                        นางสาวกรกนก เพชรแท้ (งานคลังและพัสดุ)
+                      </div>
+                      <div className="text-[11px] text-slate-500">
+                        งานบริหารพัสดุและทรัพย์สิน (ดูข้อมูลได้ทั้งหมด)
                       </div>
                     </div>
                   </button>

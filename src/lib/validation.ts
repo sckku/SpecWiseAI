@@ -84,7 +84,7 @@ export const createCommentSchema = z
 
 export const mockSwitchSchema = z
   .object({
-    role: trimmedString(20),
+    role: trimmedString(50),
   })
   .strict();
 

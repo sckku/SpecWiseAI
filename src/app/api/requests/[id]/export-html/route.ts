@@ -16,9 +16,13 @@ export async function GET(
       return NextResponse.json({ error: "ไม่พบคำของบประมาณ" }, { status: 404 });
     }
 
-    if (user.role === "REQUESTER" && proposal.requesterId !== user.id) {
+    if (
+      user.role === "REQUESTER" &&
+      proposal.department !== user.department &&
+      proposal.requesterId !== user.id
+    ) {
       return NextResponse.json(
-        { error: "คุณไม่มีสิทธิ์เข้าถึงคำของบประมาณนี้" },
+        { error: "คุณไม่มีสิทธิ์เข้าถึงคำของบประมาณของหน่วยงานอื่น" },
         { status: 403 }
       );
     }

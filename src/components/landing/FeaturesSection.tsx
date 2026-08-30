@@ -250,7 +250,7 @@ export function FeaturesSection() {
                       อินพุตจากผู้ใช้งาน (Prompt / Requirement):
                     </span>
                     <p className="text-slate-800 font-mono text-[11px] bg-white p-2 rounded-lg border border-slate-200">
-                      "ขอจัดซื้อ Workstation วิทยาการคอมพิวเตอร์ สำหรับเทรน Deep Learning 1 เครื่อง งบ 120,000 บ."
+                      "ขอจัดซื้อ Workstation สาขาวิชาเคมี สำหรับงานคำนวณเคมีเชิงฟิสิกส์และแบบจำลองโมเลกุล 1 เครื่อง งบ 120,000 บ."
                     </p>
                   </div>
 

@@ -10,7 +10,12 @@ export default async function AdminPage() {
     redirect("/login");
   }
 
-  if (user.role !== "ADMIN") {
+  if (
+    user.role !== "ADMIN" &&
+    user.role !== "PLAN_ADMIN" &&
+    user.role !== "FINANCE_PROCUREMENT" &&
+    user.role !== "APPROVER"
+  ) {
     redirect("/requests");
   }
 

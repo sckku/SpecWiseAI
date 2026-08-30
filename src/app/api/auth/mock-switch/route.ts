@@ -54,12 +54,17 @@ export async function GET(req: NextRequest) {
   const roleCookie = req.cookies.get("specwise_session_role")?.value?.toLowerCase() || "requester";
   const currentUser = MOCK_USERS[roleCookie] || MOCK_USERS.requester;
 
+  const primaryKeys = ["requester", "requester_cs2", "requester_chem", "plan_admin", "procurement"];
+  const availableRoles = primaryKeys
+    .filter((key) => MOCK_USERS[key])
+    .map((key) => ({
+      key,
+      ...MOCK_USERS[key],
+    }));
+
   return NextResponse.json({
     currentRoleKey: roleCookie,
     currentUser,
-    availableRoles: Object.keys(MOCK_USERS).map((key) => ({
-      key,
-      ...MOCK_USERS[key],
-    })),
+    availableRoles,
   });
 }

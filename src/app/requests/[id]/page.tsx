@@ -195,43 +195,76 @@ export default function RequestDetailPage() {
           </a>
 
           {/* Role-Based Workflow Transition Buttons */}
-          {currentUser?.role === "REQUESTER" && proposal.status === "AI_ANALYZED" && (
-            <button
-              onClick={() => handleTransition("DEPT_REVIEW")}
-              disabled={isUpdating}
-              className="px-4 py-2 rounded-xl kku-gradient text-white text-sm font-heading font-bold shadow-md hover:opacity-95"
-            >
-              ส่งหัวหน้าภาควิชา / งานแผน ตรวจสอบ
-            </button>
-          )}
+          {/* 1. PLAN_ADMIN Actions (Approve / Revise / Reject) */}
+          {(currentUser?.role === "PLAN_ADMIN" || currentUser?.role === "ADMIN" || currentUser?.role === "APPROVER") &&
+            ["SUBMITTED", "DEPT_REVIEW", "AI_ANALYZED"].includes(proposal.status) && (
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => handleTransition("APPROVED")}
+                  disabled={isUpdating}
+                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-heading font-bold shadow-md flex items-center space-x-1.5 transition-all"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>อนุมัติบรรจุในแผน</span>
+                </button>
+                <button
+                  onClick={() => handleTransition("REVISED")}
+                  disabled={isUpdating}
+                  className="px-3.5 py-2 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs sm:text-sm font-semibold transition-all"
+                >
+                  <span>ส่งกลับแก้ไข</span>
+                </button>
+                <button
+                  onClick={() => handleTransition("REJECTED")}
+                  disabled={isUpdating}
+                  className="px-3.5 py-2 rounded-xl border border-rose-300 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs sm:text-sm font-semibold transition-all"
+                >
+                  <span>ไม่อนุมัติ</span>
+                </button>
+              </div>
+            )}
 
-          {currentUser?.role === "DEPT_VERIFIER" && proposal.status === "DEPT_REVIEW" && (
+          {/* 2. REQUESTER Owner Actions (Submit / Resubmit) */}
+          {currentUser?.id === proposal.requesterId && (
             <>
-              <button
-                onClick={() => handleTransition("SUBMITTED")}
-                disabled={isUpdating}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-heading font-bold shadow-md"
-              >
-                ✓ ผ่านการตรวจ ส่งระดับคณะ
-              </button>
-              <button
-                onClick={() => handleTransition("REVISED")}
-                disabled={isUpdating}
-                className="px-3.5 py-2 rounded-xl border border-rose-300 bg-rose-50 text-rose-700 text-sm font-semibold"
-              >
-                ส่งกลับแก้ไข
-              </button>
+              {proposal.status === "AI_ANALYZED" && (
+                <button
+                  onClick={() => handleTransition("SUBMITTED")}
+                  disabled={isUpdating}
+                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-heading font-bold shadow-md hover:scale-[1.01] transition-all flex items-center space-x-1.5"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>ส่งเสนอของบประมาณ</span>
+                </button>
+              )}
+              {proposal.status === "REVISED" && (
+                <button
+                  onClick={() => handleTransition("SUBMITTED")}
+                  disabled={isUpdating}
+                  className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-heading font-bold shadow-md hover:scale-[1.01] transition-all flex items-center space-x-1.5"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>ส่งคำขอที่แก้ไขแล้ว</span>
+                </button>
+              )}
             </>
           )}
 
-          {currentUser?.role === "APPROVER" && proposal.status === "SUBMITTED" && (
-            <button
-              onClick={() => handleTransition("APPROVED")}
-              disabled={isUpdating}
-              className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-heading font-bold shadow-md"
-            >
-              ✓ อนุมัติบรรจุในแผนงบประมาณคณะ
-            </button>
+          {/* 3. Colleague in Same Dept Banner */}
+          {currentUser?.role === "REQUESTER" &&
+            currentUser?.id !== proposal.requesterId &&
+            proposal.department === currentUser?.department && (
+              <div className="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center space-x-1.5">
+                <span>คำขอของเพื่อนร่วมสาขา ({proposal.requesterName})</span>
+              </div>
+            )}
+
+          {/* 4. FINANCE_PROCUREMENT Indicator */}
+          {(currentUser?.role === "FINANCE_PROCUREMENT" || currentUser?.role === "DEPT_VERIFIER") && (
+            <div className="px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold flex items-center space-x-1.5">
+              <ShieldCheck className="w-4 h-4 text-blue-600" />
+              <span>งานคลังและพัสดุ (ตรวจสอบข้อมูล)</span>
+            </div>
           )}
         </div>
       </div>

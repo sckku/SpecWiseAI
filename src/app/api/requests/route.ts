@@ -21,10 +21,13 @@ export async function GET(req: NextRequest) {
 
     let proposals = getProposals();
 
-    // Role-based visibility: requesters only see their own submissions.
-    // Verifiers / approvers / admins see the full pipeline for review.
+    // Role-based visibility:
+    // - REQUESTER: can see proposals in their own department/unit (e.g. สาขาวิชาเดียวกัน) or their own submissions
+    // - PLAN_ADMIN (งานแผนและยุทธศาสตร์), FINANCE_PROCUREMENT (งานคลังและพัสดุ), ADMIN: can see all proposals across the entire university
     if (user.role === "REQUESTER") {
-      proposals = proposals.filter((p) => p.requesterId === user.id);
+      proposals = proposals.filter(
+        (p) => p.department === user.department || p.requesterId === user.id
+      );
     }
 
     if (status && status !== "ALL") {

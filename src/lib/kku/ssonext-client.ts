@@ -143,12 +143,14 @@ export class KKUSSONextClient {
   public async getUserProfile(accessToken: string): Promise<KKUSSONextUserProfile> {
     if (this.isMock) {
       // In mock mode, resolve from sample mock data or decode token hints
-      const mockRole = accessToken.includes("admin")
-        ? "admin"
-        : accessToken.includes("verifier")
-        ? "verifier"
-        : accessToken.includes("approver")
-        ? "approver"
+      const mockRole = accessToken.includes("plan_admin") || accessToken.includes("admin") || accessToken.includes("approver")
+        ? "plan_admin"
+        : accessToken.includes("procurement") || accessToken.includes("verifier") || accessToken.includes("finance")
+        ? "procurement"
+        : accessToken.includes("chem")
+        ? "requester_chem"
+        : accessToken.includes("cs2")
+        ? "requester_cs2"
         : "requester";
 
       const mock = MOCK_USERS[mockRole] || MOCK_USERS.requester;
@@ -250,21 +252,29 @@ export class KKUSSONextClient {
       const dept = (profile.department || "").toLowerCase();
       const fac = (profile.faculty || "").toLowerCase();
 
-      if (pos.includes("คณบดี") || pos.includes("dean")) {
-        role = "APPROVER";
+      if (
+        pos.includes("คณบดี") ||
+        pos.includes("dean") ||
+        dept.includes("งานแผน") ||
+        fac.includes("กองแผนงาน") ||
+        pos.includes("approver") ||
+        pos.includes("plan_admin")
+      ) {
+        role = "PLAN_ADMIN";
+      } else if (
+        fac.includes("กองคลัง") ||
+        dept.includes("พัสดุ") ||
+        dept.includes("คลัง") ||
+        pos.includes("พัสดุ") ||
+        pos.includes("procurement")
+      ) {
+        role = "FINANCE_PROCUREMENT";
       } else if (
         pos.includes("หัวหน้า") ||
-        dept.includes("งานแผน") ||
         dept.includes("นโยบาย") ||
         pos.includes("verifier")
       ) {
         role = "DEPT_VERIFIER";
-      } else if (
-        fac.includes("กองคลัง") ||
-        dept.includes("พัสดุ") ||
-        pos.includes("admin")
-      ) {
-        role = "ADMIN";
       }
     }
 

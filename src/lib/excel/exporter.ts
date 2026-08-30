@@ -99,7 +99,7 @@ export async function generateOfficialKKUProposalExcel(proposal: BudgetProposal)
   // 2.0 เหตุผลความจำเป็น
   ws.getCell("C19").value = sanitizeCellString(necessity?.details || proposal.title);
   ws.getCell("C20").value = sanitizeCellString(necessity?.installationLocation || "ห้องปฏิบัติการ / เครื่องมือกลาง คณะวิทยาศาสตร์ SC.01");
-  ws.getCell("C21").value = sanitizeCellString(necessity?.targetCurriculum || proposal.department || "สาขาวิชาวิทยาการคอมพิวเตอร์ / วิทยาศาสตร์");
+  ws.getCell("C21").value = sanitizeCellString(necessity?.targetCurriculum || proposal.department || "สาขาวิชาเคมี / วิทยาศาสตร์");
   ws.getCell("C22").value = "ด้านวิทยาศาสตร์และเทคโนโลยี / ปัญญาประดิษฐ์และวิทยาศาสตร์ข้อมูล";
   ws.getCell("C23").value = sanitizeNumber(necessity?.userCount, 40);
   ws.getCell("C24").value = sanitizeCellString(

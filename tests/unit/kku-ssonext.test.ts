@@ -141,15 +141,15 @@ describe("KKU SSONext Integration Client (Postman Collection)", () => {
       faculty: "คณะวิทยาศาสตร์",
       position: "คณบดีคณะวิทยาศาสตร์",
     });
-    expect(mappedApprover.role).toBe("APPROVER");
+    expect(mappedApprover.role).toBe("PLAN_ADMIN");
 
-    const mappedVerifier = client.mapToUserSession({
-      email: "verifier@kku.ac.th",
-      thaiFullName: "นายประเสริฐ รักงาน",
-      department: "งานแผนและนโยบาย",
-      position: "เจ้าหน้าที่งานแผน",
+    const mappedProcurement = client.mapToUserSession({
+      email: "procurement@kku.ac.th",
+      thaiFullName: "นางสาวกรกนก เพชรแท้",
+      department: "งานบริหารพัสดุและทรัพย์สิน",
+      position: "นักวิชาการพัสดุ",
     });
-    expect(mappedVerifier.role).toBe("DEPT_VERIFIER");
+    expect(mappedProcurement.role).toBe("FINANCE_PROCUREMENT");
   });
 
   it("should seamlessly operate in offline mock mode when configured", async () => {

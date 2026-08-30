@@ -1,4 +1,10 @@
-export type UserRole = "REQUESTER" | "DEPT_VERIFIER" | "APPROVER" | "ADMIN";
+export type UserRole =
+  | "REQUESTER"
+  | "PLAN_ADMIN"
+  | "FINANCE_PROCUREMENT"
+  | "ADMIN"
+  | "APPROVER"
+  | "DEPT_VERIFIER";
 
 export interface KKUUserSession {
   id: string;

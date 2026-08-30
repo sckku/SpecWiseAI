@@ -23,18 +23,24 @@ interface MobileNavigationProps {
   currentUser: KKUUserSession | null;
 }
 
-const secondaryItems = [
-  { label: "มาตรฐานและราคา", href: "/catalogs", icon: Layers },
-  { label: "วิเคราะห์และรายงาน", href: "/reports", icon: BarChart3 },
-  { label: "คู่มือการใช้งาน", href: "/manual", icon: BookOpen },
-  { label: "ตั้งค่า", href: "/settings", icon: Settings },
-];
-
 export function MobileNavigation({ currentUser }: MobileNavigationProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  const isPlanAdmin = currentUser?.role === "PLAN_ADMIN" || currentUser?.role === "ADMIN" || currentUser?.role === "APPROVER";
+  const isProcurement = currentUser?.role === "FINANCE_PROCUREMENT" || currentUser?.role === "DEPT_VERIFIER";
+
+  const secondaryItems = [
+    { label: "มาตรฐานและราคา", href: "/catalogs", icon: Layers },
+    { label: "วิเคราะห์และรายงาน", href: "/reports", icon: BarChart3 },
+    ...(isPlanAdmin || isProcurement
+      ? [{ label: isPlanAdmin ? "ศูนย์ควบคุมแอดมิน" : "ศูนย์ควบคุมพัสดุ", href: "/admin", icon: Settings }]
+      : []),
+    { label: "คู่มือการใช้งาน", href: "/manual", icon: BookOpen },
+    { label: "ตั้งค่า", href: "/settings", icon: Settings },
+  ];
 
   useEffect(() => {
     setIsOpen(false);

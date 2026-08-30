@@ -24,10 +24,16 @@ export async function GET(
       return NextResponse.json({ error: "ไม่พบคำของบประมาณ" }, { status: 404 });
     }
 
-    // Ownership check: requesters may only view their own submissions.
-    if (user.role === "REQUESTER" && proposal.requesterId !== user.id) {
+    // Visibility check:
+    // - REQUESTER: allowed to view proposals in same department or own proposals
+    // - PLAN_ADMIN, FINANCE_PROCUREMENT, ADMIN: allowed to view all proposals
+    if (
+      user.role === "REQUESTER" &&
+      proposal.department !== user.department &&
+      proposal.requesterId !== user.id
+    ) {
       return NextResponse.json(
-        { error: "คุณไม่มีสิทธิ์เข้าถึงคำของบประมาณนี้" },
+        { error: "คุณไม่มีสิทธิ์เข้าถึงคำของบประมาณของหน่วยงานอื่น" },
         { status: 403 }
       );
     }
@@ -53,7 +59,7 @@ export async function PATCH(
 
     const body = updateProposalSchema.parse(await parseJsonBody(req));
 
-    // Content edits: owner while editable, or ADMIN.
+    // Content edits: owner while editable (DRAFT or REVISED), or PLAN_ADMIN / ADMIN.
     const wantsContentEdit =
       body.title !== undefined ||
       body.totalBudgetBaht !== undefined ||
@@ -63,12 +69,12 @@ export async function PATCH(
 
     if (wantsContentEdit) {
       const isOwner = proposal.requesterId === user.id;
-      const isAdmin = user.role === "ADMIN";
+      const isAdmin = user.role === "ADMIN" || user.role === "PLAN_ADMIN";
       const editable = proposal.status === "DRAFT" || proposal.status === "REVISED";
 
       if (!isAdmin && !(isOwner && editable)) {
         return NextResponse.json(
-          { error: "ไม่สามารถแก้ไขเนื้อหาคำของบประมาณในสถานะนี้ได้" },
+          { error: "ไม่สามารถแก้ไขเนื้อหาคำของบประมาณในสถานะนี้ได้ (เฉพาะเจ้าของแบบร่าง หรือแอดมิน)" },
           { status: 403 }
         );
       }
@@ -114,12 +120,13 @@ export async function DELETE(
       return NextResponse.json({ error: "ไม่พบคำของบประมาณ" }, { status: 404 });
     }
 
-    // Deletion: ADMIN anytime; owner only while still a draft.
+    // Deletion: ADMIN / PLAN_ADMIN anytime; owner only while still a draft.
     const isOwnerDraft =
       proposal.requesterId === user.id && proposal.status === "DRAFT";
-    if (user.role !== "ADMIN" && !isOwnerDraft) {
+    const isAdmin = user.role === "ADMIN" || user.role === "PLAN_ADMIN";
+    if (!isAdmin && !isOwnerDraft) {
       return NextResponse.json(
-        { error: "เฉพาะผู้ดูแลระบบหรือเจ้าของแบบร่างเท่านั้นที่ลบคำของบประมาณได้" },
+        { error: "เฉพาะแอดมินงานแผนฯ หรือเจ้าของแบบร่างเท่านั้นที่ลบคำของบประมาณได้" },
         { status: 403 }
       );
     }
