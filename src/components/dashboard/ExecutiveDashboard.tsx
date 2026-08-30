@@ -12,17 +12,8 @@ import {
   AlertTriangle,
   Info,
   FileText,
-  Scale,
-  DollarSign,
-  ShieldCheck,
   ArrowRight,
-  Search,
-  Plus,
   Microscope,
-  Cpu,
-  Layers,
-  Check,
-  TrendingUp,
 } from "lucide-react";
 import { DashboardMetrics, BudgetProposal } from "@/types/budget";
 
@@ -31,7 +22,6 @@ export function ExecutiveDashboard() {
   const [promptText, setPromptText] = useState("");
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [proposals, setProposals] = useState<BudgetProposal[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetch("/api/dashboard/metrics")
@@ -60,284 +50,242 @@ export function ExecutiveDashboard() {
   };
 
   return (
-    <div className="space-y-7 animate-in fade-in duration-300">
+    <div className="space-y-6 animate-in fade-in duration-300">
       {/* 1. Hero AI Search / Prompt Card */}
-      <div className="bg-gradient-to-r from-indigo-50/90 via-purple-50/50 to-blue-50/80 border border-indigo-100 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-sm">
+      <div className="bg-gradient-to-r from-[#EEF2FF] via-[#F5F3FF] to-[#EFF6FF] border border-[#E0E7FF] rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-xs">
         <div className="max-w-xl relative z-10 space-y-3">
           <h1 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 tracking-tight">
             ต้องการจัดซื้ออะไร?
           </h1>
-          <p className="text-sm text-slate-600 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
             บอกความต้องการของคุณ AI จะช่วยวิเคราะห์ ตรวจสอบมาตรฐานและราคาที่เหมาะสม
           </p>
 
           <form onSubmit={handleStartAnalysis} className="pt-2">
-            <div className="bg-white rounded-2xl p-2 sm:p-2.5 border border-slate-200/90 shadow-md shadow-slate-200/50 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <div className="bg-white rounded-2xl p-1.5 sm:p-2 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <input
                 type="text"
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
-                placeholder="เช่น เครื่องคอมพิวเตอร์สำหรับงาน Data Science จำนวน 10 เครื่อง..."
-                className="flex-1 px-3 py-2 text-sm text-slate-800 placeholder-slate-400 bg-transparent focus:outline-none"
+                placeholder="เช่น เครื่องคอมพิวเตอร์สำหรับงาน Data Science จำนวน..."
+                className="flex-1 px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder-slate-400 bg-transparent focus:outline-none"
               />
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-heading font-bold text-sm shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-1.5 transition-all hover:scale-[1.02] shrink-0"
+                className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-heading font-semibold text-xs sm:text-sm shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-1.5 transition-all hover:scale-[1.01] shrink-0"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Sparkles className="w-4 h-4" />
                 <span>วิเคราะห์ด้วย AI</span>
               </button>
             </div>
           </form>
         </div>
 
-        {/* Right Side 3D Robot & Analytics Illustration */}
-        <div className="pointer-events-none absolute right-6 top-1/2 hidden h-52 w-80 -translate-y-1/2 select-none xl:block">
-          <svg
-            className="w-full h-full"
-            viewBox="0 0 320 200"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="glow" x1="0" y1="0" x2="320" y2="200" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#6366F1" stopOpacity="0.15" />
-                <stop offset="1" stopColor="#A855F7" stopOpacity="0.05" />
-              </linearGradient>
-              <linearGradient id="robotGrad" x1="180" y1="30" x2="260" y2="150" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#4F46E5" />
-                <stop offset="1" stopColor="#818CF8" />
-              </linearGradient>
-              <linearGradient id="chartGrad" x1="20" y1="20" x2="160" y2="160" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#FFFFFF" />
-                <stop offset="1" stopColor="#F1F5F9" />
-              </linearGradient>
-            </defs>
+        {/* Right Side Illustration Container */}
+        <div className="pointer-events-none absolute right-6 top-1/2 hidden h-44 w-72 -translate-y-1/2 select-none xl:block">
+          <div className="w-full h-full rounded-2xl bg-[#EDE9FE]/70 border border-purple-200/50 p-3 flex items-center justify-center relative overflow-hidden shadow-xs">
+            <svg
+              className="w-full h-full"
+              viewBox="0 0 260 140"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="robotGrad" x1="160" y1="20" x2="220" y2="110" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#4F46E5" />
+                  <stop offset="1" stopColor="#818CF8" />
+                </linearGradient>
+              </defs>
 
-            <rect width="320" height="200" rx="20" fill="url(#glow)" />
+              {/* Mini Dashboard Chart Card */}
+              <g transform="translate(15, 15)" filter="drop-shadow(0 4px 6px rgba(99,102,241,0.12))">
+                <rect width="115" height="90" rx="10" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="1" />
+                <circle cx="14" cy="14" r="4" fill="#6366F1" />
+                <line x1="24" y1="14" x2="70" y2="14" stroke="#CBD5E1" strokeWidth="2.5" strokeLinecap="round" />
+                {/* Mini Chart Bars */}
+                <rect x="14" y="62" width="10" height="18" rx="2" fill="#C7D2FE" />
+                <rect x="29" y="48" width="10" height="32" rx="2" fill="#818CF8" />
+                <rect x="44" y="36" width="10" height="44" rx="2" fill="#6366F1" />
+                <rect x="59" y="52" width="10" height="28" rx="2" fill="#C7D2FE" />
+                <rect x="74" y="40" width="10" height="40" rx="2" fill="#4F46E5" />
+                <rect x="89" y="28" width="10" height="52" rx="2" fill="#10B981" />
+                {/* Trend Line */}
+                <path d="M19 62 L34 48 L49 36 L64 52 L79 40 L94 28" stroke="#4F46E5" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+              </g>
 
-            {/* Dashboard Floating UI Card */}
-            <g transform="translate(30, 25)" filter="drop-shadow(0 10px 15px rgba(99,102,241,0.12))">
-              <rect width="140" height="110" rx="14" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="1.5" />
-              <circle cx="20" cy="20" r="6" fill="#6366F1" />
-              <line x1="32" y1="20" x2="90" y2="20" stroke="#94A3B8" strokeWidth="3" strokeLinecap="round" />
-              {/* Mini Chart Bars */}
-              <rect x="20" y="80" width="12" height="20" rx="3" fill="#C7D2FE" />
-              <rect x="38" y="60" width="12" height="40" rx="3" fill="#818CF8" />
-              <rect x="56" y="45" width="12" height="55" rx="3" fill="#6366F1" />
-              <rect x="74" y="68" width="12" height="32" rx="3" fill="#C7D2FE" />
-              <rect x="92" y="50" width="12" height="50" rx="3" fill="#4F46E5" />
-              <rect x="110" y="35" width="12" height="65" rx="3" fill="#10B981" />
-              {/* Trend Line */}
-              <path d="M26 80 L44 60 L62 45 L80 68 L98 50 L116 35" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" fill="none" />
-            </g>
+              {/* AI Robot Head */}
+              <g transform="translate(150, 15)" filter="drop-shadow(0 6px 12px rgba(79,70,229,0.25))">
+                <rect x="8" y="16" width="64" height="56" rx="18" fill="url(#robotGrad)" />
+                {/* Antenna */}
+                <line x1="40" y1="16" x2="40" y2="6" stroke="#6366F1" strokeWidth="3" strokeLinecap="round" />
+                <circle cx="40" cy="5" r="4" fill="#38BDF8" />
+                {/* Face Screen */}
+                <rect x="16" y="26" width="48" height="36" rx="12" fill="#0F172A" />
+                {/* Glowing Eyes */}
+                <circle cx="30" cy="44" r="4.5" fill="#38BDF8" />
+                <circle cx="50" cy="44" r="4.5" fill="#38BDF8" />
+                <circle cx="31.5" cy="42.5" r="1.5" fill="#FFFFFF" />
+                <circle cx="51.5" cy="42.5" r="1.5" fill="#FFFFFF" />
+                {/* Smile */}
+                <path d="M35 52 Q40 56 45 52" stroke="#38BDF8" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                {/* Ears */}
+                <rect x="2" y="32" width="6" height="20" rx="3" fill="#818CF8" />
+                <rect x="72" y="32" width="6" height="20" rx="3" fill="#818CF8" />
+              </g>
 
-            {/* AI Assistant Robot Head */}
-            <g transform="translate(190, 30)" filter="drop-shadow(0 12px 20px rgba(79,70,229,0.2))">
-              {/* Outer Body */}
-              <rect x="10" y="20" width="80" height="70" rx="24" fill="url(#robotGrad)" />
-              {/* Antenna */}
-              <line x1="50" y1="20" x2="50" y2="6" stroke="#6366F1" strokeWidth="4" strokeLinecap="round" />
-              <circle cx="50" cy="5" r="5" fill="#38BDF8" />
-              {/* Face Screen */}
-              <rect x="20" y="32" width="60" height="46" rx="16" fill="#0F172A" />
-              {/* Glowing Eyes */}
-              <circle cx="38" cy="55" r="6" fill="#38BDF8" />
-              <circle cx="62" cy="55" r="6" fill="#38BDF8" />
-              <circle cx="40" cy="53" r="2" fill="#FFFFFF" />
-              <circle cx="64" cy="53" r="2" fill="#FFFFFF" />
-              {/* Smile */}
-              <path d="M44 67 Q50 72 56 67" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" fill="none" />
-              {/* Ears */}
-              <rect x="2" y="42" width="8" height="26" rx="4" fill="#818CF8" />
-              <rect x="90" y="42" width="8" height="26" rx="4" fill="#818CF8" />
-            </g>
-
-            {/* Floating Sparkles & Badges */}
-            <g transform="translate(170, 110)">
-              <circle cx="15" cy="15" r="14" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.06))" />
-              <path d="M15 8 L17 13 L22 15 L17 17 L15 22 L13 17 L8 15 L13 13 Z" fill="#6366F1" />
-            </g>
-          </svg>
+              {/* Middle Sparkle Badge */}
+              <g transform="translate(138, 75)">
+                <circle cx="10" cy="10" r="9" fill="#FFFFFF" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.08))" />
+                <path d="M10 5 L11.5 8.5 L15 10 L11.5 11.5 L10 15 L8.5 11.5 L5 10 L8.5 8.5 Z" fill="#6366F1" />
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
 
       {/* 2. Overview Metrics Section */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="font-heading font-bold text-slate-900 text-base">
+          <h2 className="font-heading font-bold text-slate-900 text-sm sm:text-base">
             ภาพรวมคำของบประมาณปี 2570
           </h2>
           <Link
             href="/requests"
-            className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1 transition-colors"
+            className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center space-x-0.5 transition-colors"
           >
             <span>ดูทั้งหมด</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3 h-3 ml-0.5" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {/* 1. Total Requests */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-              <Monitor className="w-6 h-6" />
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-3.5">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <Monitor className="w-5 h-5" />
             </div>
             <div>
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
                 161
               </div>
-              <div className="text-sm font-semibold text-slate-600 mt-0.5">รายการทั้งหมด</div>
-              <p className="text-sm text-slate-400 mt-1">เพิ่มขึ้น 12% จากเดือนที่แล้ว</p>
+              <div className="text-xs font-semibold text-slate-700 mt-0.5">รายการทั้งหมด</div>
+              <p className="text-[11px] text-slate-400 mt-0.5">เพิ่มขึ้น 12% จากเดือนที่แล้ว</p>
             </div>
           </div>
 
           {/* 2. Pending Review */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
-            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-              <Clock className="w-6 h-6" />
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-3.5">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
+              <Clock className="w-5 h-5" />
             </div>
             <div>
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
                 24
               </div>
-              <div className="text-sm font-semibold text-slate-600 mt-0.5">รอตรวจสอบ</div>
-              <p className="text-sm text-amber-600 font-medium mt-1">ต้องดำเนินการ</p>
+              <div className="text-xs font-semibold text-slate-700 mt-0.5">รอตรวจสอบ</div>
+              <p className="text-[11px] text-amber-600 font-medium mt-0.5">ต้องดำเนินการ</p>
             </div>
           </div>
 
           {/* 3. Needs Revision */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
-            <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
-              <Edit3 className="w-6 h-6" />
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-3.5">
+            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center shrink-0">
+              <Edit3 className="w-5 h-5" />
             </div>
             <div>
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
                 8
               </div>
-              <div className="text-sm font-semibold text-slate-600 mt-0.5">ต้องแก้ไข</div>
-              <p className="text-sm text-rose-600 font-medium mt-1">รอการแก้ไข</p>
+              <div className="text-xs font-semibold text-slate-700 mt-0.5">ต้องแก้ไข</div>
+              <p className="text-[11px] text-rose-600 font-medium mt-0.5">รอการแก้ไข</p>
             </div>
           </div>
 
           {/* 4. Ready to Submit */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-              <CheckCircle2 className="w-6 h-6" />
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-3.5">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
                 3
               </div>
-              <div className="text-sm font-semibold text-slate-600 mt-0.5">พร้อมส่ง</div>
-              <p className="text-sm text-emerald-600 font-medium mt-1">พร้อมเสนออนุมัติ</p>
+              <div className="text-xs font-semibold text-slate-700 mt-0.5">พร้อมส่ง</div>
+              <p className="text-[11px] text-emerald-600 font-medium mt-0.5">พร้อมเสนออนุมัติ</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* 3. Middle 3-Column Section */}
-      <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:gap-5 xl:grid-cols-3">
         {/* Column 1: รายการที่ต้องดำเนินการ */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
           <div>
-            <h3 className="font-heading font-bold text-sm text-slate-900 mb-4">
+            <h3 className="font-heading font-bold text-sm text-slate-900 mb-3.5">
               รายการที่ต้องดำเนินการ
             </h3>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {/* Item 1 */}
               <Link
                 href="/requests"
-                className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-slate-100 p-3 transition-all hover:border-indigo-100 hover:bg-indigo-50/30 sm:flex-row sm:items-center"
+                className="flex items-center justify-between gap-2 rounded-2xl border border-slate-100 p-3 transition-all hover:border-indigo-100 hover:bg-slate-50/50"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                    <Monitor className="w-5 h-5" />
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <Monitor className="w-4 h-4" />
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">Computer Lab</h4>
-                    <p className="text-sm text-slate-400">คณะวิทยาศาสตร์</p>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-slate-900 truncate">Computer Lab</h4>
+                    <p className="text-[11px] text-slate-400 truncate">คณะวิทยาศาสตร์</p>
                   </div>
                 </div>
-                <div className="w-full text-left sm:w-auto sm:text-right">
-                  <span className="inline-flex items-center text-sm px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-medium">
+                <div className="text-right shrink-0">
+                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-medium">
                     ⚠ ตรวจสอบวงเงิน
                   </span>
-                  <div className="text-sm font-bold text-slate-800 mt-1">520,000 บาท</div>
-                  <div className="text-sm text-slate-400">25 พ.ค. 2569</div>
+                  <div className="text-xs font-bold text-slate-800 mt-0.5">520,000 บาท</div>
+                  <div className="text-[10px] text-slate-400">25 พ.ค. 2569</div>
                 </div>
               </Link>
 
               {/* Item 2 */}
               <Link
                 href="/requests"
-                className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-slate-100 p-3 transition-all hover:border-emerald-100 hover:bg-emerald-50/30 sm:flex-row sm:items-center"
+                className="flex items-center justify-between gap-2 rounded-2xl border border-slate-100 p-3 transition-all hover:border-emerald-100 hover:bg-slate-50/50"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                    <Microscope className="w-5 h-5" />
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                    <Microscope className="w-4 h-4" />
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">Microscope</h4>
-                    <p className="text-sm text-slate-400">คณะวิทยาศาสตร์</p>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-slate-900 truncate">Microscope</h4>
+                    <p className="text-[11px] text-slate-400 truncate">คณะวิทยาศาสตร์</p>
                   </div>
                 </div>
-                <div className="w-full text-left sm:w-auto sm:text-right">
-                  <span className="inline-flex items-center text-sm px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
+                <div className="text-right shrink-0">
+                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
                     ✓ ผ่านมาตรฐาน
                   </span>
-                  <div className="text-sm font-bold text-slate-800 mt-1">1,250,000 บาท</div>
-                  <div className="text-sm text-slate-400">24 พ.ค. 2569</div>
-                </div>
-              </Link>
-
-              {/* Item 3 */}
-              <Link
-                href="/requests"
-                className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-slate-100 p-3 transition-all hover:border-rose-100 hover:bg-rose-50/30 sm:flex-row sm:items-center"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
-                    <Cpu className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">GPU Workstation</h4>
-                    <p className="text-sm text-slate-400">คณะเทคโนโลยีสารสนเทศ</p>
-                  </div>
-                </div>
-                <div className="w-full text-left sm:w-auto sm:text-right">
-                  <span className="inline-flex items-center text-sm px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-medium">
-                    ⚠ Spec ไม่สอดคล้อง
-                  </span>
-                  <div className="text-sm font-bold text-slate-800 mt-1">850,000 บาท</div>
-                  <div className="text-sm text-slate-400">23 พ.ค. 2569</div>
+                  <div className="text-xs font-bold text-slate-800 mt-0.5">1,250,000 บาท</div>
+                  <div className="text-[10px] text-slate-400">24 พ.ค. 2569</div>
                 </div>
               </Link>
             </div>
-          </div>
-
-          <div className="mt-4 pt-3 border-t border-slate-100 text-center">
-            <Link
-              href="/requests"
-              className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
-            >
-              <span>ดูรายการทั้งหมด</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
           </div>
         </div>
 
         {/* Column 2: ความคืบหน้าการจัดทำคำของบประมาณ */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
           <div>
-            <h3 className="font-heading font-bold text-sm text-slate-900 mb-4">
+            <h3 className="font-heading font-bold text-sm text-slate-900 mb-3.5">
               ความคืบหน้าการจัดทำคำของบประมาณ
             </h3>
 
-            <div className="flex flex-col items-center justify-between gap-5 sm:flex-row sm:items-center">
+            <div className="flex items-center justify-center gap-6 py-1">
               {/* Circular Gauge */}
-              <div className="relative w-32 h-32 flex items-center justify-center shrink-0">
+              <div className="relative w-28 h-28 flex items-center justify-center shrink-0">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                   <circle
                     cx="50"
@@ -354,124 +302,114 @@ export function ExecutiveDashboard() {
                     stroke="#4F46E5"
                     strokeWidth="8"
                     strokeDasharray="251.2"
-                    strokeDashoffset="138.16" /* 45% */
+                    strokeDashoffset="138.16"
                     strokeLinecap="round"
                     fill="none"
                   />
                 </svg>
                 <div className="absolute text-center">
-                  <div className="text-xl font-heading font-bold text-slate-900">45%</div>
-                  <div className="text-sm text-slate-400">ดำเนินการแล้ว</div>
+                  <div className="text-lg font-heading font-bold text-slate-900">45%</div>
+                  <div className="text-[10px] text-slate-400">ดำเนินการแล้ว</div>
                 </div>
               </div>
 
               {/* Steps Status List */}
-              <div className="space-y-1.5 text-sm flex-1">
+              <div className="space-y-1 text-xs flex-1 min-w-0">
                 <div className="flex items-center space-x-2 text-slate-700">
-                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm">
+                  <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px] font-bold shrink-0">
                     ✓
                   </div>
-                  <span className="text-sm font-medium">1. ความต้องการ</span>
+                  <span className="text-xs font-medium truncate">1. ความต้องการ</span>
                 </div>
                 <div className="flex items-center space-x-2 text-slate-700">
-                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm">
+                  <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px] font-bold shrink-0">
                     ✓
                   </div>
-                  <span className="text-sm font-medium">2. รายการที่แนะนำ</span>
+                  <span className="text-xs font-medium truncate">2. รายการที่แนะนำ</span>
                 </div>
                 <div className="flex items-center space-x-2 text-slate-700">
-                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm">
+                  <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px] font-bold shrink-0">
                     ✓
                   </div>
-                  <span className="text-sm font-medium">3. ราคาอ้างอิง</span>
+                  <span className="text-xs font-medium truncate">3. ราคาอ้างอิง</span>
                 </div>
-                <div className="flex items-center space-x-2 text-indigo-700 font-semibold">
-                  <div className="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm">
+                <div className="flex items-center space-x-2 text-indigo-700 font-bold">
+                  <div className="w-3.5 h-3.5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[9px] font-bold shrink-0">
                     4
                   </div>
-                  <span className="text-sm">4. ตรวจสอบวงเงิน</span>
+                  <span className="text-xs truncate">4. ตรวจสอบวงเงิน</span>
                 </div>
                 <div className="flex items-center space-x-2 text-slate-400">
-                  <div className="w-4 h-4 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-sm">
+                  <div className="w-3.5 h-3.5 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-[9px] shrink-0">
                     5
                   </div>
-                  <span className="text-sm">5. ร่างคำของบประมาณ</span>
+                  <span className="text-xs truncate">5. ร่างคำของบประมาณ</span>
                 </div>
                 <div className="flex items-center space-x-2 text-slate-400">
-                  <div className="w-4 h-4 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-sm">
+                  <div className="w-3.5 h-3.5 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-[9px] shrink-0">
                     6
                   </div>
-                  <span className="text-sm">6. Specification</span>
+                  <span className="text-xs truncate">6. Specification</span>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="mt-4 pt-3 border-t border-slate-100 text-center">
-            <Link
-              href="/requests/new"
-              className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
-            >
-              <span>ดำเนินการต่อ</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
           </div>
         </div>
 
         {/* Column 3: การแจ้งเตือน */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
           <div>
-            <h3 className="font-heading font-bold text-sm text-slate-900 mb-4">
+            <h3 className="font-heading font-bold text-sm text-slate-900 mb-3.5">
               การแจ้งเตือน
             </h3>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {/* Alert 1 */}
-              <div className="p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-3">
-                <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
-                  <AlertTriangle className="w-4 h-4" />
+              <div className="p-2.5 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-2.5">
+                <div className="w-7 h-7 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0 mt-0.5">
+                  <AlertTriangle className="w-3.5 h-3.5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-bold text-slate-900 truncate">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">
                     วงเงินสูงกว่าข้อมูลอ้างอิง
                   </h4>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-sm text-slate-500">Computer Lab</span>
-                    <span className="text-sm text-slate-400">5 นาทีที่แล้ว</span>
+                    <span className="text-[11px] text-slate-500 truncate">Computer Lab</span>
+                    <span className="text-[10px] text-slate-400 shrink-0 ml-1">5 นาทีที่แล้ว</span>
                   </div>
                 </div>
               </div>
 
               {/* Alert 2 */}
-              <div className="p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-3">
-                <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                  <Info className="w-4 h-4" />
+              <div className="p-2.5 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-2.5">
+                <div className="w-7 h-7 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center shrink-0 mt-0.5">
+                  <Info className="w-3.5 h-3.5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-bold text-slate-900 truncate">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">
                     แนบใบเสนอราคา
                   </h4>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-sm text-slate-500">GPU Workstation</span>
-                    <span className="text-sm text-slate-400">1 ชั่วโมงที่แล้ว</span>
+                    <span className="text-[11px] text-slate-500 truncate">GPU Workstation</span>
+                    <span className="text-[10px] text-slate-400 shrink-0 ml-1">1 ชั่วโมงที่แล้ว</span>
                   </div>
                 </div>
               </div>
 
               {/* Alert 3 */}
-              <div className="p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-3">
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
-                  <FileText className="w-4 h-4" />
+              <div className="p-2.5 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-colors flex items-start space-x-2.5">
+                <div className="w-7 h-7 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0 mt-0.5">
+                  <FileText className="w-3.5 h-3.5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-bold text-slate-900 truncate">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">
                     มาตรฐานอัปเดต
                   </h4>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-sm text-slate-500 truncate">
-                      กระทรวงดิจิทัลฯ ฉบับ พ.ศ. 2569
+                    <span className="text-[11px] text-slate-500 truncate">
+                      กระทรวงดิจิทัลฯ ฉบับ ...
                     </span>
-                    <span className="text-sm text-slate-400 shrink-0 ml-1">
+                    <span className="text-[10px] text-slate-400 shrink-0 ml-1">
                       3 ชั่วโมงที่แล้ว
                     </span>
                   </div>
@@ -479,107 +417,9 @@ export function ExecutiveDashboard() {
               </div>
             </div>
           </div>
-
-          <div className="mt-4 pt-3 border-t border-slate-100 text-center">
-            <Link
-              href="/notifications"
-              className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
-            >
-              <span>ดูการแจ้งเตือนทั้งหมด</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* 4. Bottom Row: "AI ช่วยอะไรคุณได้บ้าง?" (5 Interactive Cards) */}
-      <div className="bg-gradient-to-r from-indigo-50/50 via-purple-50/30 to-blue-50/40 border border-indigo-100/70 rounded-3xl p-6 shadow-xs space-y-4">
-        <h3 className="font-heading font-bold text-sm text-indigo-950">
-          AI ช่วยอะไรคุณได้บ้าง?
-        </h3>
-
-        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {/* 1. ตรวจสอบชื่อครุภัณฑ์ */}
-          <Link
-            href="/requests/new?step=2"
-            className="bg-white border border-slate-200/80 hover:border-emerald-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
-          >
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-              <CheckCircle2 className="w-5 h-5" />
-            </div>
-            <h4 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700">
-              ตรวจสอบชื่อครุภัณฑ์
-            </h4>
-            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-              ตรวจสอบความถูกต้องของชื่อและมาตรฐาน
-            </p>
-          </Link>
-
-          {/* 2. เปรียบเทียบราคา */}
-          <Link
-            href="/requests/new?step=3"
-            className="bg-white border border-slate-200/80 hover:border-purple-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
-          >
-            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-              <Scale className="w-5 h-5" />
-            </div>
-            <h4 className="text-sm font-bold text-slate-900 group-hover:text-purple-700">
-              เปรียบเทียบราคา
-            </h4>
-            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-              เปรียบเทียบราคาจากหลายแหล่งอ้างอิง
-            </p>
-          </Link>
-
-          {/* 3. ตรวจสอบวงเงิน */}
-          <Link
-            href="/requests/new?step=4"
-            className="bg-white border border-slate-200/80 hover:border-emerald-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
-          >
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-              <DollarSign className="w-5 h-5" />
-            </div>
-            <h4 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700">
-              ตรวจสอบวงเงิน
-            </h4>
-            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-              AI วิเคราะห์ความเหมาะสมของวงเงิน
-            </p>
-          </Link>
-
-          {/* 4. ร่างเอกสารอัตโนมัติ */}
-          <Link
-            href="/requests/new?step=5"
-            className="bg-white border border-slate-200/80 hover:border-indigo-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
-          >
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-              <FileText className="w-5 h-5" />
-            </div>
-            <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-700">
-              ร่างเอกสารอัตโนมัติ
-            </h4>
-            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-              สร้างร่างคำของบประมาณ และ Spec
-            </p>
-          </Link>
-
-          {/* 5. แหล่งอ้างอิงชัดเจน */}
-          <Link
-            href="/catalogs"
-            className="bg-white border border-slate-200/80 hover:border-blue-200 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all group"
-          >
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700">
-              แหล่งอ้างอิงชัดเจน
-            </h4>
-            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-              ทุกคำแนะนำมาพร้อมแหล่งอ้างอิงที่ตรวจสอบได้
-            </p>
-          </Link>
         </div>
       </div>
     </div>
   );
 }
+

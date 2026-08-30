@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,12 +7,13 @@
 @layer base {
   html {
     font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 antialiased font-sans;
-    font-size: 1rem;
-    line-height: 1.6;
+    @apply bg-[#F8FAFC] text-slate-900 font-sans;
+    line-height: 1.5;
   }
 
   button,
@@ -21,40 +24,12 @@
   }
 }
 
-@layer utilities {
-  /* Thai text needs more room than Tailwind's compact defaults. */
-  .text-xs {
-    font-size: 1rem;
-    line-height: 1.625rem;
-  }
-
-  .text-\[8px\],
-  .text-\[9px\],
-  .text-\[10px\],
-  .text-\[11px\] {
-    font-size: 0.875rem;
-    line-height: 1.5rem;
-  }
-
-  .text-sm {
-    font-size: 1rem;
-    line-height: 1.625rem;
-  }
-
-  @media (min-width: 1024px) {
-    .text-sm {
-      font-size: 1.0625rem;
-      line-height: 1.75rem;
-    }
-  }
-}
-
 .kku-gradient {
-  background: linear-gradient(135deg, #9c3724 0%, #6d2b1f 100%);
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
 }
 
 .kku-gradient-subtle {
-  background: linear-gradient(135deg, #fdf4f2 0%, #fbe8e4 100%);
+  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
 }
 
 .glass-card {
@@ -65,8 +40,8 @@
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
@@ -78,3 +53,4 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
