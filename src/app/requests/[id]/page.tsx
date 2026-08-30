@@ -29,6 +29,7 @@ import { Step3PriceCrossCheckView } from "@/components/wizard/Step3PriceCrossChe
 import { Step4BudgetAlertView } from "@/components/wizard/Step4BudgetAlertView";
 import { Step5ProposalFormView } from "@/components/wizard/Step5ProposalFormView";
 import { Step6NeutralSpecView } from "@/components/wizard/Step6NeutralSpecView";
+import { ErrorState } from "@/components/common/ErrorState";
 
 export default function RequestDetailPage() {
   const params = useParams();
@@ -40,6 +41,8 @@ export default function RequestDetailPage() {
   const [activeTab, setActiveTab] = useState<"form" | "spec" | "ai" | "comments">("form");
   const [commentText, setCommentText] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<{ status: number; message: string } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -61,12 +64,23 @@ export default function RequestDetailPage() {
   }, [id]);
 
   const fetchProposal = async () => {
+    setIsLoading(true);
+    setFetchError(null);
     try {
       const res = await fetch(`/api/requests/${id}`);
       const data = await res.json();
-      if (data.proposal) setProposal(data.proposal);
-    } catch (err) {
+      if (!res.ok) {
+        setFetchError({ status: res.status, message: data.error || "ไม่พบคำของบประมาณ" });
+      } else if (data.proposal) {
+        setProposal(data.proposal);
+      } else {
+        setFetchError({ status: 404, message: "ไม่พบข้อมูลคำของบประมาณในระบบ" });
+      }
+    } catch (err: any) {
       console.error(err);
+      setFetchError({ status: 500, message: err.message || "เกิดข้อผิดพลาดในการโหลดข้อมูล" });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -110,10 +124,36 @@ export default function RequestDetailPage() {
     }
   };
 
-  if (!proposal) {
+  if (fetchError) {
+    return (
+      <div className="py-8">
+        <ErrorState
+          type={fetchError.status === 403 ? "403" : "404"}
+          title={
+            fetchError.status === 403
+              ? "คุณไม่มีสิทธิ์เข้าถึงคำของบประมาณนี้"
+              : `ไม่พบคำของบประมาณรหัส "${id}"`
+          }
+          description={
+            fetchError.status === 403
+              ? "คำของบประมาณนี้เป็นของหน่วยงานอื่น หรือยังไม่ได้รับการส่งต่อมายังบทบาทของคุณ"
+              : "คำของบประมาณที่คุณกำลังค้นหาอาจถูกลบไปแล้ว หรือรหัสเอกสารไม่ถูกต้อง กรุณาตรวจสอบรหัสหรือเลือกคำขออื่นจากรายการ"
+          }
+          onRetry={fetchProposal}
+          showHomeButton={true}
+          showSearch={true}
+        />
+      </div>
+    );
+  }
+
+  if (isLoading || !proposal) {
     return (
       <div className="py-20 text-center text-slate-500">
-        กำลังโหลดรายละเอียดคำของบประมาณ...
+        <div className="inline-flex items-center gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-kku-600 animate-ping" />
+          <span>กำลังโหลดรายละเอียดคำของบประมาณ...</span>
+        </div>
       </div>
     );
   }
