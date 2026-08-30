@@ -74,7 +74,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
   ];
 
   return (
-    <aside className="sticky top-0 hidden h-screen min-h-screen w-56 shrink-0 select-none flex-col border-r border-slate-200/80 bg-white md:flex lg:w-64">
+    <aside className="sticky top-0 hidden h-screen min-h-screen w-56 shrink-0 select-none flex-col border-r border-slate-200/80 bg-white md:flex xl:w-64">
       {/* Brand Logo */}
       <div className="p-5 border-b border-slate-100 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2.5 group">

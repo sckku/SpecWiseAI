@@ -33,7 +33,7 @@ export default function ReportsPage() {
       </div>
 
       {/* 4 Summary Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
           <span className="text-[10px] font-bold text-slate-400 uppercase">
             งบประมาณที่ผ่านการกลั่นกรอง
@@ -76,7 +76,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Analytics Chart Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xs space-y-4">
           <h3 className="font-heading font-bold text-sm text-slate-900">
             สัดส่วนงบประมาณตามกลุ่มครุภัณฑ์ (พ.ศ. 2569 - 2570)

@@ -63,7 +63,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           onRoleChange={handleRoleChange}
           isLoading={isLoading}
         />
-        <main className="mx-auto w-full max-w-7xl flex-1 overflow-x-hidden px-4 py-4 pb-24 sm:px-6 sm:py-6 sm:pb-24 md:p-8 md:pb-8">
+        <main className="mx-auto w-full max-w-7xl flex-1 overflow-x-hidden px-4 py-4 pb-24 sm:px-6 sm:py-6 sm:pb-24 md:p-6 md:pb-6 xl:p-8 xl:pb-8">
           {children}
         </main>
       </div>

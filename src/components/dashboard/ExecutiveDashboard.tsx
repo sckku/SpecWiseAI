@@ -92,7 +92,7 @@ export function ExecutiveDashboard() {
         </div>
 
         {/* Right Side 3D Robot & Analytics Illustration */}
-        <div className="hidden lg:block absolute right-6 top-1/2 -translate-y-1/2 w-80 h-52 pointer-events-none select-none">
+        <div className="pointer-events-none absolute right-6 top-1/2 hidden h-52 w-80 -translate-y-1/2 select-none xl:block">
           <svg
             className="w-full h-full"
             viewBox="0 0 320 200"
@@ -177,7 +177,7 @@ export function ExecutiveDashboard() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {/* 1. Total Requests */}
           <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-4">
             <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
@@ -237,7 +237,7 @@ export function ExecutiveDashboard() {
       </div>
 
       {/* 3. Middle 3-Column Section */}
-      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-3">
         {/* Column 1: รายการที่ต้องดำเนินการ */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
           <div>
@@ -498,7 +498,7 @@ export function ExecutiveDashboard() {
           AI ช่วยอะไรคุณได้บ้าง?
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
+        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {/* 1. ตรวจสอบชื่อครุภัณฑ์ */}
           <Link
             href="/requests/new?step=2"

@@ -597,7 +597,7 @@ export function ComprehensiveWizard() {
             </div>
 
             {/* 4 Cards Matrix */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
               <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4">
                 <span className="text-[10px] font-bold text-slate-400 uppercase">
                   ราคามาตรฐาน (อ้างอิง)

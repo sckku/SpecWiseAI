@@ -54,7 +54,7 @@ export function AdminControlCenter() {
       </div>
 
       {/* 6-Card Grid Layout Matching Reference */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 2xl:grid-cols-3">
         {/* 1. Admin Dashboard (ภาพรวมระบบและการแจ้งเตือน) */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between space-y-4">
           <div>
