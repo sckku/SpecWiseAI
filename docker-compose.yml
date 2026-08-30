@@ -1,4 +1,23 @@
 services:
+  app:
+    build: .
+    container_name: specwise-app
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:${PORT:-8999}:8999"
+    env_file:
+      - .env
+    environment:
+      PORT: 8999
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-specwise_db}?schema=public
+      MINIO_ENDPOINT: minio
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
+
   postgres:
     image: pgvector/pgvector:pg16
     container_name: specwise-postgres
@@ -6,7 +25,7 @@ services:
     ports:
       # Bind to localhost only: the database must not be reachable from
       # other hosts on the network.
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:5434:5432"
     environment:
       # No default credentials: these MUST be supplied via environment or .env
       POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in your environment}
