@@ -45,7 +45,7 @@ export default function ForbiddenPage() {
         body: JSON.stringify({ role: roleKey }),
       });
       if (res.ok) {
-        window.location.href = "/";
+        window.location.href = "/dashboard";
       }
     } catch (err) {
       console.error("Failed to switch role:", err);
@@ -140,7 +140,7 @@ export default function ForbiddenPage() {
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
           <Link
-            href="/"
+            href="/dashboard"
             className="inline-flex items-center space-x-2 rounded-xl bg-kku-700 hover:bg-kku-800 text-white px-5 py-2.5 text-sm font-bold shadow-md transition-all hover:scale-[1.02]"
           >
             <Home className="h-4 w-4" />

@@ -38,10 +38,10 @@ export function Sidebar({ currentUser }: SidebarProps) {
 
   const navItems = [
     {
-      label: "หน้าหลัก",
-      href: "/",
+      label: "หน้าหลัก (แดชบอร์ด)",
+      href: "/dashboard",
       icon: LayoutDashboard,
-      active: pathname === "/",
+      active: pathname === "/dashboard",
     },
     {
       label: "คำของบประมาณ",
@@ -89,7 +89,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
     <aside className="sticky top-0 hidden h-screen min-h-screen w-56 shrink-0 select-none flex-col border-r border-slate-200/80 bg-white md:flex xl:w-60">
       {/* Brand Logo */}
       <div className="p-5 pb-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2.5 group">
+        <Link href="/dashboard" className="flex items-center space-x-2.5 group">
           <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-indigo-500/20 group-hover:scale-105 transition-transform">
             <Sparkles className="w-4 h-4 fill-white/20" />
           </div>

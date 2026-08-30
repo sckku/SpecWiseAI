@@ -365,7 +365,7 @@ export function ComprehensiveWizard() {
       {/* Top Breadcrumb & Status */}
       <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
         <Link
-          href="/"
+          href="/dashboard"
           className="inline-flex items-center space-x-1.5 text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

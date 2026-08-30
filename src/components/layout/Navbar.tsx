@@ -92,7 +92,7 @@ export function Navbar() {
         <div className="flex justify-between h-16 items-center">
           {/* Brand Logo */}
           <div className="flex items-center space-x-3">
-            <Link href="/" className="flex items-center space-x-3 group">
+            <Link href="/dashboard" className="flex items-center space-x-3 group">
               <div className="w-10 h-10 rounded-xl kku-gradient flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
                 <Sparkles className="w-5 h-5" />
               </div>
@@ -114,9 +114,9 @@ export function Navbar() {
             {/* Nav Links */}
             <nav className="hidden md:flex items-center space-x-1 ml-6 pl-6 border-l border-slate-200">
               <Link
-                href="/"
+                href="/dashboard"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-1.5 ${
-                  pathname === "/"
+                  pathname === "/dashboard"
                     ? "bg-kku-50 text-kku-800 font-semibold"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}

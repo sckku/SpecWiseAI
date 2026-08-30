@@ -28,7 +28,7 @@ export default function LoginPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role }),
       });
-      router.push("/requests");
+      router.push("/dashboard");
       router.refresh();
     } catch (err) {
       console.error(err);
@@ -48,6 +48,22 @@ export default function LoginPage() {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-md w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl relative z-10 text-white space-y-6">
+        {/* Back to Landing Page Link */}
+        <div className="flex items-center justify-between pb-2 border-b border-white/10 text-xs">
+          <Link
+            href="/"
+            className="text-slate-300 hover:text-white flex items-center space-x-1 transition-colors"
+          >
+            <span>← กลับสู่หน้าแรก (Landing Page)</span>
+          </Link>
+          <Link
+            href="/dashboard"
+            className="text-amber-400 hover:text-amber-300 font-semibold flex items-center space-x-1 transition-colors"
+          >
+            <span>ไปยัง Dashboard →</span>
+          </Link>
+        </div>
+
         {/* Header Logo */}
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-indigo-600 shadow-lg shadow-indigo-500/30 mb-2">

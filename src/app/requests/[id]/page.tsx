@@ -163,7 +163,7 @@ export default function RequestDetailPage() {
       {/* Top Back Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <Link
-          href="/"
+          href="/dashboard"
           className="inline-flex items-center space-x-1.5 text-slate-500 hover:text-slate-900 text-sm font-semibold"
         >
           <ArrowLeft className="w-4 h-4" />

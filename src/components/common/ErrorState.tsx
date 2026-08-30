@@ -204,7 +204,7 @@ export function ErrorState({
 
           {showHomeButton && (
             <Link
-              href="/"
+              href="/dashboard"
               className="inline-flex items-center space-x-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 shadow-sm hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <Home className="h-4 w-4 text-slate-500" />

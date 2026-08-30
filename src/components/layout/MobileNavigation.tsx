@@ -84,7 +84,7 @@ export function MobileNavigation({ currentUser }: MobileNavigationProps) {
   }, [isOpen]);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
 
   const totalItems = metrics?.totalProposals ?? 40;
 
@@ -139,7 +139,7 @@ export function MobileNavigation({ currentUser }: MobileNavigationProps) {
       )}
 
        <nav className="fixed inset-x-0 bottom-0 z-40 grid h-16 grid-cols-5 border-t border-slate-200 bg-white/95 px-1 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_rgba(15,23,42,0.08)] backdrop-blur-md md:hidden" aria-label="เมนูมือถือ">
-         <Link href="/" className={`flex flex-col items-center justify-center gap-0.5 text-sm font-medium ${isActive("/") ? "text-indigo-600" : "text-slate-500"}`}><LayoutDashboard className="h-5 w-5" />หน้าหลัก</Link>
+         <Link href="/dashboard" className={`flex flex-col items-center justify-center gap-0.5 text-sm font-medium ${isActive("/dashboard") ? "text-indigo-600" : "text-slate-500"}`}><LayoutDashboard className="h-5 w-5" />หน้าหลัก</Link>
          <Link href="/requests" className={`flex flex-col items-center justify-center gap-0.5 text-sm font-medium ${isActive("/requests") && pathname !== "/requests/new" ? "text-indigo-600" : "text-slate-500"}`}><FileText className="h-5 w-5" />คำขอ</Link>
          <Link href="/requests/new" className="-mt-5 flex flex-col items-center justify-center gap-0.5 text-sm font-bold text-indigo-600"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/30"><Plus className="h-6 w-6" /></span>สร้างคำขอ</Link>
          <Link href="/notifications" className={`relative flex flex-col items-center justify-center gap-0.5 text-sm font-medium ${isActive("/notifications") ? "text-indigo-600" : "text-slate-500"}`}><Bell className="h-5 w-5" /><span className="absolute right-5 top-2 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white" />แจ้งเตือน</Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Sidebar } from "./Sidebar";
 import { TopHeader } from "./TopHeader";
 import { MobileNavigation } from "./MobileNavigation";
@@ -11,8 +12,12 @@ interface AppLayoutProps {
 }
 
 export function AppLayout({ children }: AppLayoutProps) {
+  const pathname = usePathname();
   const [currentUser, setCurrentUser] = useState<KKUUserSession | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Standalone pages (Landing page, Login page) don't use internal dashboard layout
+  const isStandalonePage = pathname === "/" || pathname === "/login";
 
   useEffect(() => {
     fetch("/api/auth/mock-switch")
@@ -46,6 +51,10 @@ export function AppLayout({ children }: AppLayoutProps) {
       setIsLoading(false);
     }
   };
+
+  if (isStandalonePage) {
+    return <div className="min-h-screen w-full">{children}</div>;
+  }
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFC]">
