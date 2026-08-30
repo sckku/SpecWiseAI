@@ -139,7 +139,7 @@ export function ComprehensiveWizard() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-12 animate-in fade-in duration-300">
       {/* Top Breadcrumb & Status */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
         <Link
           href="/"
           className="inline-flex items-center space-x-1.5 text-xs font-semibold text-slate-500 hover:text-indigo-600 transition-colors"
@@ -157,7 +157,7 @@ export function ComprehensiveWizard() {
 
       {/* Stepper Progress Navigation Bar */}
       <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-xs">
-        <div className="flex items-center justify-between overflow-x-auto gap-2 pb-1">
+        <div className="flex items-center justify-start gap-2 overflow-x-auto pb-1 sm:justify-between">
           {stepsHeader.map((st) => {
             const isCompleted = currentStep > st.num;
             const isActive = currentStep === st.num;

@@ -91,7 +91,7 @@ export default function RequestsPage() {
 
         <Link
           href="/requests/new"
-          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-heading font-bold text-xs shadow-md shadow-indigo-500/25 flex items-center space-x-2 transition-all hover:scale-105"
+          className="flex w-full items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-500/25 transition-all hover:from-indigo-700 hover:to-purple-700 sm:w-auto sm:hover:scale-105"
         >
           <Plus className="w-4 h-4" />
           <span>สร้างคำขอใหม่ด้วย AI</span>
@@ -114,7 +114,7 @@ export default function RequestsPage() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="text-xs py-2.5 px-3 border border-slate-200 rounded-xl bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-700 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 sm:w-auto"
         >
           <option value="ALL">สถานะทั้งหมด</option>
           <option value="AI_ANALYZED">AI วิเคราะห์แล้ว</option>
@@ -127,7 +127,8 @@ export default function RequestsPage() {
       {/* Proposals List Table */}
       <div className="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <p className="border-b border-slate-100 px-4 py-2 text-[10px] text-slate-400 sm:hidden">เลื่อนตารางไปด้านข้างเพื่อดูข้อมูลเพิ่มเติม</p>
+          <table className="w-full min-w-[760px] text-left text-xs">
             <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-500 font-semibold uppercase text-[10px]">
               <tr>
                 <th className="py-3.5 px-5">รหัสคำขอ</th>

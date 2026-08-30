@@ -237,7 +237,7 @@ export function ExecutiveDashboard() {
       </div>
 
       {/* 3. Middle 3-Column Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3">
         {/* Column 1: รายการที่ต้องดำเนินการ */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
           <div>
@@ -249,7 +249,7 @@ export function ExecutiveDashboard() {
               {/* Item 1 */}
               <Link
                 href="/requests"
-                className="p-3 rounded-2xl border border-slate-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all flex items-center justify-between"
+                className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-slate-100 p-3 transition-all hover:border-indigo-100 hover:bg-indigo-50/30 sm:flex-row sm:items-center"
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
@@ -260,7 +260,7 @@ export function ExecutiveDashboard() {
                     <p className="text-[11px] text-slate-400">คณะวิทยาศาสตร์</p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="w-full text-left sm:w-auto sm:text-right">
                   <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-medium">
                     ⚠ ตรวจสอบวงเงิน
                   </span>
@@ -272,7 +272,7 @@ export function ExecutiveDashboard() {
               {/* Item 2 */}
               <Link
                 href="/requests"
-                className="p-3 rounded-2xl border border-slate-100 hover:border-emerald-100 hover:bg-emerald-50/30 transition-all flex items-center justify-between"
+                className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-slate-100 p-3 transition-all hover:border-emerald-100 hover:bg-emerald-50/30 sm:flex-row sm:items-center"
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -283,7 +283,7 @@ export function ExecutiveDashboard() {
                     <p className="text-[11px] text-slate-400">คณะวิทยาศาสตร์</p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="w-full text-left sm:w-auto sm:text-right">
                   <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
                     ✓ ผ่านมาตรฐาน
                   </span>
@@ -295,7 +295,7 @@ export function ExecutiveDashboard() {
               {/* Item 3 */}
               <Link
                 href="/requests"
-                className="p-3 rounded-2xl border border-slate-100 hover:border-rose-100 hover:bg-rose-50/30 transition-all flex items-center justify-between"
+                className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-slate-100 p-3 transition-all hover:border-rose-100 hover:bg-rose-50/30 sm:flex-row sm:items-center"
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
@@ -306,7 +306,7 @@ export function ExecutiveDashboard() {
                     <p className="text-[11px] text-slate-400">คณะเทคโนโลยีสารสนเทศ</p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="w-full text-left sm:w-auto sm:text-right">
                   <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-medium">
                     ⚠ Spec ไม่สอดคล้อง
                   </span>
@@ -335,7 +335,7 @@ export function ExecutiveDashboard() {
               ความคืบหน้าการจัดทำคำของบประมาณ
             </h3>
 
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col items-center justify-between gap-5 sm:flex-row sm:items-center">
               {/* Circular Gauge */}
               <div className="relative w-32 h-32 flex items-center justify-center shrink-0">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">

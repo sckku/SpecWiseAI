@@ -84,8 +84,8 @@ export default function NotificationsPage() {
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <h3 className="font-heading font-bold text-sm text-slate-900 truncate">
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                <h3 className="font-heading text-sm font-bold text-slate-900 sm:truncate">
                   {alert.title}
                 </h3>
                 <span className="text-[10px] text-slate-400 shrink-0 ml-2">

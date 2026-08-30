@@ -131,12 +131,12 @@ export default function RequestDetailPage() {
         </Link>
 
         {/* Action Controls */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
           {/* Download Excel Button */}
           <a
             href={`/api/requests/${proposal.id}/export-excel`}
             download={`KKU_RequestForm_${proposal.code}.xlsx`}
-            className="px-3.5 py-2 rounded-xl border border-emerald-300 bg-emerald-50/70 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition-all hover:scale-102"
+            className="flex flex-1 items-center justify-center space-x-1.5 rounded-xl border border-emerald-300 bg-emerald-50/70 px-3.5 py-2 text-xs font-semibold text-emerald-800 shadow-sm transition-all hover:bg-emerald-100 sm:flex-none sm:hover:scale-102"
             title="ดาวน์โหลดไฟล์ Excel ตามรูปแบบฟอร์มทางการของมหาวิทยาลัยขอนแก่น"
           >
             <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
@@ -148,7 +148,7 @@ export default function RequestDetailPage() {
             href={`/api/requests/${proposal.id}/export-html`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition-all hover:scale-102"
+            className="flex flex-1 items-center justify-center space-x-1.5 rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-sm transition-all hover:bg-slate-50 sm:flex-none sm:hover:scale-102"
           >
             <Printer className="w-4 h-4 text-kku-700" />
             <span>พิมพ์แบบฟอร์ม มข. (PDF)</span>
@@ -230,7 +230,7 @@ export default function RequestDetailPage() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-200 space-x-4 text-xs font-heading font-semibold pt-2">
+        <div className="flex min-w-0 gap-4 overflow-x-auto border-b border-slate-200 pt-2 text-xs font-heading font-semibold">
           <button
             onClick={() => setActiveTab("form")}
             className={`pb-2.5 transition-colors border-b-2 ${

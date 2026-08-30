@@ -66,14 +66,14 @@ export function TopHeader({ currentUser, onRoleChange, isLoading }: TopHeaderPro
   ];
 
   return (
-    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-6 flex items-center justify-between sticky top-0 z-40">
+    <header className="sticky top-0 z-40 flex min-h-14 items-center justify-between gap-2 border-b border-slate-200/80 bg-white/95 px-4 py-2 backdrop-blur-md sm:h-16 sm:px-6">
       {/* Left: Greeting & Subtitle */}
-      <div>
-        <h2 className="font-heading font-bold text-slate-900 text-base flex items-center gap-1.5">
-          <span>สวัสดีครับ, {currentUser?.thaiName?.split(" ")[0] || "วรรณวิภา"}</span>
+      <div className="min-w-0">
+        <h2 className="flex items-center gap-1.5 truncate font-heading text-base font-bold text-slate-900">
+          <span className="truncate">สวัสดีครับ, {currentUser?.thaiName?.split(" ")[0] || "วรรณวิภา"}</span>
           <span className="text-base">👋</span>
         </h2>
-        <p className="text-[11px] text-slate-400 font-medium">
+        <p className="hidden text-[11px] font-medium text-slate-400 sm:block">
           จัดทำคำของบประมาณได้ง่ายขึ้นด้วย AI
         </p>
       </div>
@@ -96,7 +96,7 @@ export function TopHeader({ currentUser, onRoleChange, isLoading }: TopHeaderPro
       </div>
 
       {/* Right Controls: Notifications, Help, Faculty Badge, Role Switcher */}
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-1 sm:space-x-3">
         {/* Notification Bell */}
         <Link
           href="/notifications"
@@ -109,21 +109,21 @@ export function TopHeader({ currentUser, onRoleChange, isLoading }: TopHeaderPro
 
         {/* Help Button */}
         <button
-          className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+          className="hidden rounded-xl p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 sm:block"
           title="คู่มือการใช้งาน"
         >
-          <HelpCircle className="w-4 h-4" />
+          <HelpCircle className="h-4 w-4" />
         </button>
 
         {/* Faculty & User Role Badge */}
         <div className="relative">
           <button
             onClick={() => setIsRoleOpen(!isRoleOpen)}
-            className="flex items-center space-x-2.5 pl-3 pr-2.5 py-1.5 rounded-full border border-slate-200/80 hover:border-slate-300 bg-slate-50/70 hover:bg-slate-100/70 transition-all text-left"
+            className="flex items-center space-x-1.5 rounded-full border border-slate-200/80 bg-slate-50/70 py-1.5 pl-2 pr-2 text-left transition-all hover:border-slate-300 hover:bg-slate-100/70 sm:space-x-2.5 sm:pl-3 sm:pr-2.5"
           >
             {/* Faculty Logo Pill */}
             <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 text-[10px] font-bold text-white shadow-xs">
                 {currentUser?.faculty?.charAt(0) || "ค"}
               </div>
               <div className="hidden sm:block text-left pr-1">
@@ -141,7 +141,7 @@ export function TopHeader({ currentUser, onRoleChange, isLoading }: TopHeaderPro
               {currentUser?.thaiName?.charAt(0) || "N"}
             </div>
 
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+             <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
           </button>
 
           {/* Role Switcher Dropdown */}

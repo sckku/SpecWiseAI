@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "./Sidebar";
 import { TopHeader } from "./TopHeader";
+import { MobileNavigation } from "./MobileNavigation";
 import { KKUUserSession } from "@/types/auth";
 
 interface AppLayoutProps {
@@ -62,10 +63,11 @@ export function AppLayout({ children }: AppLayoutProps) {
           onRoleChange={handleRoleChange}
           isLoading={isLoading}
         />
-        <main className="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto">
+        <main className="mx-auto w-full max-w-7xl flex-1 overflow-x-hidden px-4 py-4 pb-24 sm:px-6 sm:py-6 sm:pb-24 md:p-8 md:pb-8">
           {children}
         </main>
       </div>
+      <MobileNavigation currentUser={currentUser} />
     </div>
   );
 }

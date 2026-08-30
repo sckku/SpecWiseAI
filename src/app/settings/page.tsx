@@ -75,7 +75,7 @@ export default function SettingsPage() {
 
         {/* Security & KKU SSONext Authentication */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xs space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center space-x-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
               <Shield className="w-4 h-4 text-emerald-600" />
               <span>การเชื่อมต่อระบบยืนยันตัวตน (KKU SSONext)</span>
@@ -87,7 +87,7 @@ export default function SettingsPage() {
 
           <div className="space-y-3 text-xs text-slate-600">
             <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/60 space-y-2">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <span className="font-semibold text-slate-800">KKU SSONext Postman Spec Endpoints</span>
                 <span className="text-[10px] font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md font-bold">
                   ssonext-api.kku.ac.th
@@ -112,7 +112,7 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50">
+            <div className="flex flex-col items-start gap-2 rounded-2xl bg-slate-50 p-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <span className="font-semibold text-slate-800">KKU Employee API v3 Integration</span>
                 <p className="text-[11px] text-slate-400">ดึงข้อมูลสังกัด คณะ ภาควิชา และตำแหน่งบุคลากรโดยตรง</p>
@@ -122,7 +122,7 @@ export default function SettingsPage() {
               </span>
             </div>
 
-            <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50">
+            <div className="flex flex-col items-start gap-2 rounded-2xl bg-slate-50 p-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <span className="font-semibold text-slate-800">Anti-Brand-Locking Procurement Linter</span>
                 <p className="text-[11px] text-slate-400">ตรวจสอบการล็อคสเปกสินค้าและชื่อทางการค้าตามระเบียบพัสดุ</p>
@@ -134,7 +134,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
           {saved ? (
             <span className="text-xs text-emerald-600 font-semibold flex items-center space-x-1">
               <CheckCircle2 className="w-4 h-4" />
@@ -156,4 +156,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
