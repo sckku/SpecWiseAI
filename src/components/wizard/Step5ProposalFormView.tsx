@@ -46,7 +46,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
             <h4 className="font-heading font-bold text-sm text-kku-900">
               แบบร่างคำของบประมาณเงินรายได้ (งบลงทุน/ครุภัณฑ์) 8 หมวดหมู่
             </h4>
-            <p className="text-xs text-kku-700">
+            <p className="text-sm text-kku-700">
               ตามแบบฟอร์มมาตรฐานของมหาวิทยาลัยขอนแก่น พร้อมสำหรับการพิมพ์หรือส่งตรวจสอบ
             </p>
           </div>
@@ -65,7 +65,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
               8: !allOpen,
             });
           }}
-          className="text-xs font-semibold text-kku-800 hover:text-kku-950 underline shrink-0"
+          className="text-sm font-semibold text-kku-800 hover:text-kku-950 underline shrink-0"
         >
           {Object.values(openSections).every(Boolean) ? "ย่อทั้งหมด" : "ขยายทั้งหมด"}
         </button>
@@ -78,7 +78,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
           className="w-full px-4 py-3 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-left"
         >
           <div className="flex items-center space-x-2">
-            <span className="w-5 h-5 rounded bg-kku-700 text-white text-xs font-bold flex items-center justify-center">
+            <span className="w-5 h-5 rounded bg-kku-700 text-white text-sm font-bold flex items-center justify-center">
               1
             </span>
             <span className="font-heading font-bold text-sm text-slate-800">
@@ -88,7 +88,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
           {openSections[1] ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
         </button>
         {openSections[1] && (
-          <div className="p-4 text-xs space-y-3">
+          <div className="p-4 text-sm space-y-3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <label className="text-slate-500 font-medium">หน่วยงาน / ส่วนงาน</label>
@@ -112,11 +112,11 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
               </div>
             </div>
             <div className="pt-2 border-t border-slate-100 flex flex-wrap gap-2">
-              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[11px]">
+              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-sm">
                 {form.section1BasicInfo.sCurve}
               </span>
               {form.section1BasicInfo.sdgs.map((sdg, i) => (
-                <span key={i} className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-[11px]">
+                <span key={i} className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-sm">
                   {sdg}
                 </span>
               ))}
@@ -132,7 +132,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
           className="w-full px-4 py-3 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-left"
         >
           <div className="flex items-center space-x-2">
-            <span className="w-5 h-5 rounded bg-kku-700 text-white text-xs font-bold flex items-center justify-center">
+            <span className="w-5 h-5 rounded bg-kku-700 text-white text-sm font-bold flex items-center justify-center">
               2
             </span>
             <span className="font-heading font-bold text-sm text-slate-800">
@@ -142,7 +142,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
           {openSections[2] ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
         </button>
         {openSections[2] && (
-          <div className="p-4 text-xs space-y-2.5">
+          <div className="p-4 text-sm space-y-2.5">
             <div>
               <span className="font-semibold text-slate-700">เหตุผลความจำเป็น:</span>
               <p className="text-slate-600 mt-0.5 leading-relaxed">{form.section2Necessity.details}</p>
@@ -172,7 +172,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
           className="w-full px-4 py-3 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-left"
         >
           <div className="flex items-center space-x-2">
-            <span className="w-5 h-5 rounded bg-kku-700 text-white text-xs font-bold flex items-center justify-center">
+            <span className="w-5 h-5 rounded bg-kku-700 text-white text-sm font-bold flex items-center justify-center">
               4
             </span>
             <span className="font-heading font-bold text-sm text-slate-800">
@@ -182,7 +182,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
           {openSections[4] ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
         </button>
         {openSections[4] && (
-          <div className="p-4 text-xs space-y-3">
+          <div className="p-4 text-sm space-y-3">
             <table className="w-full border-collapse border border-slate-200">
               <thead>
                 <tr className="bg-slate-100 text-slate-700">
@@ -199,7 +199,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
                   <td className="p-2 border border-slate-200 text-right font-semibold text-emerald-700">
                     {form.section4QuotationComparison.vendor1.price.toLocaleString()} ฿
                   </td>
-                  <td className="p-2 border border-slate-200 text-center text-[11px] font-bold text-emerald-700">
+                  <td className="p-2 border border-slate-200 text-center text-sm font-bold text-emerald-700">
                     ⭐ ราคาต่ำสุดที่เลือกใช้
                   </td>
                 </tr>
@@ -233,7 +233,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
           className="w-full px-4 py-3 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-left"
         >
           <div className="flex items-center space-x-2">
-            <span className="w-5 h-5 rounded bg-kku-700 text-white text-xs font-bold flex items-center justify-center">
+            <span className="w-5 h-5 rounded bg-kku-700 text-white text-sm font-bold flex items-center justify-center">
               7
             </span>
             <span className="font-heading font-bold text-sm text-slate-800">
@@ -243,7 +243,7 @@ export function Step5ProposalFormView({ form, onChange }: Step5ProposalFormViewP
           {openSections[7] ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
         </button>
         {openSections[7] && (
-          <div className="p-4 text-xs space-y-2">
+          <div className="p-4 text-sm space-y-2">
             <div>
               <span className="font-semibold text-slate-700">คุณลักษณะทางเทคนิค:</span>
               <p className="text-slate-800 mt-0.5">{form.section7SpecSummary.technicalSpec}</p>

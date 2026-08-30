@@ -13,14 +13,14 @@ export function Step1IntentView({ intent, onChange }: Step1IntentViewProps) {
   return (
     <div className="space-y-4">
       <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl p-5 shadow-sm">
-        <div className="flex items-center space-x-2 text-xs font-bold text-kku-300 uppercase tracking-wider mb-2">
+        <div className="flex items-center space-x-2 text-sm font-bold text-kku-300 uppercase tracking-wider mb-2">
           <Layers className="w-4 h-4" />
           <span>ผลการสกัดความต้องการ (Step 1: NLP Intent Extraction)</span>
         </div>
         <h3 className="text-lg font-heading font-semibold text-white">
           {intent.rawItemName}
         </h3>
-        <p className="text-xs text-slate-300 mt-1">
+        <p className="text-sm text-slate-300 mt-1">
           {intent.objective}
         </p>
       </div>
@@ -28,7 +28,7 @@ export function Step1IntentView({ intent, onChange }: Step1IntentViewProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Quantity & Unit */}
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-subtle">
-          <div className="flex items-center space-x-2 text-slate-500 text-xs font-semibold uppercase mb-1">
+          <div className="flex items-center space-x-2 text-slate-500 text-sm font-semibold uppercase mb-1">
             <Tag className="w-4 h-4 text-blue-600" />
             <span>จำนวนที่ขอจัดซื้อ</span>
           </div>
@@ -39,7 +39,7 @@ export function Step1IntentView({ intent, onChange }: Step1IntentViewProps) {
 
         {/* Unit Price */}
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-subtle">
-          <div className="flex items-center space-x-2 text-slate-500 text-xs font-semibold uppercase mb-1">
+          <div className="flex items-center space-x-2 text-slate-500 text-sm font-semibold uppercase mb-1">
             <DollarSign className="w-4 h-4 text-amber-600" />
             <span>ราคาต่อหน่วยที่เสนอ</span>
           </div>
@@ -51,7 +51,7 @@ export function Step1IntentView({ intent, onChange }: Step1IntentViewProps) {
 
         {/* Total Budget */}
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-subtle">
-          <div className="flex items-center space-x-2 text-slate-500 text-xs font-semibold uppercase mb-1">
+          <div className="flex items-center space-x-2 text-slate-500 text-sm font-semibold uppercase mb-1">
             <Target className="w-4 h-4 text-emerald-600" />
             <span>วงเงินงบประมาณรวม</span>
           </div>
@@ -62,7 +62,7 @@ export function Step1IntentView({ intent, onChange }: Step1IntentViewProps) {
         </div>
       </div>
 
-      <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2">
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-slate-500 font-medium">หมวดหมู่ครุภัณฑ์:</span>
           <span className="font-semibold text-slate-800 bg-white px-2.5 py-1 rounded border border-slate-200">

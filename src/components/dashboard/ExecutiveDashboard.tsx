@@ -67,7 +67,7 @@ export function ExecutiveDashboard() {
           <h1 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 tracking-tight">
             ต้องการจัดซื้ออะไร?
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             บอกความต้องการของคุณ AI จะช่วยวิเคราะห์ ตรวจสอบมาตรฐานและราคาที่เหมาะสม
           </p>
 
@@ -78,11 +78,11 @@ export function ExecutiveDashboard() {
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
                 placeholder="เช่น เครื่องคอมพิวเตอร์สำหรับงาน Data Science จำนวน 10 เครื่อง..."
-                className="flex-1 px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder-slate-400 bg-transparent focus:outline-none"
+                className="flex-1 px-3 py-2 text-sm text-slate-800 placeholder-slate-400 bg-transparent focus:outline-none"
               />
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-heading font-bold text-xs shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-1.5 transition-all hover:scale-[1.02] shrink-0"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-heading font-bold text-sm shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-1.5 transition-all hover:scale-[1.02] shrink-0"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>วิเคราะห์ด้วย AI</span>
@@ -170,7 +170,7 @@ export function ExecutiveDashboard() {
           </h2>
           <Link
             href="/requests"
-            className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1 transition-colors"
+            className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1 transition-colors"
           >
             <span>ดูทั้งหมด</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -187,8 +187,8 @@ export function ExecutiveDashboard() {
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
                 161
               </div>
-              <div className="text-xs font-semibold text-slate-600 mt-0.5">รายการทั้งหมด</div>
-              <p className="text-[10px] text-slate-400 mt-1">เพิ่มขึ้น 12% จากเดือนที่แล้ว</p>
+              <div className="text-sm font-semibold text-slate-600 mt-0.5">รายการทั้งหมด</div>
+              <p className="text-sm text-slate-400 mt-1">เพิ่มขึ้น 12% จากเดือนที่แล้ว</p>
             </div>
           </div>
 
@@ -201,8 +201,8 @@ export function ExecutiveDashboard() {
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
                 24
               </div>
-              <div className="text-xs font-semibold text-slate-600 mt-0.5">รอตรวจสอบ</div>
-              <p className="text-[10px] text-amber-600 font-medium mt-1">ต้องดำเนินการ</p>
+              <div className="text-sm font-semibold text-slate-600 mt-0.5">รอตรวจสอบ</div>
+              <p className="text-sm text-amber-600 font-medium mt-1">ต้องดำเนินการ</p>
             </div>
           </div>
 
@@ -215,8 +215,8 @@ export function ExecutiveDashboard() {
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
                 8
               </div>
-              <div className="text-xs font-semibold text-slate-600 mt-0.5">ต้องแก้ไข</div>
-              <p className="text-[10px] text-rose-600 font-medium mt-1">รอการแก้ไข</p>
+              <div className="text-sm font-semibold text-slate-600 mt-0.5">ต้องแก้ไข</div>
+              <p className="text-sm text-rose-600 font-medium mt-1">รอการแก้ไข</p>
             </div>
           </div>
 
@@ -229,8 +229,8 @@ export function ExecutiveDashboard() {
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
                 3
               </div>
-              <div className="text-xs font-semibold text-slate-600 mt-0.5">พร้อมส่ง</div>
-              <p className="text-[10px] text-emerald-600 font-medium mt-1">พร้อมเสนออนุมัติ</p>
+              <div className="text-sm font-semibold text-slate-600 mt-0.5">พร้อมส่ง</div>
+              <p className="text-sm text-emerald-600 font-medium mt-1">พร้อมเสนออนุมัติ</p>
             </div>
           </div>
         </div>
@@ -256,16 +256,16 @@ export function ExecutiveDashboard() {
                     <Monitor className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">Computer Lab</h4>
-                    <p className="text-[11px] text-slate-400">คณะวิทยาศาสตร์</p>
+                    <h4 className="text-sm font-bold text-slate-900">Computer Lab</h4>
+                    <p className="text-sm text-slate-400">คณะวิทยาศาสตร์</p>
                   </div>
                 </div>
                 <div className="w-full text-left sm:w-auto sm:text-right">
-                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-medium">
+                  <span className="inline-flex items-center text-sm px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-medium">
                     ⚠ ตรวจสอบวงเงิน
                   </span>
-                  <div className="text-xs font-bold text-slate-800 mt-1">520,000 บาท</div>
-                  <div className="text-[9px] text-slate-400">25 พ.ค. 2569</div>
+                  <div className="text-sm font-bold text-slate-800 mt-1">520,000 บาท</div>
+                  <div className="text-sm text-slate-400">25 พ.ค. 2569</div>
                 </div>
               </Link>
 
@@ -279,16 +279,16 @@ export function ExecutiveDashboard() {
                     <Microscope className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">Microscope</h4>
-                    <p className="text-[11px] text-slate-400">คณะวิทยาศาสตร์</p>
+                    <h4 className="text-sm font-bold text-slate-900">Microscope</h4>
+                    <p className="text-sm text-slate-400">คณะวิทยาศาสตร์</p>
                   </div>
                 </div>
                 <div className="w-full text-left sm:w-auto sm:text-right">
-                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
+                  <span className="inline-flex items-center text-sm px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
                     ✓ ผ่านมาตรฐาน
                   </span>
-                  <div className="text-xs font-bold text-slate-800 mt-1">1,250,000 บาท</div>
-                  <div className="text-[9px] text-slate-400">24 พ.ค. 2569</div>
+                  <div className="text-sm font-bold text-slate-800 mt-1">1,250,000 บาท</div>
+                  <div className="text-sm text-slate-400">24 พ.ค. 2569</div>
                 </div>
               </Link>
 
@@ -302,16 +302,16 @@ export function ExecutiveDashboard() {
                     <Cpu className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">GPU Workstation</h4>
-                    <p className="text-[11px] text-slate-400">คณะเทคโนโลยีสารสนเทศ</p>
+                    <h4 className="text-sm font-bold text-slate-900">GPU Workstation</h4>
+                    <p className="text-sm text-slate-400">คณะเทคโนโลยีสารสนเทศ</p>
                   </div>
                 </div>
                 <div className="w-full text-left sm:w-auto sm:text-right">
-                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-medium">
+                  <span className="inline-flex items-center text-sm px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-medium">
                     ⚠ Spec ไม่สอดคล้อง
                   </span>
-                  <div className="text-xs font-bold text-slate-800 mt-1">850,000 บาท</div>
-                  <div className="text-[9px] text-slate-400">23 พ.ค. 2569</div>
+                  <div className="text-sm font-bold text-slate-800 mt-1">850,000 บาท</div>
+                  <div className="text-sm text-slate-400">23 พ.ค. 2569</div>
                 </div>
               </Link>
             </div>
@@ -320,7 +320,7 @@ export function ExecutiveDashboard() {
           <div className="mt-4 pt-3 border-t border-slate-100 text-center">
             <Link
               href="/requests"
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
+              className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
             >
               <span>ดูรายการทั้งหมด</span>
               <ArrowRight className="w-3 h-3" />
@@ -361,47 +361,47 @@ export function ExecutiveDashboard() {
                 </svg>
                 <div className="absolute text-center">
                   <div className="text-xl font-heading font-bold text-slate-900">45%</div>
-                  <div className="text-[9px] text-slate-400">ดำเนินการแล้ว</div>
+                  <div className="text-sm text-slate-400">ดำเนินการแล้ว</div>
                 </div>
               </div>
 
               {/* Steps Status List */}
-              <div className="space-y-1.5 text-xs flex-1">
+              <div className="space-y-1.5 text-sm flex-1">
                 <div className="flex items-center space-x-2 text-slate-700">
-                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
+                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm">
                     ✓
                   </div>
-                  <span className="text-[11px] font-medium">1. ความต้องการ</span>
+                  <span className="text-sm font-medium">1. ความต้องการ</span>
                 </div>
                 <div className="flex items-center space-x-2 text-slate-700">
-                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
+                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm">
                     ✓
                   </div>
-                  <span className="text-[11px] font-medium">2. รายการที่แนะนำ</span>
+                  <span className="text-sm font-medium">2. รายการที่แนะนำ</span>
                 </div>
                 <div className="flex items-center space-x-2 text-slate-700">
-                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
+                  <div className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm">
                     ✓
                   </div>
-                  <span className="text-[11px] font-medium">3. ราคาอ้างอิง</span>
+                  <span className="text-sm font-medium">3. ราคาอ้างอิง</span>
                 </div>
                 <div className="flex items-center space-x-2 text-indigo-700 font-semibold">
-                  <div className="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">
+                  <div className="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm">
                     4
                   </div>
-                  <span className="text-[11px]">4. ตรวจสอบวงเงิน</span>
+                  <span className="text-sm">4. ตรวจสอบวงเงิน</span>
                 </div>
                 <div className="flex items-center space-x-2 text-slate-400">
-                  <div className="w-4 h-4 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-[10px]">
+                  <div className="w-4 h-4 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-sm">
                     5
                   </div>
-                  <span className="text-[11px]">5. ร่างคำของบประมาณ</span>
+                  <span className="text-sm">5. ร่างคำของบประมาณ</span>
                 </div>
                 <div className="flex items-center space-x-2 text-slate-400">
-                  <div className="w-4 h-4 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-[10px]">
+                  <div className="w-4 h-4 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-sm">
                     6
                   </div>
-                  <span className="text-[11px]">6. Specification</span>
+                  <span className="text-sm">6. Specification</span>
                 </div>
               </div>
             </div>
@@ -410,7 +410,7 @@ export function ExecutiveDashboard() {
           <div className="mt-4 pt-3 border-t border-slate-100 text-center">
             <Link
               href="/requests/new"
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
+              className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
             >
               <span>ดำเนินการต่อ</span>
               <ArrowRight className="w-3 h-3" />
@@ -432,12 +432,12 @@ export function ExecutiveDashboard() {
                   <AlertTriangle className="w-4 h-4" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-bold text-slate-900 truncate">
+                  <h4 className="text-sm font-bold text-slate-900 truncate">
                     วงเงินสูงกว่าข้อมูลอ้างอิง
                   </h4>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[11px] text-slate-500">Computer Lab</span>
-                    <span className="text-[10px] text-slate-400">5 นาทีที่แล้ว</span>
+                    <span className="text-sm text-slate-500">Computer Lab</span>
+                    <span className="text-sm text-slate-400">5 นาทีที่แล้ว</span>
                   </div>
                 </div>
               </div>
@@ -448,12 +448,12 @@ export function ExecutiveDashboard() {
                   <Info className="w-4 h-4" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-bold text-slate-900 truncate">
+                  <h4 className="text-sm font-bold text-slate-900 truncate">
                     แนบใบเสนอราคา
                   </h4>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[11px] text-slate-500">GPU Workstation</span>
-                    <span className="text-[10px] text-slate-400">1 ชั่วโมงที่แล้ว</span>
+                    <span className="text-sm text-slate-500">GPU Workstation</span>
+                    <span className="text-sm text-slate-400">1 ชั่วโมงที่แล้ว</span>
                   </div>
                 </div>
               </div>
@@ -464,14 +464,14 @@ export function ExecutiveDashboard() {
                   <FileText className="w-4 h-4" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-bold text-slate-900 truncate">
+                  <h4 className="text-sm font-bold text-slate-900 truncate">
                     มาตรฐานอัปเดต
                   </h4>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[11px] text-slate-500 truncate">
+                    <span className="text-sm text-slate-500 truncate">
                       กระทรวงดิจิทัลฯ ฉบับ พ.ศ. 2569
                     </span>
-                    <span className="text-[10px] text-slate-400 shrink-0 ml-1">
+                    <span className="text-sm text-slate-400 shrink-0 ml-1">
                       3 ชั่วโมงที่แล้ว
                     </span>
                   </div>
@@ -483,7 +483,7 @@ export function ExecutiveDashboard() {
           <div className="mt-4 pt-3 border-t border-slate-100 text-center">
             <Link
               href="/notifications"
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
+              className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1"
             >
               <span>ดูการแจ้งเตือนทั้งหมด</span>
               <ArrowRight className="w-3 h-3" />
@@ -507,10 +507,10 @@ export function ExecutiveDashboard() {
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
               <CheckCircle2 className="w-5 h-5" />
             </div>
-            <h4 className="text-xs font-bold text-slate-900 group-hover:text-emerald-700">
+            <h4 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700">
               ตรวจสอบชื่อครุภัณฑ์
             </h4>
-            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
               ตรวจสอบความถูกต้องของชื่อและมาตรฐาน
             </p>
           </Link>
@@ -523,10 +523,10 @@ export function ExecutiveDashboard() {
             <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
               <Scale className="w-5 h-5" />
             </div>
-            <h4 className="text-xs font-bold text-slate-900 group-hover:text-purple-700">
+            <h4 className="text-sm font-bold text-slate-900 group-hover:text-purple-700">
               เปรียบเทียบราคา
             </h4>
-            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
               เปรียบเทียบราคาจากหลายแหล่งอ้างอิง
             </p>
           </Link>
@@ -539,10 +539,10 @@ export function ExecutiveDashboard() {
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
               <DollarSign className="w-5 h-5" />
             </div>
-            <h4 className="text-xs font-bold text-slate-900 group-hover:text-emerald-700">
+            <h4 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700">
               ตรวจสอบวงเงิน
             </h4>
-            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
               AI วิเคราะห์ความเหมาะสมของวงเงิน
             </p>
           </Link>
@@ -555,10 +555,10 @@ export function ExecutiveDashboard() {
             <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
               <FileText className="w-5 h-5" />
             </div>
-            <h4 className="text-xs font-bold text-slate-900 group-hover:text-indigo-700">
+            <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-700">
               ร่างเอกสารอัตโนมัติ
             </h4>
-            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
               สร้างร่างคำของบประมาณ และ Spec
             </p>
           </Link>
@@ -571,10 +571,10 @@ export function ExecutiveDashboard() {
             <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-700">
+            <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700">
               แหล่งอ้างอิงชัดเจน
             </h4>
-            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
               ทุกคำแนะนำมาพร้อมแหล่งอ้างอิงที่ตรวจสอบได้
             </p>
           </Link>

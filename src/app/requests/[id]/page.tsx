@@ -124,7 +124,7 @@ export default function RequestDetailPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <Link
           href="/"
-          className="inline-flex items-center space-x-1.5 text-slate-500 hover:text-slate-900 text-xs font-semibold"
+          className="inline-flex items-center space-x-1.5 text-slate-500 hover:text-slate-900 text-sm font-semibold"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>กลับไปยังแดชบอร์ด</span>
@@ -136,7 +136,7 @@ export default function RequestDetailPage() {
           <a
             href={`/api/requests/${proposal.id}/export-excel`}
             download={`KKU_RequestForm_${proposal.code}.xlsx`}
-            className="flex flex-1 items-center justify-center space-x-1.5 rounded-xl border border-emerald-300 bg-emerald-50/70 px-3.5 py-2 text-xs font-semibold text-emerald-800 shadow-sm transition-all hover:bg-emerald-100 sm:flex-none sm:hover:scale-102"
+            className="flex flex-1 items-center justify-center space-x-1.5 rounded-xl border border-emerald-300 bg-emerald-50/70 px-3.5 py-2 text-sm font-semibold text-emerald-800 shadow-sm transition-all hover:bg-emerald-100 sm:flex-none sm:hover:scale-102"
             title="ดาวน์โหลดไฟล์ Excel ตามรูปแบบฟอร์มทางการของมหาวิทยาลัยขอนแก่น"
           >
             <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
@@ -148,7 +148,7 @@ export default function RequestDetailPage() {
             href={`/api/requests/${proposal.id}/export-html`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-1 items-center justify-center space-x-1.5 rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-sm transition-all hover:bg-slate-50 sm:flex-none sm:hover:scale-102"
+            className="flex flex-1 items-center justify-center space-x-1.5 rounded-xl border border-slate-300 px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:bg-slate-50 sm:flex-none sm:hover:scale-102"
           >
             <Printer className="w-4 h-4 text-kku-700" />
             <span>พิมพ์แบบฟอร์ม มข. (PDF)</span>
@@ -159,7 +159,7 @@ export default function RequestDetailPage() {
             <button
               onClick={() => handleTransition("DEPT_REVIEW")}
               disabled={isUpdating}
-              className="px-4 py-2 rounded-xl kku-gradient text-white text-xs font-heading font-bold shadow-md hover:opacity-95"
+              className="px-4 py-2 rounded-xl kku-gradient text-white text-sm font-heading font-bold shadow-md hover:opacity-95"
             >
               ส่งหัวหน้าภาควิชา / งานแผน ตรวจสอบ
             </button>
@@ -170,14 +170,14 @@ export default function RequestDetailPage() {
               <button
                 onClick={() => handleTransition("SUBMITTED")}
                 disabled={isUpdating}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-heading font-bold shadow-md"
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-heading font-bold shadow-md"
               >
                 ✓ ผ่านการตรวจ ส่งระดับคณะ
               </button>
               <button
                 onClick={() => handleTransition("REVISED")}
                 disabled={isUpdating}
-                className="px-3.5 py-2 rounded-xl border border-rose-300 bg-rose-50 text-rose-700 text-xs font-semibold"
+                className="px-3.5 py-2 rounded-xl border border-rose-300 bg-rose-50 text-rose-700 text-sm font-semibold"
               >
                 ส่งกลับแก้ไข
               </button>
@@ -188,7 +188,7 @@ export default function RequestDetailPage() {
             <button
               onClick={() => handleTransition("APPROVED")}
               disabled={isUpdating}
-              className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-heading font-bold shadow-md"
+              className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-heading font-bold shadow-md"
             >
               ✓ อนุมัติบรรจุในแผนงบประมาณคณะ
             </button>
@@ -197,7 +197,7 @@ export default function RequestDetailPage() {
       </div>
 
       {errorMsg && (
-        <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs">
+        <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm">
           {errorMsg}
         </div>
       )}
@@ -207,11 +207,11 @@ export default function RequestDetailPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-mono text-xs font-bold text-kku-700 bg-kku-50 px-2 py-0.5 rounded">
+              <span className="font-mono text-sm font-bold text-kku-700 bg-kku-50 px-2 py-0.5 rounded">
                 {proposal.code}
               </span>
-              <span className="text-xs text-slate-400">•</span>
-              <span className="text-xs text-slate-500">{proposal.department} ({proposal.faculty})</span>
+              <span className="text-sm text-slate-400">•</span>
+              <span className="text-sm text-slate-500">{proposal.department} ({proposal.faculty})</span>
             </div>
             <h1 className="text-xl font-heading font-bold text-slate-900 mt-1">
               {proposal.title}
@@ -223,14 +223,14 @@ export default function RequestDetailPage() {
               {Number(proposal.totalBudgetBaht).toLocaleString()}{" "}
               <span className="text-sm font-normal text-slate-500">บาท</span>
             </div>
-            <div className="text-xs text-slate-500 mt-0.5">
+            <div className="text-sm text-slate-500 mt-0.5">
               จำนวน {proposal.quantity} {proposal.unit} (หน่วยละ {Number(proposal.unitPriceBaht).toLocaleString()} ฿)
             </div>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex min-w-0 gap-4 overflow-x-auto border-b border-slate-200 pt-2 text-xs font-heading font-semibold">
+        <div className="flex min-w-0 gap-4 overflow-x-auto border-b border-slate-200 pt-2 text-sm font-heading font-semibold">
           <button
             onClick={() => setActiveTab("form")}
             className={`pb-2.5 transition-colors border-b-2 ${
@@ -302,16 +302,16 @@ export default function RequestDetailPage() {
           <div className="space-y-3">
             {proposal.reviewComments && proposal.reviewComments.length > 0 ? (
               proposal.reviewComments.map((comm) => (
-                <div key={comm.id} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1">
+                <div key={comm.id} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-sm space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-slate-800">{comm.authorName} ({comm.authorRole})</span>
-                    <span className="text-slate-400 text-[11px]">{new Date(comm.createdAt).toLocaleString("th-TH")}</span>
+                    <span className="text-slate-400 text-sm">{new Date(comm.createdAt).toLocaleString("th-TH")}</span>
                   </div>
                   <p className="text-slate-700">{comm.content}</p>
                 </div>
               ))
             ) : (
-              <p className="text-xs text-slate-400 py-4 text-center">ยังไม่มีความคิดเห็นหรือข้อเสนอแนะ</p>
+              <p className="text-sm text-slate-400 py-4 text-center">ยังไม่มีความคิดเห็นหรือข้อเสนอแนะ</p>
             )}
           </div>
 
@@ -322,11 +322,11 @@ export default function RequestDetailPage() {
               placeholder="เพิ่มข้อเสนอแนะหรือบันทึกการตรวจสอบ..."
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              className="flex-1 text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-kku-700"
+              className="flex-1 text-sm p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-kku-700"
             />
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center space-x-1"
+              className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold flex items-center space-x-1"
             >
               <Send className="w-3.5 h-3.5" />
               <span>ส่ง</span>

@@ -32,7 +32,7 @@ export function Step2CatalogMatchView({ matchResult }: Step2CatalogMatchViewProp
               ? "พบรายการมาตรฐานในบัญชีราคาอ้างอิงภาครัฐ"
               : "เป็นรายการนอกบัญชีมาตรฐาน (Non-Standard)"}
           </div>
-          <p className="text-xs opacity-90 mt-0.5">
+          <p className="text-sm opacity-90 mt-0.5">
             {matchResult.comparisonNotes}
           </p>
         </div>
@@ -41,7 +41,7 @@ export function Step2CatalogMatchView({ matchResult }: Step2CatalogMatchViewProp
       {/* Recommended Standard Name */}
       <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-subtle space-y-4">
         <div>
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+          <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">
             ชื่อครุภัณฑ์มาตรฐานที่แนะนำ (Official Standard Name)
           </span>
           <h4 className="text-base font-heading font-bold text-slate-900 mt-1">
@@ -51,7 +51,7 @@ export function Step2CatalogMatchView({ matchResult }: Step2CatalogMatchViewProp
 
         {matchResult.standardUnitPrice && (
           <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 flex justify-between items-center">
-            <span className="text-xs text-slate-600 font-medium">ราคามาตรฐานต่อหน่วย:</span>
+            <span className="text-sm text-slate-600 font-medium">ราคามาตรฐานต่อหน่วย:</span>
             <span className="text-base font-bold text-slate-900">
               {matchResult.standardUnitPrice.toLocaleString()} บาท
             </span>
@@ -61,11 +61,11 @@ export function Step2CatalogMatchView({ matchResult }: Step2CatalogMatchViewProp
         {/* Evidence Card */}
         {matchResult.evidence && (
           <div className="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-xl p-4 space-y-2">
-            <div className="flex items-center space-x-2 text-xs font-bold text-kku-700">
+            <div className="flex items-center space-x-2 text-sm font-bold text-kku-700">
               <BookMarked className="w-4 h-4" />
               <span>หลักฐานอ้างอิงทางการ (Official Citation Evidence)</span>
             </div>
-            <div className="text-xs text-slate-700 space-y-1 pl-6">
+            <div className="text-sm text-slate-700 space-y-1 pl-6">
               <p>
                 <strong className="text-slate-900">แหล่งอ้างอิง:</strong> {matchResult.evidence.source}
               </p>

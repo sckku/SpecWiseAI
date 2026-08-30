@@ -101,11 +101,11 @@ export function Navbar() {
                   <span className="font-heading font-bold text-lg text-slate-900 tracking-tight">
                     SpecWise <span className="text-kku-700">AI</span>
                   </span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-kku-100 text-kku-800 font-semibold uppercase">
+                  <span className="text-sm px-1.5 py-0.5 rounded bg-kku-100 text-kku-800 font-semibold uppercase">
                     KKU 2026
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 hidden sm:block">
+                <p className="text-sm text-slate-500 hidden sm:block">
                   AI Asset Budget &amp; TOR Assistant
                 </p>
               </div>
@@ -146,15 +146,15 @@ export function Navbar() {
                 className="flex items-center space-x-2.5 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-slate-300 bg-slate-50 text-left transition-colors"
                 disabled={isLoading}
               >
-                <div className="w-7 h-7 rounded-full bg-kku-700 text-white text-xs flex items-center justify-center font-bold">
+                <div className="w-7 h-7 rounded-full bg-kku-700 text-white text-sm flex items-center justify-center font-bold">
                   {currentUser?.thaiName?.charAt(0) || "U"}
                 </div>
                 <div className="hidden sm:block">
-                  <div className="text-xs font-semibold text-slate-800 flex items-center space-x-1">
+                  <div className="text-sm font-semibold text-slate-800 flex items-center space-x-1">
                     <span>{currentUser?.thaiName || "ผู้ใช้งาน"}</span>
                   </div>
                   <span
-                    className={`inline-block text-[10px] px-1.5 py-0.2 rounded border font-medium ${roleBadgeColor(
+                    className={`inline-block text-sm px-1.5 py-0.2 rounded border font-medium ${roleBadgeColor(
                       currentUser?.role
                     )}`}
                   >
@@ -168,24 +168,24 @@ export function Navbar() {
               {isRoleMenuOpen && (
                 <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2">
                   <div className="px-3 py-2 border-b border-slate-100">
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">
                       สลับบทบาททดสอบ (Mock Auth)
                     </p>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-sm text-slate-400">
                       จำลองการใช้งานสิทธิ์ตามระบบ KKU SSONext
                     </p>
                   </div>
 
                   <button
                     onClick={() => handleRoleSwitch("requester")}
-                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors"
+                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-sm transition-colors"
                   >
                     <UserCheck className="w-4 h-4 text-emerald-600 mt-0.5" />
                     <div>
                       <div className="font-semibold text-slate-800">
                         ดร.สมชาย (ผู้ขอตั้งงบ)
                       </div>
-                      <div className="text-[11px] text-slate-500">
+                      <div className="text-sm text-slate-500">
                         อาจารย์/นักวิจัย สาขาวิชาวิทยาการคอมฯ
                       </div>
                     </div>
@@ -193,14 +193,14 @@ export function Navbar() {
 
                   <button
                     onClick={() => handleRoleSwitch("verifier")}
-                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors"
+                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-sm transition-colors"
                   >
                     <ShieldCheck className="w-4 h-4 text-blue-600 mt-0.5" />
                     <div>
                       <div className="font-semibold text-slate-800">
                         นายประเสริฐ (ผู้ตรวจภาควิชา)
                       </div>
-                      <div className="text-[11px] text-slate-500">
+                      <div className="text-sm text-slate-500">
                         เจ้าหน้าที่งานแผนและนโยบาย ภาควิชา
                       </div>
                     </div>
@@ -208,14 +208,14 @@ export function Navbar() {
 
                   <button
                     onClick={() => handleRoleSwitch("approver")}
-                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors"
+                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-sm transition-colors"
                   >
                     <Building2 className="w-4 h-4 text-amber-600 mt-0.5" />
                     <div>
                       <div className="font-semibold text-slate-800">
                         ศ.ดร.วิโรจน์ (ผู้อนุมัติคณะ)
                       </div>
-                      <div className="text-[11px] text-slate-500">
+                      <div className="text-sm text-slate-500">
                         คณบดีคณะวิทยาศาสตร์
                       </div>
                     </div>
@@ -223,14 +223,14 @@ export function Navbar() {
 
                   <button
                     onClick={() => handleRoleSwitch("admin")}
-                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-xs transition-colors"
+                    className="w-full px-3 py-2 text-left hover:bg-slate-50 flex items-start space-x-2.5 text-sm transition-colors"
                   >
                     <Sparkles className="w-4 h-4 text-purple-600 mt-0.5" />
                     <div>
                       <div className="font-semibold text-slate-800">
                         นางสาวกรกนก (ผู้ดูแลระบบ)
                       </div>
-                      <div className="text-[11px] text-slate-500">
+                      <div className="text-sm text-slate-500">
                         กองคลังและพัสดุ มหาวิทยาลัยขอนแก่น
                       </div>
                     </div>

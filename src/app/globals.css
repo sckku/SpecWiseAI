@@ -1,17 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-prompt: 'Prompt', system-ui, -apple-system, sans-serif;
-  --font-sarabun: 'Sarabun', system-ui, -apple-system, sans-serif;
-}
-
 @layer base {
+  html {
+    font-size: 16px;
+  }
+
   body {
     @apply bg-slate-50 text-slate-900 antialiased font-sans;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@layer utilities {
+  /* Thai text needs more room than Tailwind's compact defaults. */
+  .text-xs {
+    font-size: 1rem;
+    line-height: 1.625rem;
+  }
+
+  .text-\[8px\],
+  .text-\[9px\],
+  .text-\[10px\],
+  .text-\[11px\] {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  .text-sm {
+    font-size: 1rem;
+    line-height: 1.625rem;
+  }
+
+  @media (min-width: 1024px) {
+    .text-sm {
+      font-size: 1.0625rem;
+      line-height: 1.75rem;
+    }
   }
 }
 

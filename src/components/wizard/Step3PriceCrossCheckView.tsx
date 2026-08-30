@@ -16,7 +16,7 @@ export function Step3PriceCrossCheckView({ priceCrossCheck }: Step3PriceCrossChe
       {/* Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-subtle">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase">
+          <span className="text-sm font-semibold text-slate-400 uppercase">
             ราคามาตรฐานต่ำสุด
           </span>
           <div className="text-xl font-heading font-bold text-slate-800 mt-0.5">
@@ -25,7 +25,7 @@ export function Step3PriceCrossCheckView({ priceCrossCheck }: Step3PriceCrossChe
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-subtle">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase">
+          <span className="text-sm font-semibold text-slate-400 uppercase">
             ส่วนต่างจากราคามาตรฐาน
           </span>
           <div
@@ -42,7 +42,7 @@ export function Step3PriceCrossCheckView({ priceCrossCheck }: Step3PriceCrossChe
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-subtle">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase">
+          <span className="text-sm font-semibold text-slate-400 uppercase">
             อัตราความแปรปรวน (Variance)
           </span>
           <div
@@ -65,13 +65,13 @@ export function Step3PriceCrossCheckView({ priceCrossCheck }: Step3PriceCrossChe
               ตารางตรวจสอบราคา 4 แหล่งข้อมูลทางการ (Multi-Source Price Matrix)
             </h4>
           </div>
-          <span className="text-[11px] px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-medium">
+          <span className="text-sm px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-medium">
             4 ฐานข้อมูล
           </span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <table className="w-full text-left text-sm">
             <thead className="bg-slate-50/70 border-b border-slate-200 text-slate-600 font-semibold">
               <tr>
                 <th className="py-2.5 px-4">แหล่งข้อมูลอ้างอิง</th>
@@ -88,11 +88,11 @@ export function Step3PriceCrossCheckView({ priceCrossCheck }: Step3PriceCrossChe
                   </td>
                   <td className="py-3 px-4 text-center">
                     {src.found ? (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-sm font-semibold bg-emerald-100 text-emerald-800">
                         <Check className="w-3 h-3 mr-1" /> พบข้อมูล
                       </span>
                     ) : (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-sm font-semibold bg-slate-100 text-slate-500">
                         <X className="w-3 h-3 mr-1" /> ไม่มีในเกณฑ์
                       </span>
                     )}

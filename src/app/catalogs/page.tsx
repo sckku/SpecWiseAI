@@ -66,7 +66,7 @@ export default function CatalogsPage() {
         <h1 className="text-xl sm:text-2xl font-heading font-bold text-slate-900">
           มาตรฐานและราคากลางอ้างอิงภาครัฐ
         </h1>
-        <p className="text-xs text-slate-500 mt-0.5">
+        <p className="text-sm text-slate-500 mt-0.5">
           ค้นหา ตรวจสอบราคา และเอกสารอ้างอิงทางการจาก สำนักงบประมาณ, กระทรวง DE และ มข.
         </p>
       </div>
@@ -82,12 +82,12 @@ export default function CatalogsPage() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-900">สำนักงบประมาณ</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
+            <span className="text-sm font-bold text-slate-900">สำนักงบประมาณ</span>
+            <span className="text-sm px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
               ฉบับ เม.ย. 2569
             </span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             บัญชีราคามาตรฐานครุภัณฑ์ภาครัฐ (บัญชีหลัก)
           </p>
         </button>
@@ -101,12 +101,12 @@ export default function CatalogsPage() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-900">กระทรวงดิจิทัลฯ (MDES)</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
+            <span className="text-sm font-bold text-slate-900">กระทรวงดิจิทัลฯ (MDES)</span>
+            <span className="text-sm px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
               ฉบับ 2569
             </span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             เกณฑ์ราคากลางและคุณลักษณะพื้นฐานคอมพิวเตอร์
           </p>
         </button>
@@ -120,12 +120,12 @@ export default function CatalogsPage() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-900">มหาวิทยาลัยขอนแก่น</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 font-semibold">
+            <span className="text-sm font-bold text-slate-900">มหาวิทยาลัยขอนแก่น</span>
+            <span className="text-sm px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 font-semibold">
               มข. 2569
             </span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             บัญชีราคากลางและคุณลักษณะเฉพาะ มหาวิทยาลัยขอนแก่น
           </p>
         </button>
@@ -140,7 +140,7 @@ export default function CatalogsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="ค้นหาชื่อรายการ, คุณลักษณะเฉพาะ, รหัส..."
-            className="w-full text-xs pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+            className="w-full text-sm pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
           />
         </div>
       </div>
@@ -153,11 +153,11 @@ export default function CatalogsPage() {
             className="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
           >
             <div>
-              <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center justify-between text-sm">
                 <span className="font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
                   {item.code}
                 </span>
-                <span className="text-[11px] text-slate-400">
+                <span className="text-sm text-slate-400">
                   หน้า {item.page} • ข้อ {item.itemNo}
                 </span>
               </div>
@@ -165,18 +165,18 @@ export default function CatalogsPage() {
               <h3 className="font-heading font-bold text-sm text-slate-900 mt-2">
                 {item.name}
               </h3>
-              <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">{item.spec}</p>
+              <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">{item.spec}</p>
             </div>
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
               <div>
-                <span className="text-[10px] text-slate-400 block">ราคามาตรฐานต่อหน่วย</span>
+                <span className="text-sm text-slate-400 block">ราคามาตรฐานต่อหน่วย</span>
                 <span className="text-lg font-heading font-bold text-slate-900">
                   {item.price.toLocaleString()} บาท
                 </span>
               </div>
 
-              <span className="text-xs font-semibold text-indigo-600 inline-flex items-center space-x-1">
+              <span className="text-sm font-semibold text-indigo-600 inline-flex items-center space-x-1">
                 <span>{item.source}</span>
               </span>
             </div>

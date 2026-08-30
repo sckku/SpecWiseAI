@@ -56,7 +56,7 @@ export default function LoginPage() {
           <h1 className="text-2xl font-heading font-extrabold tracking-tight">
             SpecWise <span className="text-amber-400">AI</span>
           </h1>
-          <p className="text-xs text-slate-300">
+          <p className="text-sm text-slate-300">
             ระบบจัดทำคำของบประมาณและสเปกครุภัณฑ์ มหาวิทยาลัยขอนแก่น
           </p>
         </div>
@@ -71,7 +71,7 @@ export default function LoginPage() {
             <LogIn className="w-5 h-5" />
             <span>เข้าสู่ระบบด้วย KKU SSONext</span>
           </button>
-          <div className="flex items-center justify-center space-x-2 text-[11px] text-slate-400">
+          <div className="flex items-center justify-center space-x-2 text-sm text-slate-400">
             <Shield className="w-3.5 h-3.5 text-emerald-400" />
             <span>รองรับ KKU SSONext OAuth2 / OIDC Single Sign-On</span>
           </div>
@@ -80,7 +80,7 @@ export default function LoginPage() {
         {/* Divider */}
         <div className="relative flex py-2 items-center">
           <div className="flex-grow border-t border-white/10"></div>
-          <span className="flex-shrink mx-4 text-[10px] uppercase tracking-wider text-slate-400 font-semibold">
+          <span className="flex-shrink mx-4 text-sm uppercase tracking-wider text-slate-400 font-semibold">
             หรือ ทดสอบในโหมด Sandbox / Mock
           </span>
           <div className="flex-grow border-t border-white/10"></div>
@@ -88,7 +88,7 @@ export default function LoginPage() {
 
         {/* Mock Role Switcher Cards */}
         <div className="space-y-2">
-          <div className="text-[11px] font-semibold text-slate-300">
+          <div className="text-sm font-semibold text-slate-300">
             เลือกบทบาทผู้ใช้งานเพื่อทดสอบระบบทันที:
           </div>
 
@@ -140,10 +140,10 @@ export default function LoginPage() {
                       <Icon className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
+                      <div className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
                         {item.name}
                       </div>
-                      <div className="text-[10px] text-slate-300">{item.roleName}</div>
+                      <div className="text-sm text-slate-300">{item.roleName}</div>
                     </div>
                   </div>
                   <ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
@@ -154,7 +154,7 @@ export default function LoginPage() {
         </div>
 
         {/* Footer info */}
-        <div className="pt-2 text-center text-[10px] text-slate-400 border-t border-white/10">
+        <div className="pt-2 text-center text-sm text-slate-400 border-t border-white/10">
           KKU AI Hackathon 2026 • Khon Kaen University
         </div>
       </div>

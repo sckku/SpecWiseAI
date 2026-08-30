@@ -56,7 +56,7 @@ const config: Config = {
           "sans-serif",
         ],
         heading: [
-          "var(--font-prompt)",
+          "var(--font-sarabun)",
           "system-ui",
           "-apple-system",
           "sans-serif",

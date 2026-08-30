@@ -84,14 +84,14 @@ export default function RequestsPage() {
           <h1 className="text-xl sm:text-2xl font-heading font-bold text-slate-900">
             คำของบประมาณครุภัณฑ์
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-sm text-slate-500 mt-0.5">
             จัดการ ติดตามสถานะ และตรวจสอบคำของบประมาณครุภัณฑ์ทั้งหมด
           </p>
         </div>
 
         <Link
           href="/requests/new"
-          className="flex w-full items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-500/25 transition-all hover:from-indigo-700 hover:to-purple-700 sm:w-auto sm:hover:scale-105"
+          className="flex w-full items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-indigo-500/25 transition-all hover:from-indigo-700 hover:to-purple-700 sm:w-auto sm:hover:scale-105"
         >
           <Plus className="w-4 h-4" />
           <span>สร้างคำขอใหม่ด้วย AI</span>
@@ -107,14 +107,14 @@ export default function RequestsPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="ค้นหาชื่อคำขอ, รหัส, หน่วยงาน..."
-            className="w-full text-xs pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+            className="w-full text-sm pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
           />
         </div>
 
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-700 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 sm:w-auto"
+          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 sm:w-auto"
         >
           <option value="ALL">สถานะทั้งหมด</option>
           <option value="AI_ANALYZED">AI วิเคราะห์แล้ว</option>
@@ -127,9 +127,9 @@ export default function RequestsPage() {
       {/* Proposals List Table */}
       <div className="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <p className="border-b border-slate-100 px-4 py-2 text-[10px] text-slate-400 sm:hidden">เลื่อนตารางไปด้านข้างเพื่อดูข้อมูลเพิ่มเติม</p>
-          <table className="w-full min-w-[760px] text-left text-xs">
-            <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-500 font-semibold uppercase text-[10px]">
+          <p className="border-b border-slate-100 px-4 py-2 text-sm text-slate-400 sm:hidden">เลื่อนตารางไปด้านข้างเพื่อดูข้อมูลเพิ่มเติม</p>
+          <table className="w-full min-w-[760px] text-left text-sm">
+            <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-500 font-semibold uppercase text-sm">
               <tr>
                 <th className="py-3.5 px-5">รหัสคำขอ</th>
                 <th className="py-3.5 px-5">ชื่อรายการครุภัณฑ์</th>
@@ -154,20 +154,20 @@ export default function RequestsPage() {
                     </td>
                     <td className="py-4 px-5">
                       <div className="font-semibold text-slate-900">{prop.title}</div>
-                      <div className="text-[11px] text-slate-400 mt-0.5">
+                      <div className="text-sm text-slate-400 mt-0.5">
                         {prop.quantity} {prop.unit} ({Number(prop.unitPriceBaht).toLocaleString()} ฿/{prop.unit})
                       </div>
                     </td>
                     <td className="py-4 px-5">
                       <div className="text-slate-800 font-medium">{prop.department}</div>
-                      <div className="text-[11px] text-slate-400">{prop.faculty}</div>
+                      <div className="text-sm text-slate-400">{prop.faculty}</div>
                     </td>
                     <td className="py-4 px-5 text-right font-heading font-bold text-slate-900">
                       {Number(prop.totalBudgetBaht).toLocaleString()} ฿
                     </td>
                     <td className="py-4 px-5 text-center">
                       <span
-                        className={`inline-block text-[10px] px-2.5 py-1 rounded-full border font-semibold ${statusBadge(
+                        className={`inline-block text-sm px-2.5 py-1 rounded-full border font-semibold ${statusBadge(
                           prop.status
                         )}`}
                       >
@@ -180,14 +180,14 @@ export default function RequestsPage() {
                           href={`/api/requests/${prop.id}/export-excel`}
                           download={`KKU_RequestForm_${prop.code}.xlsx`}
                           title="ดาวน์โหลด Excel (ฟอร์ม มข.)"
-                          className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs transition-colors"
+                          className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-sm transition-colors"
                         >
                           <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
                           <span className="hidden md:inline">Excel</span>
                         </a>
                         <Link
                           href={`/requests/${prop.id}`}
-                          className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition-colors"
+                          className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-sm transition-colors"
                         >
                           <span>เปิดดู</span>
                           <ArrowRight className="w-3 h-3" />

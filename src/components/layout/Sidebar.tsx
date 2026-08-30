@@ -87,7 +87,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
                 SpecWise <span className="text-indigo-600">AI</span>
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 font-medium">KKU Asset & Budget AI</p>
+            <p className="text-sm text-slate-400 font-medium">KKU Asset & Budget AI</p>
           </div>
         </Link>
       </div>
@@ -96,7 +96,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
       <div className="p-4">
         <Link
           href="/requests/new"
-          className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-heading font-medium text-xs shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-2 transition-all hover:shadow-lg hover:shadow-indigo-500/35 active:scale-[0.98]"
+          className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-heading font-medium text-sm shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-2 transition-all hover:shadow-lg hover:shadow-indigo-500/35 active:scale-[0.98]"
         >
           <Plus className="w-4 h-4" />
           <span>สร้างคำของบประมาณใหม่</span>
@@ -111,7 +111,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
+              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 item.active
                   ? "bg-indigo-50/80 text-indigo-700 font-semibold shadow-xs"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
@@ -126,7 +126,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
                 <span>{item.label}</span>
               </div>
               {item.badge && (
-                <span className="w-5 h-5 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-rose-500 text-white text-sm font-bold flex items-center justify-center">
                   {item.badge}
                 </span>
               )}
@@ -139,26 +139,26 @@ export function Sidebar({ currentUser }: SidebarProps) {
       <div className="p-4 border-t border-slate-100">
         <div className="bg-gradient-to-br from-indigo-50/70 via-purple-50/40 to-slate-50 border border-indigo-100/80 rounded-2xl p-4 relative overflow-hidden">
           <div className="flex items-center justify-between text-indigo-700 mb-1">
-            <span className="text-[11px] font-semibold text-slate-800">AI ช่วยคุณไปแล้ว</span>
+            <span className="text-sm font-semibold text-slate-800">AI ช่วยคุณไปแล้ว</span>
           </div>
-          <p className="text-[10px] text-slate-500">ประจำปีงบประมาณ 2570</p>
+          <p className="text-sm text-slate-500">ประจำปีงบประมาณ 2570</p>
 
           <div className="mt-3">
             <div className="text-3xl font-heading font-bold text-indigo-600 leading-tight">
               161
             </div>
-            <div className="text-[11px] text-slate-600">รายการ</div>
+            <div className="text-sm text-slate-600">รายการ</div>
           </div>
 
           <div className="mt-3 pt-3 border-t border-indigo-100/60 flex items-center justify-between">
             <div>
-              <span className="text-[10px] text-slate-500 block">ประหยัดเวลาไปแล้ว</span>
+              <span className="text-sm text-slate-500 block">ประหยัดเวลาไปแล้ว</span>
               <span className="text-sm font-bold text-emerald-600">428</span>{" "}
-              <span className="text-[10px] text-slate-500">ชั่วโมง</span>
+              <span className="text-sm text-slate-500">ชั่วโมง</span>
             </div>
             <Link
               href="/reports"
-              className="text-[10px] text-indigo-600 hover:text-indigo-800 font-semibold flex items-center space-x-0.5"
+              className="text-sm text-indigo-600 hover:text-indigo-800 font-semibold flex items-center space-x-0.5"
             >
               <span>ดูรายละเอียด</span>
               <ArrowRight className="w-3 h-3" />
@@ -168,14 +168,14 @@ export function Sidebar({ currentUser }: SidebarProps) {
 
         {/* User Profile Pill */}
         <div className="mt-3 flex items-center space-x-2.5 px-2 py-1.5 rounded-xl hover:bg-slate-50 transition-colors">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 text-white text-xs font-bold flex items-center justify-center shadow-xs">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 text-white text-sm font-bold flex items-center justify-center shadow-xs">
             {currentUser?.thaiName?.charAt(0) || "ว"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-slate-800 truncate">
+            <p className="text-sm font-semibold text-slate-800 truncate">
               {currentUser?.thaiName || "วรรณวิภา อ."}
             </p>
-            <p className="text-[10px] text-slate-400 truncate">
+            <p className="text-sm text-slate-400 truncate">
               {currentUser?.position || "นักวิเคราะห์พัสดุ"}
             </p>
           </div>

@@ -54,7 +54,7 @@ export default function NotificationsPage() {
         <h1 className="text-xl sm:text-2xl font-heading font-bold text-slate-900">
           การแจ้งเตือนทั้งหมด
         </h1>
-        <p className="text-xs text-slate-500 mt-0.5">
+        <p className="text-sm text-slate-500 mt-0.5">
           แจ้งเตือนความเสี่ยง เกณฑ์ราคากลางอัปเดต และสถานะคำของบประมาณ
         </p>
       </div>
@@ -88,11 +88,11 @@ export default function NotificationsPage() {
                 <h3 className="font-heading text-sm font-bold text-slate-900 sm:truncate">
                   {alert.title}
                 </h3>
-                <span className="text-[10px] text-slate-400 shrink-0 ml-2">
+                <span className="text-sm text-slate-400 shrink-0 ml-2">
                   {alert.time}
                 </span>
               </div>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+              <p className="text-sm text-slate-600 mt-1 leading-relaxed">
                 {alert.description}
               </p>
             </div>
