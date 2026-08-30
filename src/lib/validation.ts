@@ -42,7 +42,6 @@ const attachmentSchema = z
 export const createProposalSchema = z
   .object({
     title: z.string().trim().max(500).optional(),
-    status: requestStatusEnum.optional(),
     category: z.string().trim().max(200).optional(),
     unit: z.string().trim().max(50).optional(),
     unitPriceBaht: moneyBaht.optional(),

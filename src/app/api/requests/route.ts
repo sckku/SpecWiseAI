@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       requesterId: user.id,
       requesterName: user.thaiName,
       requesterEmail: user.email,
-      status: body.status || "DRAFT",
+      status: "DRAFT",
       fiscalYear: 2569,
       category: body.category || "ครุภัณฑ์คอมพิวเตอร์",
       totalBudgetBaht: body.totalBudgetBaht ?? 0,
