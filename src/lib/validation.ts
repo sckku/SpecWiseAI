@@ -49,11 +49,12 @@ export const createProposalSchema = z
     quantity: z.number().int().min(1).max(1_000_000).optional(),
     standardMatched: z.boolean().optional(),
     standardName: z.string().trim().max(500).optional(),
+    alertLevel: z.enum(["GREEN_MATCH", "AMBER_ALERT", "CUSTOM_NON_STANDARD"]).optional(),
+    status: requestStatusEnum.optional(),
     form8Sections: z.record(z.unknown()).optional(),
     neutralSpec: z.record(z.unknown()).optional(),
     aiAnalysis: z.record(z.unknown()).optional(),
     attachments: z.array(attachmentSchema).max(20).optional(),
-    // status intentionally omitted: new proposals always start as DRAFT
   })
   .strict();
 

@@ -18,14 +18,10 @@ export function AppLayout({ children }: AppLayoutProps) {
     fetch("/api/auth/mock-switch")
       .then((res) => res.json())
       .then((data) => {
-        if (data.availableRoles && data.availableRoles.length > 0) {
-          const currentRoleKey =
-            document.cookie
-              .split("; ")
-              .find((row) => row.startsWith("specwise_session_role="))
-              ?.split("=")[1] || "requester";
-          const match = data.availableRoles.find((r: any) => r.key === currentRoleKey);
-          setCurrentUser(match || data.availableRoles[0]);
+        if (data.currentUser) {
+          setCurrentUser(data.currentUser);
+        } else if (data.availableRoles && data.availableRoles.length > 0) {
+          setCurrentUser(data.availableRoles[0]);
         }
       })
       .catch(console.error);

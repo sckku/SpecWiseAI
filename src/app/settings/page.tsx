@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Settings,
   Shield,
@@ -10,17 +10,39 @@ import {
   Bot,
   Save,
   CheckCircle2,
+  Sparkles,
+  Server,
 } from "lucide-react";
 
 export default function SettingsPage() {
   const [model, setModel] = useState("llama-3.3-70b-instruct");
   const [baseUrl, setBaseUrl] = useState("https://intelsphere.kku.ac.th/v1");
   const [saved, setSaved] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    try {
+      const savedModel = localStorage.getItem("specwise_ai_model");
+      const savedBaseUrl = localStorage.getItem("specwise_ai_base_url");
+      if (savedModel) setModel(savedModel);
+      if (savedBaseUrl) setBaseUrl(savedBaseUrl);
+    } catch (e) {
+      console.warn("Could not read from localStorage", e);
+    } finally {
+      setIsLoaded(true);
+    }
+  }, []);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      localStorage.setItem("specwise_ai_model", model);
+      localStorage.setItem("specwise_ai_base_url", baseUrl);
+    } catch (e) {
+      console.warn("Could not save to localStorage", e);
+    }
     setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+    setTimeout(() => setSaved(false), 3000);
   };
 
   return (
@@ -37,12 +59,12 @@ export default function SettingsPage() {
       <form onSubmit={handleSave} className="space-y-6">
         {/* AI Model Settings */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xs space-y-4">
-          <div className="flex items-center space-x-2 text-sm font-bold text-slate-700 uppercase tracking-wider">
+          <div className="flex items-center space-x-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
             <Cpu className="w-4 h-4 text-indigo-600" />
             <span>การเชื่อมต่อ KKU IntelSphere AI</span>
           </div>
 
-          <div className="space-y-4 text-sm">
+          <div className="space-y-4 text-xs">
             <div>
               <label className="block font-semibold text-slate-700 mb-1.5">
                 KKU IntelSphere Endpoint Base URL
@@ -51,24 +73,34 @@ export default function SettingsPage() {
                 type="text"
                 value={baseUrl}
                 onChange={(e) => setBaseUrl(e.target.value)}
-                className="w-full p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 font-mono"
+                className="w-full p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 font-mono text-xs"
               />
             </div>
 
             <div>
               <label className="block font-semibold text-slate-700 mb-1.5">
-                AI Model Name
+                AI Model Name (โมเดลประมวลผล)
               </label>
               <select
                 value={model}
                 onChange={(e) => setModel(e.target.value)}
-                className="w-full p-3 border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 font-mono"
+                className="w-full p-3 border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 font-mono text-xs font-medium text-slate-800"
               >
                 <option value="llama-3.3-70b-instruct">llama-3.3-70b-instruct (KKU IntelSphere Recommended)</option>
                 <option value="llama-3.1-8b-instruct">llama-3.1-8b-instruct (Fast Low Latency)</option>
-                <option value="qwen-2.5-72b-instruct">qwen-2.5-72b-instruct</option>
-                <option value="mock-ai-offline">Mock AI Engine (Offline Testing)</option>
+                <option value="qwen-2.5-72b-instruct">qwen-2.5-72b-instruct (High Precision)</option>
+                <option value="mock-ai-offline">Mock AI Engine (Offline Tester - โหมดทดสอบออฟไลน์)</option>
               </select>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-indigo-50/50 border border-indigo-100 flex items-center justify-between">
+              <span className="text-indigo-900 font-medium flex items-center space-x-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+                <span>สถานะโมเดลปัจจุบัน:</span>
+              </span>
+              <span className="font-mono font-bold text-indigo-700 bg-white px-2.5 py-1 rounded-lg border border-indigo-200">
+                {model}
+              </span>
             </div>
           </div>
         </div>
@@ -76,38 +108,38 @@ export default function SettingsPage() {
         {/* Security & KKU SSONext Authentication */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xs space-y-4">
           <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center space-x-2 text-sm font-bold text-slate-700 uppercase tracking-wider">
+            <div className="flex items-center space-x-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
               <Shield className="w-4 h-4 text-emerald-600" />
               <span>การเชื่อมต่อระบบยืนยันตัวตน (KKU SSONext)</span>
             </div>
-            <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-bold">
+            <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
               API Standardized
             </span>
           </div>
 
-          <div className="space-y-3 text-sm text-slate-600">
+          <div className="space-y-3 text-xs text-slate-600">
             <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/60 space-y-2">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <span className="font-semibold text-slate-800">KKU SSONext Postman Spec Endpoints</span>
-                <span className="text-sm font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md font-bold">
+                <span className="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md font-bold">
                   ssonext-api.kku.ac.th
                 </span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 pt-1 font-mono text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 pt-1 font-mono text-xs">
                 <div className="p-2 bg-white rounded-xl border border-slate-200/80">
-                  <div className="text-sm text-slate-400 font-sans font-semibold">1. Token Exchange</div>
+                  <div className="text-[11px] text-slate-400 font-sans font-semibold">1. Token Exchange</div>
                   <div className="text-slate-800 font-bold">POST /auth.token</div>
-                  <div className="text-sm text-slate-500">code, redirectUrl, clientId, clientSecret</div>
+                  <div className="text-[10px] text-slate-500 truncate">code, redirectUrl, clientId, clientSecret</div>
                 </div>
                 <div className="p-2 bg-white rounded-xl border border-slate-200/80">
-                  <div className="text-sm text-slate-400 font-sans font-semibold">2. User Profile</div>
+                  <div className="text-[11px] text-slate-400 font-sans font-semibold">2. User Profile</div>
                   <div className="text-slate-800 font-bold">POST /user.profile</div>
-                  <div className="text-sm text-slate-500">Authorization: Bearer &lt;token&gt;</div>
+                  <div className="text-[10px] text-slate-500 truncate">Authorization: Bearer &lt;token&gt;</div>
                 </div>
                 <div className="p-2 bg-white rounded-xl border border-slate-200/80">
-                  <div className="text-sm text-slate-400 font-sans font-semibold">3. Status Verification</div>
+                  <div className="text-[11px] text-slate-400 font-sans font-semibold">3. Status Verification</div>
                   <div className="text-slate-800 font-bold">POST /auth.status</div>
-                  <div className="text-sm text-slate-500">Authorization: Bearer &lt;token&gt;</div>
+                  <div className="text-[10px] text-slate-500 truncate">Authorization: Bearer &lt;token&gt;</div>
                 </div>
               </div>
             </div>
@@ -115,9 +147,9 @@ export default function SettingsPage() {
             <div className="flex flex-col items-start gap-2 rounded-2xl bg-slate-50 p-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <span className="font-semibold text-slate-800">KKU Employee API v3 Integration</span>
-                <p className="text-sm text-slate-400">ดึงข้อมูลสังกัด คณะ ภาควิชา และตำแหน่งบุคลากรโดยตรง</p>
+                <p className="text-xs text-slate-400">ดึงข้อมูลสังกัด คณะ ภาควิชา และตำแหน่งบุคลากรโดยตรง</p>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-bold">
+              <span className="px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold font-mono">
                 api.kku.ac.th/v3
               </span>
             </div>
@@ -125,9 +157,9 @@ export default function SettingsPage() {
             <div className="flex flex-col items-start gap-2 rounded-2xl bg-slate-50 p-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <span className="font-semibold text-slate-800">Anti-Brand-Locking Procurement Linter</span>
-                <p className="text-sm text-slate-400">ตรวจสอบการล็อคสเปกสินค้าและชื่อทางการค้าตามระเบียบพัสดุ</p>
+                <p className="text-xs text-slate-400">ตรวจสอบการล็อคสเปกสินค้าและชื่อทางการค้าตามระเบียบพัสดุ</p>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-bold">
+              <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
                 Active
               </span>
             </div>
@@ -136,9 +168,9 @@ export default function SettingsPage() {
 
         <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
           {saved ? (
-            <span className="text-sm text-emerald-600 font-semibold flex items-center space-x-1">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>บันทึกการตั้งค่าเรียบร้อยแล้ว</span>
+            <span className="text-xs text-emerald-600 font-bold flex items-center space-x-1.5 bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200 animate-in fade-in">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <span>บันทึกการตั้งค่าลงเครื่อง (Local Persistence) เรียบร้อยแล้ว</span>
             </span>
           ) : (
             <div></div>
@@ -146,7 +178,7 @@ export default function SettingsPage() {
 
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-heading font-bold text-sm shadow-md shadow-indigo-500/25 flex items-center space-x-2 transition-all hover:scale-105"
+            className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-heading font-bold text-xs shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-2 transition-all hover:scale-105"
           >
             <Save className="w-4 h-4" />
             <span>บันทึกการตั้งค่า</span>

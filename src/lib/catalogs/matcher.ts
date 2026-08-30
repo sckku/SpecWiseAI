@@ -98,7 +98,7 @@ export function matchStandardNameHeuristic(
   }
 
   // Match Scientific Centrifuge
-  if (nameLower.includes("centrifuge") || nameLower.includes("ปั่นเหวี่ยง") || nameLower.includes("วิทยาศาสตร์")) {
+  if (nameLower.includes("centrifuge") || nameLower.includes("ปั่นเหวี่ยง") || nameLower.includes("ตกตะกอน")) {
     const match = (catalogsData as any[]).find((c) => c.itemCode === "4.12") || catalogsData[5];
     return {
       isMatched: true,
@@ -116,7 +116,45 @@ export function matchStandardNameHeuristic(
     };
   }
 
-  // Default standard PC
+  // Match UV-Vis Spectrophotometer
+  if (nameLower.includes("spectrophotometer") || nameLower.includes("สเปกโตร") || nameLower.includes("ดูดกลืนแสง")) {
+    const match = (catalogsData as any[]).find((c) => c.itemCode === "4.18") || catalogsData[6] || catalogsData[5];
+    return {
+      isMatched: true,
+      matchStatus: "matched",
+      rawName,
+      recommendedStandardName: match.standardName,
+      standardUnitPrice: match.unitPrice,
+      evidence: {
+        source: match.sourceEdition,
+        page: match.documentPage,
+        itemNo: match.itemCode,
+        description: match.specSummary,
+      },
+      comparisonNotes: "รายการตรงกับบัญชีราคามาตรฐานครุภัณฑ์วิทยาศาสตร์ สำนักงบประมาณ",
+    };
+  }
+
+  // Match Interactive Smart Display
+  if (nameLower.includes("interactive") || nameLower.includes("smart display") || nameLower.includes("จอสัมผัส") || nameLower.includes("กระดานอัจฉริยะ")) {
+    const match = (catalogsData as any[]).find((c) => c.itemCode === "KKU-AV-01") || catalogsData[7];
+    return {
+      isMatched: true,
+      matchStatus: "matched",
+      rawName,
+      recommendedStandardName: match.standardName,
+      standardUnitPrice: match.unitPrice,
+      evidence: {
+        source: match.sourceEdition,
+        page: match.documentPage,
+        itemNo: match.itemCode,
+        description: match.specSummary,
+      },
+      comparisonNotes: "รายการตรงกับแนวทางราคากลางครุภัณฑ์ มหาวิทยาลัยขอนแก่น (ครุภัณฑ์การศึกษา)",
+    };
+  }
+
+  // Default fallback
   const defaultMatch = catalogsData[0];
   return {
     isMatched: true,

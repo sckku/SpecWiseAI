@@ -46,12 +46,17 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   if (!isMockAuthEnabled()) {
     return mockDisabled();
   }
 
+  const roleCookie = req.cookies.get("specwise_session_role")?.value?.toLowerCase() || "requester";
+  const currentUser = MOCK_USERS[roleCookie] || MOCK_USERS.requester;
+
   return NextResponse.json({
+    currentRoleKey: roleCookie,
+    currentUser,
     availableRoles: Object.keys(MOCK_USERS).map((key) => ({
       key,
       ...MOCK_USERS[key],

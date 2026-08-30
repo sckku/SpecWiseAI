@@ -14,10 +14,10 @@ import { lintProcurementSpec } from "../security/procurement-linter";
 export function simulateStep1(promptText: string): Step1IntentResult {
   const lower = promptText.toLowerCase();
 
-  // Check for quantity
-  const qtyMatch = promptText.match(/(\d+)\s*(เครื่อง|ชุด|ตัว|จอ|อัน|โหล)/);
+  // Check for quantity & unit
+  const qtyMatch = promptText.match(/(\d+)\s*(เครื่อง|ชุด|ตัว|จอ|อัน|โหล|คัน|ระบบ)/);
   const qty = qtyMatch ? parseInt(qtyMatch[1], 10) : 10;
-  const unit = qtyMatch ? qtyMatch[2] : "เครื่อง";
+  const unit = qtyMatch ? qtyMatch[2] : (lower.includes("รถ") ? "คัน" : lower.includes("ชุด") || lower.includes("โต๊ะ") ? "ชุด" : "เครื่อง");
 
   // Check for total or unit price
   let totalBudget = 500000;
@@ -28,7 +28,7 @@ export function simulateStep1(promptText: string): Step1IntentResult {
     totalBudget = parseInt(budgetMatch[1].replace(/,/g, ""), 10);
     unitPrice = totalBudget / qty;
   } else {
-    const unitMatch = promptText.match(/เครื่องละ\s*([\d,]+)\s*บาท/);
+    const unitMatch = promptText.match(/(?:เครื่อง|ชุด|ตัว|จอ|อัน|คัน)ละ\s*([\d,]+)\s*บาท/);
     if (unitMatch) {
       unitPrice = parseInt(unitMatch[1].replace(/,/g, ""), 10);
       totalBudget = unitPrice * qty;
@@ -38,6 +38,7 @@ export function simulateStep1(promptText: string): Step1IntentResult {
   let itemCategory = "ครุภัณฑ์คอมพิวเตอร์";
   let rawItemName = "เครื่องคอมพิวเตอร์ประสิทธิภาพสูงสำหรับงาน Data Science และ AI";
   let objective = "เพื่อใช้ในการประมวลผลข้อมูลขนาดใหญ่ การเรียนการสอน และงานวิจัยด้าน Data Science และ AI";
+  let targetDepartment = "สาขาวิชาวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์";
 
   if (lower.includes("notebook") || lower.includes("laptop") || lower.includes("พกพา")) {
     itemCategory = "ครุภัณฑ์คอมพิวเตอร์";
@@ -47,13 +48,67 @@ export function simulateStep1(promptText: string): Step1IntentResult {
       unitPrice = 38000;
       totalBudget = unitPrice * qty;
     }
-  } else if (lower.includes("centrifuge") || lower.includes("ปั่นเหวี่ยง") || lower.includes("วิทยาศาสตร์")) {
+  } else if (lower.includes("centrifuge") || lower.includes("ปั่นเหวี่ยง") || lower.includes("ตกตะกอน")) {
     itemCategory = "ครุภัณฑ์วิทยาศาสตร์";
-    rawItemName = "เครื่องปั่นเหวี่ยงตกตะกอนควบคุมอุณหภูมิความเร็วรอบสูง";
-    objective = "เพื่อใช้ในการแยกสารชีวโมเลกุลในงานวิจัยด้านเทคโนโลยีชีวภาพ";
+    rawItemName = "เครื่องปั่นเหวี่ยงตกตะกอนควบคุมอุณหภูมิความเร็วรอบสูง (Refrigerated Centrifuge)";
+    objective = "เพื่อใช้ในการแยกสารชีวโมเลกุลในงานวิจัยด้านเทคโนโลยีชีวภาพและจุลชีววิทยา";
+    targetDepartment = "สาขาวิชาชีวเคมีและชีววิทยา คณะวิทยาศาสตร์";
     if (!budgetMatch) {
       unitPrice = 350000;
       totalBudget = unitPrice * qty;
+    }
+  } else if (lower.includes("spectrophotometer") || lower.includes("สเปกโตร") || lower.includes("ดูดกลืนแสง")) {
+    itemCategory = "ครุภัณฑ์วิทยาศาสตร์";
+    rawItemName = "เครื่องวัดการดูดกลืนแสงแบบยูวี-วิสิเบิล (UV-Vis Spectrophotometer)";
+    objective = "เพื่อใช้ในการวิเคราะห์ปริมาณสารอินทรีย์และโลหะหนักในห้องปฏิบัติการ";
+    targetDepartment = "สาขาวิชาเคมี คณะวิทยาศาสตร์";
+    if (!budgetMatch) {
+      unitPrice = 280000;
+      totalBudget = unitPrice * qty;
+    }
+  } else if (lower.includes("interactive") || lower.includes("smart display") || lower.includes("จอสัมผัส") || lower.includes("กระดานอัจฉริยะ")) {
+    itemCategory = "ครุภัณฑ์การศึกษา";
+    rawItemName = "จอสัมผัสอัจฉริยะเพื่อการเรียนการสอน (Interactive Smart Display 75 นิ้ว)";
+    objective = "เพื่อยกระดับห้องเรียนอัจฉริยะ (Active Learning Classroom) และการสอนแบบผสมผสาน";
+    targetDepartment = "งานบริการการศึกษา คณะวิทยาศาสตร์";
+    if (!budgetMatch) {
+      unitPrice = 95000;
+      totalBudget = unitPrice * qty;
+    }
+  } else if (lower.includes("ปรับอากาศ") || lower.includes("แอร์") || lower.includes("inverter")) {
+    itemCategory = "ครุภัณฑ์สำนักงาน";
+    rawItemName = "เครื่องปรับอากาศ แบบแยกส่วน ระบบ Inverter ขนาด 36,000 BTU";
+    objective = "เพื่อทดแทนเครื่องเดิมที่ชำรุดและประหยัดพลังงานในห้องปฏิบัติการวิจัย";
+    targetDepartment = "งานอาคารสถานที่และยานพาหนะ";
+    if (!budgetMatch) {
+      unitPrice = 48000;
+      totalBudget = unitPrice * qty;
+    }
+  } else if (lower.includes("โต๊ะ") || lower.includes("เก้าอี้") || lower.includes("เฟอร์นิเจอร์")) {
+    itemCategory = "ครุภัณฑ์สำนักงาน";
+    rawItemName = "ชุดโต๊ะและเก้าอี้ปฏิบัติการวิทยาศาสตร์ทนสารเคมี";
+    objective = "เพื่อปรับปรุงห้องปฏิบัติการวิจัยให้ได้มาตรฐานความปลอดภัย";
+    targetDepartment = "คณะวิทยาศาสตร์";
+    if (!budgetMatch) {
+      unitPrice = 25000;
+      totalBudget = unitPrice * qty;
+    }
+  } else if (lower.includes("รถ") || lower.includes("พยาบาล") || lower.includes("ตู้")) {
+    itemCategory = "ครุภัณฑ์ยานพาหนะและขนส่ง";
+    rawItemName = "รถพยาบาลฉุกเฉินพร้อมอุปกรณ์ช่วยชีวิตขั้นสูง (Ambulance)";
+    objective = "เพื่อใช้ในการให้บริการการแพทย์ฉุกเฉินและการส่งต่อผู้ป่วย";
+    targetDepartment = "โรงพยาบาลศรีนครินทร์ คณะแพทยศาสตร์";
+    if (!budgetMatch) {
+      unitPrice = 2500000;
+      totalBudget = unitPrice * qty;
+    }
+  } else {
+    // Clean prompt to derive custom name
+    const cleaned = promptText
+      .replace(/ต้องการจัดซื้อ|จัดซื้อ|ขอตั้งงบ|ขออนุมัติ|จำนวน\s*\d+\s*(เครื่อง|ชุด|ตัว|จอ|อัน|โหล|คัน|ระบบ)|งบประมาณ\s*[\d,]+\s*บาท|(เครื่อง|ชุด|ตัว|คัน)ละ\s*[\d,]+\s*บาท/g, "")
+      .trim();
+    if (cleaned.length > 3) {
+      rawItemName = cleaned;
     }
   }
 
@@ -65,8 +120,8 @@ export function simulateStep1(promptText: string): Step1IntentResult {
     unit,
     totalProposedBudget: totalBudget,
     unitProposedPrice: unitPrice,
-    urgencyReason: "เพื่อรองรับการเปิดภาคการศึกษาใหม่และโครงการวิจัยทุนภายนอก",
-    targetDepartment: "สาขาวิชาวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์",
+    urgencyReason: "เพื่อรองรับการเปิดภาคการศึกษาใหม่และโครงการวิจัยตามยุทธศาสตร์มหาวิทยาลัย",
+    targetDepartment,
   };
 }
 
