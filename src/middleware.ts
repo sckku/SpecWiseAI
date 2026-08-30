@@ -3,14 +3,14 @@ import type { NextRequest } from "next/server";
 
 const isMockAuth =
   process.env.ENABLE_MOCK_AUTH === "true" &&
-  process.env.NODE_ENV !== "production";
+  (process.env.NODE_ENV !== "production" ||
+    process.env.ALLOW_UAT_MOCK_AUTH === "true");
 
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   // In mock mode only, seed a default role cookie for local development.
-  // In production this cookie is never auto-created: the session must come
-  // from the SSONext login flow.
+  // Production requires an explicit UAT opt-in before this cookie is created.
   if (isMockAuth) {
     const sessionRole = request.cookies.get("specwise_session_role")?.value;
     if (!sessionRole) {

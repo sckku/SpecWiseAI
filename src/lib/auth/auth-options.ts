@@ -5,14 +5,15 @@ import { getMockUser, MOCK_USERS } from "./mock-auth";
 const SESSION_COOKIE_NAME = "specwise_session_role";
 
 /**
- * Mock authentication is ONLY enabled when explicitly requested via env
- * AND the app is not running a production build. This prevents an
- * accidental production deploy from exposing the role-switch backdoor.
+ * Mock authentication is enabled locally with ENABLE_MOCK_AUTH. A UAT
+ * production deployment additionally requires an explicit second opt-in.
  */
 export function isMockAuthEnabled(): boolean {
+  if (process.env.ENABLE_MOCK_AUTH !== "true") return false;
+
   return (
-    process.env.ENABLE_MOCK_AUTH === "true" &&
-    process.env.NODE_ENV !== "production"
+    process.env.NODE_ENV !== "production" ||
+    process.env.ALLOW_UAT_MOCK_AUTH === "true"
   );
 }
 
