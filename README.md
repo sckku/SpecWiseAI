@@ -24,6 +24,14 @@ $$\text{“AI วิเคราะห์} \rightarrow \text{AI ตรวจ} \r
 
 ---
 
+## 📚 คู่มือการใช้งานระบบ (System Manuals)
+
+- 📘 **[คู่มือการใช้งานสำหรับผู้ใช้งานทั่วไป (User Manual)](docs/USER_MANUAL.md)**: คำแนะนำทีละขั้นตอนพร้อมภาพประกอบ สำหรับอาจารย์ นักวิจัย และผู้ขอตั้งงบประมาณ
+- 🛠️ **[คู่มือสำหรับผู้ดูแลระบบและเจ้าหน้าที่พัสดุ (Admin Manual)](docs/ADMIN_MANUAL.md)**: คู่มือการใช้งาน Admin Control Center, ระบบคิวตรวจสอบความเสี่ยง, การซิงค์แคตตาล็อก และการกำกับดูแล
+- 📂 **[ศูนย์รวมเอกสารทั้งหมด (Documentation Hub)](docs/README.md)**
+
+---
+
 ## 🚀 Key Capabilities & The 6-Step AI Engine
 
 ```mermaid

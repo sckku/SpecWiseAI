@@ -13,6 +13,7 @@ import {
   Settings,
   Plus,
   ArrowRight,
+  BookOpen,
 } from "lucide-react";
 import { KKUUserSession } from "@/types/auth";
 
@@ -48,6 +49,12 @@ export function Sidebar({ currentUser }: SidebarProps) {
       href: "/reports",
       icon: BarChart3,
       active: pathname === "/reports",
+    },
+    {
+      label: "คู่มือการใช้งาน",
+      href: "/manual",
+      icon: BookOpen,
+      active: pathname === "/manual",
     },
     {
       label: "การแจ้งเตือน",

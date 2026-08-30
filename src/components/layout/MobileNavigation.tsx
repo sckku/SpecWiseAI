@@ -14,6 +14,7 @@ import {
   Settings,
   Sparkles,
   X,
+  BookOpen,
 } from "lucide-react";
 import { KKUUserSession } from "@/types/auth";
 
@@ -24,6 +25,7 @@ interface MobileNavigationProps {
 const secondaryItems = [
   { label: "มาตรฐานและราคา", href: "/catalogs", icon: Layers },
   { label: "วิเคราะห์และรายงาน", href: "/reports", icon: BarChart3 },
+  { label: "คู่มือการใช้งาน", href: "/manual", icon: BookOpen },
   { label: "ตั้งค่า", href: "/settings", icon: Settings },
 ];
 

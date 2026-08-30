@@ -135,6 +135,17 @@ export function Navbar() {
                 <FilePlus2 className="w-4 h-4" />
                 <span>สร้างคำขอใหม่ (6-Step AI)</span>
               </Link>
+              <Link
+                href="/manual"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center space-x-1.5 ${
+                  pathname === "/manual"
+                    ? "bg-kku-50 text-kku-800 font-semibold"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                }`}
+              >
+                <BookOpen className="w-4 h-4" />
+                <span>คู่มือการใช้งาน</span>
+              </Link>
             </nav>
           </div>
 

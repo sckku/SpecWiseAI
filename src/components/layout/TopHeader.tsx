@@ -82,12 +82,13 @@ export function TopHeader({ currentUser, onRoleChange, isLoading }: TopHeaderPro
         </Link>
 
         {/* Help Button */}
-        <button
-          className="rounded-xl p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-          title="คู่มือการใช้งาน"
+        <Link
+          href="/manual"
+          className="rounded-xl p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+          title="คู่มือการใช้งานระบบ (Manual & Guides)"
         >
           <HelpCircle className="h-4 w-4" />
-        </button>
+        </Link>
 
         {/* Faculty & User Profile Capsule */}
         <div className="relative">
