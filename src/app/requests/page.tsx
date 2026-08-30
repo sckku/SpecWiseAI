@@ -116,11 +116,14 @@ export default function RequestsPage() {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 sm:w-auto"
         >
-          <option value="ALL">สถานะทั้งหมด</option>
+          <option value="ALL">สถานะทั้งหมด (ทุกขั้นตอน)</option>
+          <option value="DRAFT">แบบร่าง (Draft)</option>
           <option value="AI_ANALYZED">AI วิเคราะห์แล้ว</option>
           <option value="DEPT_REVIEW">รอตรวจระดับภาควิชา</option>
           <option value="SUBMITTED">ส่งระดับคณะแล้ว</option>
+          <option value="REVISED">ส่งกลับแก้ไข</option>
           <option value="APPROVED">อนุมัติบรรจุแผน</option>
+          <option value="REJECTED">ไม่อนุมัติ</option>
         </select>
       </div>
 

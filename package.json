@@ -10,6 +10,8 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "tsx scripts/seed/seed-catalogs.ts",
+    "db:seed:proposals": "tsx scripts/seed/seed-40-proposals.ts",
+    "db:seed:all": "tsx scripts/seed/seed-catalogs.ts && tsx scripts/seed/seed-40-proposals.ts",
     "test": "vitest run"
   },
   "dependencies": {

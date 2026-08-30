@@ -166,10 +166,10 @@ export function ExecutiveDashboard() {
             </div>
             <div>
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
-                161
+                {metrics?.totalProposals ?? proposals.length}
               </div>
               <div className="text-xs font-semibold text-slate-700 mt-0.5">รายการทั้งหมด</div>
-              <p className="text-[11px] text-slate-400 mt-0.5">เพิ่มขึ้น 12% จากเดือนที่แล้ว</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">งบประมาณรวม {(metrics ? (metrics.totalBudgetRequestedBaht / 1000000).toFixed(1) : "0")} ลบ.</p>
             </div>
           </div>
 
@@ -180,10 +180,10 @@ export function ExecutiveDashboard() {
             </div>
             <div>
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
-                24
+                {metrics?.pendingReviewCount ?? proposals.filter((p) => ["DEPT_REVIEW", "SUBMITTED", "AI_ANALYZED"].includes(p.status)).length}
               </div>
               <div className="text-xs font-semibold text-slate-700 mt-0.5">รอตรวจสอบ</div>
-              <p className="text-[11px] text-amber-600 font-medium mt-0.5">ต้องดำเนินการ</p>
+              <p className="text-[11px] text-amber-600 font-medium mt-0.5">อยู่ระหว่างการพิจารณา</p>
             </div>
           </div>
 
@@ -194,24 +194,24 @@ export function ExecutiveDashboard() {
             </div>
             <div>
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
-                8
+                {proposals.filter((p) => p.status === "REVISED").length}
               </div>
               <div className="text-xs font-semibold text-slate-700 mt-0.5">ต้องแก้ไข</div>
-              <p className="text-[11px] text-rose-600 font-medium mt-0.5">รอการแก้ไข</p>
+              <p className="text-[11px] text-rose-600 font-medium mt-0.5">รอผู้ขอปรับแก้เอกสาร</p>
             </div>
           </div>
 
-          {/* 4. Ready to Submit */}
+          {/* 4. Approved */}
           <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-xs hover:shadow-md transition-shadow flex items-start space-x-3.5">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
               <div className="text-2xl font-heading font-bold text-slate-900 leading-tight">
-                3
+                {metrics?.approvedCount ?? proposals.filter((p) => p.status === "APPROVED").length}
               </div>
-              <div className="text-xs font-semibold text-slate-700 mt-0.5">พร้อมส่ง</div>
-              <p className="text-[11px] text-emerald-600 font-medium mt-0.5">พร้อมเสนออนุมัติ</p>
+              <div className="text-xs font-semibold text-slate-700 mt-0.5">อนุมัติบรรจุแผน</div>
+              <p className="text-[11px] text-emerald-600 font-medium mt-0.5">พร้อมจัดซื้อจัดจ้าง</p>
             </div>
           </div>
         </div>
@@ -227,51 +227,38 @@ export function ExecutiveDashboard() {
             </h3>
 
             <div className="space-y-2.5">
-              {/* Item 1 */}
-              <Link
-                href="/requests"
-                className="flex items-center justify-between gap-2 rounded-2xl border border-slate-100 p-3 transition-all hover:border-indigo-100 hover:bg-slate-50/50"
-              >
-                <div className="flex items-center space-x-3 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                    <Monitor className="w-4 h-4" />
+              {proposals.filter((p) => ["AI_ANALYZED", "DEPT_REVIEW", "REVISED"].includes(p.status)).slice(0, 3).map((prop) => (
+                <Link
+                  key={prop.id}
+                  href={`/requests/${prop.id}`}
+                  className="flex items-center justify-between gap-2 rounded-2xl border border-slate-100 p-3 transition-all hover:border-indigo-100 hover:bg-slate-50/50"
+                >
+                  <div className="flex items-center space-x-3 min-w-0">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                      prop.status === "REVISED" ? "bg-rose-50 text-rose-600" : prop.alertLevel === "AMBER_ALERT" ? "bg-amber-50 text-amber-600" : "bg-blue-50 text-blue-600"
+                    }`}>
+                      <Monitor className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-xs font-bold text-slate-900 truncate">{prop.title}</h4>
+                      <p className="text-[11px] text-slate-400 truncate">{prop.department}</p>
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <h4 className="text-xs font-bold text-slate-900 truncate">Computer Lab</h4>
-                    <p className="text-[11px] text-slate-400 truncate">คณะวิทยาศาสตร์</p>
+                  <div className="text-right shrink-0">
+                    <span className={`inline-flex items-center text-[10px] px-2 py-0.5 rounded-full border font-medium ${
+                      prop.status === "REVISED"
+                        ? "bg-rose-50 text-rose-700 border-rose-200"
+                        : prop.alertLevel === "AMBER_ALERT"
+                        ? "bg-amber-50 text-amber-700 border-amber-200"
+                        : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                    }`}>
+                      {prop.status === "REVISED" ? "✏ ส่งกลับแก้ไข" : prop.alertLevel === "AMBER_ALERT" ? "⚠ ตรวจสอบวงเงิน" : "✓ ผ่านเกณฑ์"}
+                    </span>
+                    <div className="text-xs font-bold text-slate-800 mt-0.5">{Number(prop.totalBudgetBaht).toLocaleString()} ฿</div>
+                    <div className="text-[10px] text-slate-400">{prop.code}</div>
                   </div>
-                </div>
-                <div className="text-right shrink-0">
-                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-medium">
-                    ⚠ ตรวจสอบวงเงิน
-                  </span>
-                  <div className="text-xs font-bold text-slate-800 mt-0.5">520,000 บาท</div>
-                  <div className="text-[10px] text-slate-400">25 พ.ค. 2569</div>
-                </div>
-              </Link>
-
-              {/* Item 2 */}
-              <Link
-                href="/requests"
-                className="flex items-center justify-between gap-2 rounded-2xl border border-slate-100 p-3 transition-all hover:border-emerald-100 hover:bg-slate-50/50"
-              >
-                <div className="flex items-center space-x-3 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                    <Microscope className="w-4 h-4" />
-                  </div>
-                  <div className="min-w-0">
-                    <h4 className="text-xs font-bold text-slate-900 truncate">Microscope</h4>
-                    <p className="text-[11px] text-slate-400 truncate">คณะวิทยาศาสตร์</p>
-                  </div>
-                </div>
-                <div className="text-right shrink-0">
-                  <span className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
-                    ✓ ผ่านมาตรฐาน
-                  </span>
-                  <div className="text-xs font-bold text-slate-800 mt-0.5">1,250,000 บาท</div>
-                  <div className="text-[10px] text-slate-400">24 พ.ค. 2569</div>
-                </div>
-              </Link>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
