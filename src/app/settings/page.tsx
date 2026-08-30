@@ -73,28 +73,59 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Security & Authentication */}
+        {/* Security & KKU SSONext Authentication */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-xs space-y-4">
-          <div className="flex items-center space-x-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
-            <Shield className="w-4 h-4 text-emerald-600" />
-            <span>ความปลอดภัยและการยืนยันตัวตน (KKU SSONext)</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <Shield className="w-4 h-4 text-emerald-600" />
+              <span>การเชื่อมต่อระบบยืนยันตัวตน (KKU SSONext)</span>
+            </div>
+            <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+              API Standardized
+            </span>
           </div>
 
           <div className="space-y-3 text-xs text-slate-600">
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/60 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-slate-800">KKU SSONext Postman Spec Endpoints</span>
+                <span className="text-[10px] font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md font-bold">
+                  ssonext-api.kku.ac.th
+                </span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 pt-1 font-mono text-[11px]">
+                <div className="p-2 bg-white rounded-xl border border-slate-200/80">
+                  <div className="text-[10px] text-slate-400 font-sans font-semibold">1. Token Exchange</div>
+                  <div className="text-slate-800 font-bold">POST /auth.token</div>
+                  <div className="text-[10px] text-slate-500">code, redirectUrl, clientId, clientSecret</div>
+                </div>
+                <div className="p-2 bg-white rounded-xl border border-slate-200/80">
+                  <div className="text-[10px] text-slate-400 font-sans font-semibold">2. User Profile</div>
+                  <div className="text-slate-800 font-bold">POST /user.profile</div>
+                  <div className="text-[10px] text-slate-500">Authorization: Bearer &lt;token&gt;</div>
+                </div>
+                <div className="p-2 bg-white rounded-xl border border-slate-200/80">
+                  <div className="text-[10px] text-slate-400 font-sans font-semibold">3. Status Verification</div>
+                  <div className="text-slate-800 font-bold">POST /auth.status</div>
+                  <div className="text-[10px] text-slate-500">Authorization: Bearer &lt;token&gt;</div>
+                </div>
+              </div>
+            </div>
+
             <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50">
               <div>
-                <span className="font-semibold text-slate-800">KKU SSONext OpenID Connect (OIDC)</span>
-                <p className="text-[11px] text-slate-400">ระบบพิสูจน์และยืนยันตัวตน มหาวิทยาลัยขอนแก่น</p>
+                <span className="font-semibold text-slate-800">KKU Employee API v3 Integration</span>
+                <p className="text-[11px] text-slate-400">ดึงข้อมูลสังกัด คณะ ภาควิชา และตำแหน่งบุคลากรโดยตรง</p>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
-                เปิดใช้งานแล้ว
+              <span className="px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">
+                api.kku.ac.th/v3
               </span>
             </div>
 
             <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50">
               <div>
                 <span className="font-semibold text-slate-800">Anti-Brand-Locking Procurement Linter</span>
-                <p className="text-[11px] text-slate-400">ตรวจสอบการล็อคสเปกสินค้าโดยอัตโนมัติ</p>
+                <p className="text-[11px] text-slate-400">ตรวจสอบการล็อคสเปกสินค้าและชื่อทางการค้าตามระเบียบพัสดุ</p>
               </div>
               <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
                 Active
@@ -125,3 +156,4 @@ export default function SettingsPage() {
     </div>
   );
 }
+
