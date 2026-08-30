@@ -1,21 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth/auth-options";
+import { requireUser, AuthError } from "@/lib/auth/auth-options";
 import { sanitizePromptInput } from "@/lib/security/anti-prompt-injection";
 import { runFull6StepPipeline } from "@/lib/ai/mock-ai-engine";
 import { intelSphereClient, INTELSPHERE_MODEL } from "@/lib/ai/intelsphere-client";
 import { getStep1Prompt } from "@/lib/ai/prompts/parse-intent";
 import { Step1IntentSchema } from "@/lib/ai/parsers";
+import { checkRateLimit, clientKeyFromHeaders } from "@/lib/security/rate-limit";
+import { analyzeFullSchema, parseJsonBody, formatZodError } from "@/lib/validation";
+import { z } from "zod";
 
 const isMockAi = process.env.ENABLE_MOCK_AI === "true";
 
+// AI analysis calls an external LLM: cap usage to protect cost & capacity.
+const AI_RATE_LIMIT = 10;
+const AI_RATE_WINDOW_MS = 60_000;
+
 export async function POST(req: NextRequest) {
   try {
-    const user = await getCurrentUser();
-    const { prompt } = await req.json();
+    const user = await requireUser();
 
-    if (!prompt || typeof prompt !== "string" || prompt.trim() === "") {
-      return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
+    const limit = checkRateLimit(
+      clientKeyFromHeaders(req.headers, `ai:${user.id}`),
+      AI_RATE_LIMIT,
+      AI_RATE_WINDOW_MS
+    );
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: "เรียกใช้งาน AI ถี่เกินไป กรุณารอสักครู่แล้วลองใหม่" },
+        { status: 429, headers: { "Retry-After": String(limit.retryAfterSec) } }
+      );
     }
+
+    const { prompt } = analyzeFullSchema.parse(await parseJsonBody(req));
 
     // Security sanitization check
     const sanitization = sanitizePromptInput(prompt);
@@ -73,8 +89,17 @@ export async function POST(req: NextRequest) {
         analysis: fullAnalysis,
       });
     }
-  } catch (error: any) {
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: formatZodError(error) }, { status: 400 });
+    }
     console.error("AI Analysis error:", error);
-    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "เกิดข้อผิดพลาดในการวิเคราะห์ด้วย AI กรุณาลองใหม่อีกครั้ง" },
+      { status: 500 }
+    );
   }
 }

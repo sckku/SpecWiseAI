@@ -45,12 +45,17 @@ export async function GET(req: NextRequest) {
     // 5. Establish session cookies
     const response = NextResponse.redirect(new URL(returnUrl, req.url));
 
-    // Save active user role & access token
+    // Save active user role & access token.
+    // All session cookies are httpOnly: client-side JavaScript must never
+    // read or forge them; authorization is resolved server-side only.
+    const isSecure = process.env.NODE_ENV === "production";
+
     response.cookies.set("specwise_session_role", userSession.role.toLowerCase(), {
       path: "/",
       maxAge: 60 * 60 * 24 * 7,
       sameSite: "lax",
-      httpOnly: false,
+      httpOnly: true,
+      secure: isSecure,
     });
 
     response.cookies.set("specwise_access_token", tokenData.accessToken, {
@@ -58,19 +63,25 @@ export async function GET(req: NextRequest) {
       maxAge: tokenData.expiresIn || 60 * 60 * 24,
       sameSite: "lax",
       httpOnly: true,
+      secure: isSecure,
     });
 
-    response.cookies.set("specwise_user_session", JSON.stringify(userSession), {
+    // Strip the access token from the session snapshot persisted in a cookie.
+    const { accessToken: _omitToken, ...sessionPayload } = userSession;
+
+    response.cookies.set("specwise_user_session", JSON.stringify(sessionPayload), {
       path: "/",
       maxAge: 60 * 60 * 24 * 7,
       sameSite: "lax",
-      httpOnly: false,
+      httpOnly: true,
+      secure: isSecure,
     });
 
     return response;
   } catch (err: any) {
     console.error("Failed to complete KKU SSONext Callback:", err);
-    const errorRedirect = new URL(`/login?error=${encodeURIComponent(err.message)}`, req.url);
+    // Do not echo internal error details into the redirect URL.
+    const errorRedirect = new URL("/login?error=sso_callback_failed", req.url);
     return NextResponse.redirect(errorRedirect);
   }
 }

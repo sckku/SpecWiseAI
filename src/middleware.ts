@@ -1,17 +1,26 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
-  // Pass through all requests, attach session cookie default if not present
-  const response = NextResponse.next();
-  const sessionRole = request.cookies.get("specwise_session_role")?.value;
+const isMockAuth =
+  process.env.ENABLE_MOCK_AUTH === "true" &&
+  process.env.NODE_ENV !== "production";
 
-  if (!sessionRole) {
-    response.cookies.set("specwise_session_role", "requester", {
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-      sameSite: "lax",
-    });
+export function middleware(request: NextRequest) {
+  const response = NextResponse.next();
+
+  // In mock mode only, seed a default role cookie for local development.
+  // In production this cookie is never auto-created: the session must come
+  // from the SSONext login flow.
+  if (isMockAuth) {
+    const sessionRole = request.cookies.get("specwise_session_role")?.value;
+    if (!sessionRole) {
+      response.cookies.set("specwise_session_role", "requester", {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7,
+        sameSite: "lax",
+        httpOnly: true,
+      });
+    }
   }
 
   return response;

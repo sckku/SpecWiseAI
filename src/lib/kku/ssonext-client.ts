@@ -55,7 +55,8 @@ export class KKUSSONextClient {
     this.isMock =
       options?.isMock !== undefined
         ? options.isMock
-        : process.env.ENABLE_MOCK_AUTH === "true" || !this.clientId;
+        : (process.env.ENABLE_MOCK_AUTH === "true" || !this.clientId) &&
+          process.env.NODE_ENV !== "production";
   }
 
   /**

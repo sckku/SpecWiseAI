@@ -6,7 +6,11 @@ export async function GET(req: NextRequest) {
   const redirectUrl = searchParams.get("redirectUrl") || undefined;
   const state = searchParams.get("state") || "specwise-auth-state";
 
-  const isMock = process.env.ENABLE_MOCK_AUTH === "true" || !process.env.KKU_SSO_CLIENT_ID;
+  // Mock login is only allowed in non-production builds, even if the env
+  // flag was accidentally enabled on a production deployment.
+  const isMock =
+    (process.env.ENABLE_MOCK_AUTH === "true" || !process.env.KKU_SSO_CLIENT_ID) &&
+    process.env.NODE_ENV !== "production";
 
   if (isMock) {
     // In mock mode, immediately redirect to callback with a mock code

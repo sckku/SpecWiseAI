@@ -4,15 +4,18 @@ services:
     container_name: specwise-postgres
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      # Bind to localhost only: the database must not be reachable from
+      # other hosts on the network.
+      - "127.0.0.1:5432:5432"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      # No default credentials: these MUST be supplied via environment or .env
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in your environment}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your environment}
       POSTGRES_DB: ${POSTGRES_DB:-specwise_db}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -22,11 +25,11 @@ services:
     container_name: specwise-minio
     restart: unless-stopped
     ports:
-      - "9000:9000"   # S3 API
-      - "9001:9001"   # Web Console
+      - "127.0.0.1:9000:9000"   # S3 API (localhost only)
+      - "127.0.0.1:9001:9001"   # Web Console (localhost only)
     environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-specwise_minio_admin}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-specwise_secure_pass_2026}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?Set MINIO_ROOT_USER in your environment}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?Set MINIO_ROOT_PASSWORD in your environment}
     volumes:
       - minio_data:/data
     command: server /data --console-address ":9001"

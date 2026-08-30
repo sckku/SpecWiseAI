@@ -1,25 +1,54 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth/auth-options";
+import { requireUser, AuthError } from "@/lib/auth/auth-options";
 import { getProposalById, saveProposal } from "@/lib/db/proposal-store";
 import { ReviewComment } from "@/types/budget";
+import {
+  createCommentSchema,
+  parseJsonBody,
+  formatZodError,
+  BodyTooLargeError,
+  InvalidJsonError,
+} from "@/lib/validation";
+import { z } from "zod";
+
+// Actions that change the review trail require elevated roles.
+const ACTION_ROLE_MAP: Record<string, string[]> = {
+  COMMENT: ["REQUESTER", "DEPT_VERIFIER", "APPROVER", "ADMIN"],
+  REQUEST_CHANGE: ["DEPT_VERIFIER", "APPROVER", "ADMIN"],
+  APPROVE: ["APPROVER", "ADMIN"],
+  REJECT: ["APPROVER", "ADMIN"],
+};
 
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const user = await requireUser();
     const { id } = await params;
-    const user = await getCurrentUser();
     const proposal = getProposalById(id);
 
     if (!proposal) {
-      return NextResponse.json({ error: "Proposal not found" }, { status: 404 });
+      return NextResponse.json({ error: "ไม่พบคำของบประมาณ" }, { status: 404 });
     }
 
-    const { content, action } = await req.json();
+    // Requesters may only comment on their own submissions.
+    if (user.role === "REQUESTER" && proposal.requesterId !== user.id) {
+      return NextResponse.json(
+        { error: "คุณไม่มีสิทธิ์แสดงความคิดเห็นในคำของบประมาณนี้" },
+        { status: 403 }
+      );
+    }
 
-    if (!content || !content.trim()) {
-      return NextResponse.json({ error: "Comment content is required" }, { status: 400 });
+    const body = createCommentSchema.parse(await parseJsonBody(req));
+    const action = body.action || "COMMENT";
+
+    const allowedRoles = ACTION_ROLE_MAP[action] || [];
+    if (!allowedRoles.includes(user.role)) {
+      return NextResponse.json(
+        { error: `สิทธิ์ของคุณ (${user.role}) ไม่สามารถดำเนินการ ${action} ได้` },
+        { status: 403 }
+      );
     }
 
     const newComment: ReviewComment = {
@@ -27,8 +56,8 @@ export async function POST(
       authorId: user.id,
       authorName: user.thaiName,
       authorRole: user.role,
-      content,
-      action: action || "COMMENT",
+      content: body.content,
+      action,
       createdAt: new Date().toISOString(),
     };
 
@@ -40,7 +69,20 @@ export async function POST(
     saveProposal(proposal);
 
     return NextResponse.json({ success: true, comment: newComment });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: formatZodError(error) }, { status: 400 });
+    }
+    if (error instanceof BodyTooLargeError || error instanceof InvalidJsonError) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+    console.error("Comment API error:", error);
+    return NextResponse.json(
+      { error: "เกิดข้อผิดพลาดภายในระบบ กรุณาลองใหม่อีกครั้ง" },
+      { status: 500 }
+    );
   }
 }

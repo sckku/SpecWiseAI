@@ -368,9 +368,11 @@ export class KKUEmployeeApiClient {
     const thaiFirst = thaiTitleAndFirst.replace(thaiTitle, "");
     const thaiLast = thaiParts.slice(1).join(" ");
 
-    return {
-      employeeId: mockMatch.id,
-      citizenId: "1409900000000",
+      return {
+        employeeId: mockMatch.id,
+        // Deliberately not a valid-format citizen ID: mock data must never
+        // resemble real personal data (PDPA hygiene).
+        citizenId: undefined,
       thaiTitle,
       thaiFirstName: thaiFirst || "สมชาย",
       thaiLastName: thaiLast || "แก้วกล้า",
