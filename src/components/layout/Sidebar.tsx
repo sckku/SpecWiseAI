@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -16,6 +16,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { KKUUserSession } from "@/types/auth";
+import { DashboardMetrics } from "@/types/budget";
 
 interface SidebarProps {
   currentUser: KKUUserSession | null;
@@ -24,6 +25,16 @@ interface SidebarProps {
 
 export function Sidebar({ currentUser }: SidebarProps) {
   const pathname = usePathname();
+  const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
+
+  useEffect(() => {
+    fetch("/api/dashboard/metrics")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.metrics) setMetrics(data.metrics);
+      })
+      .catch((err) => console.error("Sidebar metrics fetch error:", err));
+  }, [pathname]);
 
   const navItems = [
     {
@@ -70,6 +81,9 @@ export function Sidebar({ currentUser }: SidebarProps) {
       active: pathname === "/settings",
     },
   ];
+
+  const totalItems = metrics?.totalProposals ?? 40;
+  const timeSavedHours = metrics?.nvaTimeSavedHours ?? Math.round(totalItems * 10.7);
 
   return (
     <aside className="sticky top-0 hidden h-screen min-h-screen w-56 shrink-0 select-none flex-col border-r border-slate-200/80 bg-white md:flex xl:w-60">
@@ -141,11 +155,11 @@ export function Sidebar({ currentUser }: SidebarProps) {
           <div className="text-xs font-bold text-slate-800">
             AI ช่วยคุณไปแล้ว
           </div>
-          <p className="text-[11px] text-slate-400">ประจำปีงบประมาณ 2570</p>
+          <p className="text-[11px] text-slate-400">ประจำปีงบประมาณ 2569 - 2570</p>
 
           <div className="mt-2">
             <div className="text-2xl font-heading font-bold text-indigo-600 leading-tight">
-              161
+              {totalItems.toLocaleString()}
             </div>
             <div className="text-[11px] text-slate-500">รายการ</div>
           </div>
@@ -153,7 +167,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
           <div className="mt-2 pt-2 border-t border-slate-200/50 flex items-center justify-between text-xs">
             <div>
               <span className="text-[11px] text-slate-400 block leading-tight">ประหยัดเวลาไปแล้ว</span>
-              <span className="text-xs font-bold text-emerald-600">428</span>{" "}
+              <span className="text-xs font-bold text-emerald-600">{timeSavedHours.toLocaleString()}</span>{" "}
               <span className="text-[11px] text-slate-500">ชั่วโมง</span>
             </div>
             <Link
@@ -169,7 +183,7 @@ export function Sidebar({ currentUser }: SidebarProps) {
         {/* User Profile Pill */}
         <div className="mt-2.5 flex items-center space-x-2.5 px-2 py-1.5 rounded-xl hover:bg-slate-50 transition-colors">
           <div className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center shadow-xs shrink-0">
-            N
+            {currentUser?.thaiName?.[0] || currentUser?.name?.[0] || "N"}
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs font-semibold text-slate-800 truncate leading-tight">
@@ -184,4 +198,3 @@ export function Sidebar({ currentUser }: SidebarProps) {
     </aside>
   );
 }
-

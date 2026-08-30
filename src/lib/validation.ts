@@ -42,6 +42,7 @@ const attachmentSchema = z
 export const createProposalSchema = z
   .object({
     title: z.string().trim().max(500).optional(),
+    status: requestStatusEnum.optional(),
     category: z.string().trim().max(200).optional(),
     unit: z.string().trim().max(50).optional(),
     unitPriceBaht: moneyBaht.optional(),
@@ -50,7 +51,6 @@ export const createProposalSchema = z
     standardMatched: z.boolean().optional(),
     standardName: z.string().trim().max(500).optional(),
     alertLevel: z.enum(["GREEN_MATCH", "AMBER_ALERT", "CUSTOM_NON_STANDARD"]).optional(),
-    status: requestStatusEnum.optional(),
     form8Sections: z.record(z.unknown()).optional(),
     neutralSpec: z.record(z.unknown()).optional(),
     aiAnalysis: z.record(z.unknown()).optional(),

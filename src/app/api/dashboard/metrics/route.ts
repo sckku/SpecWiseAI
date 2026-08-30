@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { requireUser, AuthError } from "@/lib/auth/auth-options";
-import { calculateDashboardMetrics } from "@/lib/db/proposal-store";
+import { getDashboardMetricsAsync } from "@/lib/db/proposal-store";
 
 export async function GET() {
   try {
     await requireUser();
-    const metrics = calculateDashboardMetrics();
+    const metrics = await getDashboardMetricsAsync();
     return NextResponse.json({ success: true, metrics });
   } catch (error) {
     if (error instanceof AuthError) {

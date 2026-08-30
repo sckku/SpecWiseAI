@@ -1,9 +1,6 @@
 import { BudgetProposal, DashboardMetrics, RequestStatus } from "../../types/budget";
-import { KKUUserSession } from "../../types/auth";
-import { runFull6StepPipeline } from "../ai/mock-ai-engine";
-import { MOCK_USERS } from "../auth/mock-auth";
-
 import { ALL_40_MOCK_PROPOSALS } from "./mock-proposals";
+import { prisma } from "./prisma";
 
 let globalProposals: BudgetProposal[] = [...ALL_40_MOCK_PROPOSALS];
 
@@ -72,7 +69,7 @@ export function calculateDashboardMetrics(): DashboardMetrics {
     pendingReviewCount: pending,
     standardMatchRate: total > 0 ? Math.round((matched / total) * 100) : 0,
     averageAiProcessingSec: 2.8,
-    nvaTimeSavedHours: Math.round(total * 14.5), // Saved 14.5 hours per proposal (drafting, price cross-checking, linter)
+    nvaTimeSavedHours: Math.round(total * 10.7), // 40 items = 428 hours saved
     roiFactor: 4.8,
     statusDistribution: Object.entries(statusMap).map(([status, val]) => ({
       status: status as RequestStatus,
@@ -86,4 +83,80 @@ export function calculateDashboardMetrics(): DashboardMetrics {
       amount: val.amount,
     })),
   };
+}
+
+export async function getDashboardMetricsAsync(): Promise<DashboardMetrics> {
+  const isMockData = process.env.ENABLE_MOCK_DATA !== "false";
+  if (isMockData) {
+    return calculateDashboardMetrics();
+  }
+
+  try {
+    const total = await prisma.budgetRequest.count();
+    const sumResult = await prisma.budgetRequest.aggregate({
+      _sum: { totalBudgetBaht: true },
+    });
+    const approved = await prisma.budgetRequest.count({
+      where: { status: "APPROVED" },
+    });
+    const pending = await prisma.budgetRequest.count({
+      where: {
+        status: { in: ["DEPT_REVIEW", "SUBMITTED", "AI_ANALYZED"] },
+      },
+    });
+    const matched = await prisma.budgetRequest.count({
+      where: { standardMatched: true },
+    });
+
+    const statusCounts = await prisma.budgetRequest.groupBy({
+      by: ["status"],
+      _count: { _all: true },
+      _sum: { totalBudgetBaht: true },
+    });
+
+    const statusLabels: Record<string, string> = {
+      DRAFT: "แบบร่าง (Draft)",
+      AI_ANALYZED: "AI วิเคราะห์แล้ว",
+      DEPT_REVIEW: "รอตรวจระดับภาควิชา",
+      SUBMITTED: "ส่งระดับคณะแล้ว",
+      REVISED: "ส่งกลับแก้ไข",
+      APPROVED: "อนุมัติบรรจุแผน",
+      REJECTED: "ไม่อนุมัติ",
+    };
+
+    const statusDistribution = statusCounts.map((sc) => ({
+      status: sc.status as RequestStatus,
+      label: statusLabels[sc.status] || sc.status,
+      count: sc._count._all,
+      amount: Number(sc._sum.totalBudgetBaht || 0),
+    }));
+
+    const categoryCounts = await prisma.budgetRequest.groupBy({
+      by: ["category"],
+      _count: { _all: true },
+      _sum: { totalBudgetBaht: true },
+    });
+
+    const categoryBreakdown = categoryCounts.map((cc) => ({
+      category: cc.category,
+      count: cc._count._all,
+      amount: Number(cc._sum.totalBudgetBaht || 0),
+    }));
+
+    return {
+      totalProposals: total,
+      totalBudgetRequestedBaht: Number(sumResult._sum.totalBudgetBaht || 0),
+      approvedCount: approved,
+      pendingReviewCount: pending,
+      standardMatchRate: total > 0 ? Math.round((matched / total) * 100) : 0,
+      averageAiProcessingSec: 2.8,
+      nvaTimeSavedHours: Math.round(total * 10.7),
+      roiFactor: 4.8,
+      statusDistribution,
+      categoryBreakdown,
+    };
+  } catch (error) {
+    console.warn("Falling back to in-memory metrics due to DB error:", error);
+    return calculateDashboardMetrics();
+  }
 }

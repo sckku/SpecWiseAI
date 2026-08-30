@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BarChart3,
   TrendingUp,
@@ -17,29 +17,52 @@ import {
   Sparkles,
   ArrowDownToLine,
 } from "lucide-react";
+import { DashboardMetrics } from "@/types/budget";
 
 export default function ReportsPage() {
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState<string | null>(null);
   const [showExportModal, setShowExportModal] = useState(false);
+  const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
+
+  useEffect(() => {
+    fetch("/api/dashboard/metrics")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.metrics) setMetrics(data.metrics);
+      })
+      .catch((err) => console.error("Reports metrics error:", err));
+  }, []);
+
+  const totalBudget = metrics ? metrics.totalBudgetRequestedBaht : 42850000;
+  const totalItems = metrics?.totalProposals ?? 40;
+  const timeSavedHours = metrics?.nvaTimeSavedHours ?? 428;
+  const matchRate = metrics?.standardMatchRate ?? 94;
 
   const handleExportCSV = () => {
     setIsExporting(true);
     setTimeout(() => {
       const csvData = [
-        ["รายงานสรุปภาพรวมคำของบประมาณและดัชนีประสิทธิภาพ SpecWise AI", "ปีงบประมาณ 2570"],
+        ["รายงานสรุปภาพรวมคำของบประมาณและดัชนีประสิทธิภาพ SpecWise AI", "ปีงบประมาณ 2569 - 2570"],
         ["มหาวิทยาลัยขอนแก่น", new Date().toLocaleDateString("th-TH")],
         [],
         ["ตัวชี้วัดหลัก (Key Metrics)", "ค่าที่วัดได้", "เกณฑ์เปรียบเทียบ"],
-        ["งบประมาณที่ผ่านการกลั่นกรอง", "42,850,000 บาท", "สอดคล้องตามเกณฑ์ราคากลาง 94%"],
-        ["เวลาทำงานที่ประหยัดได้ (NVA Time Reduction)", "428 ชั่วโมง", "ลดลง 72% เทียบกระบวนการเดิม"],
+        ["งบประมาณที่ผ่านการกลั่นกรอง", `${totalBudget.toLocaleString()} บาท`, `สอดคล้องตามเกณฑ์ราคากลาง ${matchRate}%`],
+        ["จำนวนรายการคำของบประมาณ", `${totalItems} รายการ`, "ครอบคลุมทุกหมวดหมู่ครุภัณฑ์"],
+        ["เวลาทำงานที่ประหยัดได้ (NVA Time Reduction)", `${timeSavedHours} ชั่วโมง`, "ลดลง 72% เทียบกระบวนการเดิม"],
         ["อัตราลดการส่งกลับแก้ไข (Rework Reduction)", "88.5%", "ตรวจพบข้อผิดพลาดก่อนส่งระดับคณะ"],
         ["ความสอดคล้อง Anti-Brand-Locking", "99.2%", "ผ่านเกณฑ์ พ.ร.บ. จัดซื้อจัดจ้างฯ 2560"],
         [],
         ["สัดส่วนงบประมาณตามกลุ่มครุภัณฑ์", "ร้อยละ (%)", "วงเงินรวม (ล้านบาท)"],
-        ["ครุภัณฑ์คอมพิวเตอร์และสารสนเทศ", "65%", "27.80"],
-        ["ครุภัณฑ์วิทยาศาสตร์และการแพทย์", "25%", "10.70"],
-        ["ครุภัณฑ์การศึกษา", "10%", "4.35"],
+        ...(metrics?.categoryBreakdown?.map((cat) => [
+          cat.category,
+          totalBudget > 0 ? `${Math.round((cat.amount / totalBudget) * 100)}%` : "0%",
+          (cat.amount / 1000000).toFixed(2),
+        ]) || [
+          ["ครุภัณฑ์คอมพิวเตอร์และสารสนเทศ", "65%", "27.80"],
+          ["ครุภัณฑ์วิทยาศาสตร์และการแพทย์", "25%", "10.70"],
+          ["ครุภัณฑ์การศึกษา", "10%", "4.35"],
+        ]),
         [],
         ["การลดเวลา Non-Value Added (NVA)", "เวลาเดิม (ต่อรายการ)", "เวลา AI (ต่อรายการ)", "ประสิทธิภาพที่เพิ่มขึ้น"],
         ["การสืบค้นราคากลาง 4 ฐานข้อมูล", "4 ชั่วโมง", "3 วินาที", "99%"],
@@ -107,9 +130,9 @@ export default function ReportsPage() {
             งบประมาณที่ผ่านการกลั่นกรอง
           </span>
           <div className="text-2xl font-heading font-bold text-slate-900 mt-1">
-            42,850,000 บาท
+            {totalBudget.toLocaleString()} บาท
           </div>
-          <p className="text-xs text-emerald-600 mt-1 font-medium">สอดคล้องตามเกณฑ์ราคากลาง 94%</p>
+          <p className="text-xs text-emerald-600 mt-1 font-medium">สอดคล้องตามเกณฑ์ราคากลาง {matchRate}%</p>
         </div>
 
         <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
@@ -117,9 +140,9 @@ export default function ReportsPage() {
             เวลาทำงานที่ประหยัดได้ (NVA Reduction)
           </span>
           <div className="text-2xl font-heading font-bold text-indigo-600 mt-1">
-            428 ชั่วโมง
+            {timeSavedHours.toLocaleString()} ชั่วโมง
           </div>
-          <p className="text-xs text-slate-400 mt-1">เทียบกับกระบวนการเดิม (ลดลง 72%)</p>
+          <p className="text-xs text-slate-400 mt-1">จาก {totalItems} รายการ (ลดลง 72% เทียบเดิม)</p>
         </div>
 
         <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
@@ -150,33 +173,54 @@ export default function ReportsPage() {
             สัดส่วนงบประมาณตามกลุ่มครุภัณฑ์ (พ.ศ. 2569 - 2570)
           </h3>
           <div className="space-y-3 text-xs">
-            <div>
-              <div className="flex justify-between text-slate-700 font-semibold mb-1">
-                <span>ครุภัณฑ์คอมพิวเตอร์และสารสนเทศ</span>
-                <span>65% (27.8 ล้านบาท)</span>
-              </div>
-              <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
-                <div className="h-full bg-indigo-600 rounded-full w-[65%]"></div>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between text-slate-700 font-semibold mb-1">
-                <span>ครุภัณฑ์วิทยาศาสตร์และการแพทย์</span>
-                <span>25% (10.7 ล้านบาท)</span>
-              </div>
-              <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
-                <div className="h-full bg-emerald-500 rounded-full w-[25%]"></div>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between text-slate-700 font-semibold mb-1">
-                <span>ครุภัณฑ์การศึกษา</span>
-                <span>10% (4.3 ล้านบาท)</span>
-              </div>
-              <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
-                <div className="h-full bg-amber-500 rounded-full w-[10%]"></div>
-              </div>
-            </div>
+            {metrics?.categoryBreakdown && metrics.categoryBreakdown.length > 0 ? (
+              metrics.categoryBreakdown.map((cat, idx) => {
+                const pct = totalBudget > 0 ? Math.round((cat.amount / totalBudget) * 100) : 0;
+                const colors = ["bg-indigo-600", "bg-emerald-500", "bg-amber-500", "bg-purple-500", "bg-blue-500"];
+                const barColor = colors[idx % colors.length];
+                return (
+                  <div key={cat.category}>
+                    <div className="flex justify-between text-slate-700 font-semibold mb-1">
+                      <span>{cat.category}</span>
+                      <span>{pct}% ({(cat.amount / 1000000).toFixed(2)} ล้านบาท)</span>
+                    </div>
+                    <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                      <div className={`h-full ${barColor} rounded-full`} style={{ width: `${pct}%` }}></div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <>
+                <div>
+                  <div className="flex justify-between text-slate-700 font-semibold mb-1">
+                    <span>ครุภัณฑ์คอมพิวเตอร์และสารสนเทศ</span>
+                    <span>65% (27.8 ล้านบาท)</span>
+                  </div>
+                  <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                    <div className="h-full bg-indigo-600 rounded-full w-[65%]"></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-slate-700 font-semibold mb-1">
+                    <span>ครุภัณฑ์วิทยาศาสตร์และการแพทย์</span>
+                    <span>25% (10.7 ล้านบาท)</span>
+                  </div>
+                  <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                    <div className="h-full bg-emerald-500 rounded-full w-[25%]"></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-slate-700 font-semibold mb-1">
+                    <span>ครุภัณฑ์การศึกษา</span>
+                    <span>10% (4.3 ล้านบาท)</span>
+                  </div>
+                  <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                    <div className="h-full bg-amber-500 rounded-full w-[10%]"></div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 

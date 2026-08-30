@@ -17,6 +17,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { KKUUserSession } from "@/types/auth";
+import { DashboardMetrics } from "@/types/budget";
 
 interface MobileNavigationProps {
   currentUser: KKUUserSession | null;
@@ -32,10 +33,20 @@ const secondaryItems = [
 export function MobileNavigation({ currentUser }: MobileNavigationProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setIsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    fetch("/api/dashboard/metrics")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.metrics) setMetrics(data.metrics);
+      })
+      .catch((err) => console.error("Mobile nav metrics fetch error:", err));
   }, [pathname]);
 
   useEffect(() => {
@@ -74,6 +85,8 @@ export function MobileNavigation({ currentUser }: MobileNavigationProps) {
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const totalItems = metrics?.totalProposals ?? 40;
 
   return (
     <>
@@ -116,9 +129,9 @@ export function MobileNavigation({ currentUser }: MobileNavigationProps) {
             <div className="border-t border-slate-100 p-4">
               <div className="rounded-2xl border border-indigo-100 bg-indigo-50/60 p-4">
                 <div className="flex items-center gap-2 text-sm font-semibold text-slate-800"><Sparkles className="h-4 w-4 text-indigo-600" /> AI ช่วยคุณไปแล้ว</div>
-                 <p className="mt-1 text-sm text-slate-500">ประจำปีงบประมาณ 2570</p>
-                 <p className="mt-2 font-heading text-2xl font-bold text-indigo-600">161 <span className="font-sans text-sm font-normal text-slate-500">รายการ</span></p>
-                 <p className="mt-2 border-t border-indigo-100 pt-2 text-sm text-slate-500">{currentUser?.thaiName || "วรรณวิภา อ."}</p>
+                 <p className="mt-1 text-sm text-slate-500">ประจำปีงบประมาณ 2569 - 2570</p>
+                 <p className="mt-2 font-heading text-2xl font-bold text-indigo-600">{totalItems.toLocaleString()} <span className="font-sans text-sm font-normal text-slate-500">รายการ</span></p>
+                 <p className="mt-2 border-t border-indigo-100 pt-2 text-sm text-slate-500">{currentUser?.thaiName || "ดร.สมชาย แก้วกล้า"}</p>
               </div>
             </div>
           </aside>
